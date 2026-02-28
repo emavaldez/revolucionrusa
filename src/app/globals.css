@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme {
+  --color-soviet-red: #be1111;
+  --color-soviet-gold: #ffce00;
+  --color-paper-dark: #1a1a1a;
+  --color-paper-light: #e5e5d1;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  @apply bg-paper-dark text-white min-h-screen overflow-hidden;
+}
