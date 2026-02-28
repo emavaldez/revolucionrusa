@@ -3,8 +3,9 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useGame } from '@/context/GameContext';
+import type { Item } from '@/context/GameContext';
 import { MISIONES } from '@/data/historia';
-import type { Item, Hotspot } from '@/data/historia';
+import type { Hotspot } from '@/data/historia';
 
 interface Props {
   misionId: number;
