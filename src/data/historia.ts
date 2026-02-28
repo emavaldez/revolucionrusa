@@ -12,7 +12,63 @@ export const HISTORIA = {
   }
 };
 
-export const ITEMS_INICIALES = [
-  { id: 'pan_duro', nombre: 'Pan Duro', desc: 'Un espécimen arqueológico de la panadería local.', icono: '🥖' },
-  { id: 'volante', nombre: 'Volante del POSDR', desc: 'Contiene verdades prohibidas y manchas de té.', icono: '📄' }
+export const INVENTARIO_BASE = [
+  { id: 'pan_duro', nombre: 'Pan Duro', desc: 'Arma contundente o cena, según la necesidad.', icono: '🥖' },
+  { id: 'manual_justo', nombre: 'Manual de Juan B. Justo', desc: 'Socialismo con sabor a asado. Confunde a los rusos.', icono: '📘' }
 ];
+
+export const MISIONES = {
+  1905: {
+    id: 1905,
+    titulo: "El Domingo Sangriento",
+    fondo: "/escenas/mision_1905.png",
+    descripcion: "Fábrica Putilov. El frío cala los huesos y el Zar no responde las cartas.",
+    hotspots: [
+      {
+        id: "volante",
+        x: 20, y: 80, // Porcentaje de la pantalla
+        tipo: "recoger",
+        label: "Volante Pisoteado",
+        item: { id: 'volante', nombre: 'Volante del POSDR', desc: 'Manchado con barro y teoría.', icono: '📄' },
+        mensaje: "Un volante revolucionario. Alguien lo pisó. Típico."
+      },
+      {
+        id: "puerta_fabrica",
+        x: 75, y: 50,
+        tipo: "usar",
+        label: "Puerta Trabada",
+        requiere: "pan_duro",
+        mensajeFallo: "Está trabada por el hielo. Necesito algo para hacer palanca.",
+        mensajeExito: "Usaste el pan duro como palanca. La puerta cedió. ¡El pan es la base de la revolución!",
+        accion: "abrir_puerta"
+      },
+      {
+        id: "obrero_viejo",
+        x: 40, y: 65,
+        tipo: "hablar",
+        label: "Obrero Cansado",
+        mensaje: "Compañero, si me vas a hablar de plusvalía, primero consígueme fuego."
+      }
+    ],
+    siguienteMision: 1912
+  },
+  1912: {
+    id: 1912,
+    titulo: "La Imprenta de la Pravda",
+    fondo: "/escenas/mision_1912.png",
+    descripcion: "Praga. Un sótano húmedo. La tinta escasea, pero sobran las palabras.",
+    hotspots: [
+      {
+        id: "engranaje",
+        x: 50, y: 60,
+        tipo: "usar",
+        label: "Engranaje Trabado",
+        requiere: "grasa",
+        mensajeFallo: "La prensa no gira. Necesita lubricación burguesa.",
+        mensajeExito: "La máquina ruge. ¡Que tiemble el capital!",
+        accion: "arreglar_prensa"
+      }
+    ],
+    siguienteMision: 1917
+  }
+};
