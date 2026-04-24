@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Revolución Rusa: Aventura Dialéctica
 
-## Getting Started
+Juego point-and-click de aventura histórica sobre la Revolución Rusa (1905–1924).
 
-First, run the development server:
+## Características
+
+- 7 misiones históricas con puzles, diálogos y exploración
+- Personaje femenino fijo: Alexandra Kollontai
+- Motor point-and-click con personaje caminando, cámara scroll, cursores contextuales
+- Puzle musical: tocar "La Internacional" en un piano
+- Sistema de pistas integrado
+- Inventario persistente entre misiones
+- Diálogos con opciones múltiples
+- Estética constructivista/soviética con humor
+
+## Tech Stack
+
+- Next.js 16 + React + TypeScript
+- Tailwind CSS
+- Framer Motion
+- Web Audio API (efectos de sonido)
+
+## Deploy en GitHub Pages
+
+1. Crear repo en GitHub y subir el código
+2. Ir a Settings → Pages → Source: GitHub Actions
+3. Usar el workflow de Next.js oficial, o simplemente subir la carpeta `dist/` a la rama `gh-pages`
+
+### Opción rápida (manual)
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run build
+# Subir el contenido de /dist a la rama gh-pages
+git subtree push --prefix dist origin gh-pages
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Desarrollo
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm install
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Estructura
 
-## Learn More
+- `src/app/page.tsx` — Flujo principal (menú → juego → fin)
+- `src/components/scenes/AdventureEngine.tsx` — Motor del juego
+- `src/data/historia.ts` — Misiones, items, diálogos, puzles
+- `src/context/GameContext.tsx` — Estado global
+- `public/escenas/` — Imágenes de fondo
 
-To learn more about Next.js, take a look at the following resources:
+## Créditos
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Hecho con <3 y un poco de vodka digital.

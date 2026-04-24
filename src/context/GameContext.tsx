@@ -16,6 +16,8 @@ export interface GameState {
   ubicacion: string;
   inventario: Item[];
   fervor: number;
+  misionesCompletadas: number[];
+  pistasUsadas: number;
 }
 
 interface GameContextType {
@@ -27,12 +29,14 @@ const GameContext = createContext<GameContextType | null>(null);
 
 export const GameProvider = ({ children }: { children: React.ReactNode }) => {
   const [gameState, setGameState] = useState<GameState>({
-    nombre: "",
+    nombre: "Alexandra",
     genero: "Camarada",
     año: 1905,
     ubicacion: "San Petersburgo",
     inventario: [],
     fervor: 100,
+    misionesCompletadas: [],
+    pistasUsadas: 0,
   });
 
   return (

@@ -1,10 +1,10 @@
 // src/app/page.tsx
 "use client";
-import { useState, useRef, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useGame } from '@/context/GameContext';
 import { INVENTARIO_BASE, MISIONES } from '@/data/historia';
-import PointAndClickEngine from '@/components/scenes/PointAndClickEngine';
+import AdventureEngine from '@/components/scenes/AdventureEngine';
 
 type Fase = 'menu' | 'juego' | 'fin';
 
@@ -12,43 +12,24 @@ export default function Home() {
   const { gameState, setGameState } = useGame();
 
   const [fase, setFase] = useState<Fase>('menu');
-  const [nombreInput, setNombreInput] = useState('');
-  const [generoSelected, setGeneroSelected] = useState<'Camarada' | 'Compañera'>('Camarada');
   const [misionActual, setMisionActual] = useState<number>(1905);
-
-  const mainRef = useRef<HTMLElement>(null);
-
-  // ── Fullscreen ──────────────────────────────────────────────────────────
-  const activarFullscreen = useCallback(async () => {
-    try {
-      const el = document.documentElement;
-      if (!document.fullscreenElement) {
-        await el.requestFullscreen();
-      }
-    } catch {
-      // Fullscreen puede estar bloqueado en algunos navegadores — continuamos igual
-    }
-  }, []);
 
   // ── Iniciar partida ─────────────────────────────────────────────────────
   const iniciarRevolucion = useCallback(() => {
-    if (!nombreInput.trim()) {
-      alert('¡El Partido exige un nombre para el registro, camarada!');
-      return;
-    }
     setGameState((prev) => ({
       ...prev,
-      nombre: nombreInput.trim(),
-      genero: generoSelected,
+      nombre: 'Alexandra',
+      genero: 'Camarada',
       año: 1905,
       ubicacion: 'San Petersburgo',
       inventario: INVENTARIO_BASE,
       fervor: 100,
+      misionesCompletadas: [],
+      pistasUsadas: 0,
     }));
     setMisionActual(1905);
     setFase('juego');
-    activarFullscreen();
-  }, [nombreInput, generoSelected, setGameState, activarFullscreen]);
+  }, [setGameState]);
 
   // ── Avanzar misión ──────────────────────────────────────────────────────
   const avanzarMision = useCallback(() => {
@@ -58,8 +39,9 @@ export default function Home() {
       setMisionActual(siguiente);
       setGameState((prev) => ({
         ...prev,
-        año: siguiente,
+        año: MISIONES[siguiente].año,
         ubicacion: MISIONES[siguiente].ubicacion,
+        misionesCompletadas: [...prev.misionesCompletadas, misionActual],
       }));
     } else {
       setFase('fin');
@@ -68,10 +50,7 @@ export default function Home() {
 
   // ── Render ──────────────────────────────────────────────────────────────
   return (
-    <main
-      ref={mainRef}
-      className="min-h-screen bg-paper-dark text-white overflow-hidden flex flex-col select-none"
-    >
+    <main className="min-h-screen bg-paper-dark text-white overflow-hidden flex flex-col select-none">
       <AnimatePresence mode="wait">
 
         {/* ════════════════════════════════════════════════════════════════
@@ -96,7 +75,6 @@ export default function Home() {
             />
 
             <div className="relative bg-paper-light p-8 border-8 border-double border-soviet-red max-w-md w-full text-black shadow-2xl">
-              {/* Estrella decorativa */}
               <div className="absolute -top-5 left-1/2 -translate-x-1/2 text-4xl">⭐</div>
 
               <h1 className="text-4xl md:text-5xl font-black text-center mb-1 text-soviet-red uppercase tracking-tighter leading-none">
@@ -109,56 +87,25 @@ export default function Home() {
                 1905 — 1924
               </p>
 
-              <div className="space-y-4">
-                {/* Nombre */}
-                <div>
-                  <label className="text-[10px] font-black uppercase tracking-widest opacity-60 block mb-1">
-                    Nombre del Proletario
-                  </label>
-                  <input
-                    className="w-full p-3 border-2 border-black bg-white focus:ring-2 ring-soviet-red outline-none uppercase font-bold text-sm placeholder:opacity-40 placeholder:normal-case"
-                    placeholder="Tu nombre en el registro del Partido..."
-                    value={nombreInput}
-                    onChange={(e) => setNombreInput(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && iniciarRevolucion()}
-                    maxLength={24}
-                  />
+              <div className="text-center mb-6">
+                <div className="inline-block p-4 border-2 border-black bg-white">
+                  <p className="text-xs uppercase tracking-widest font-black mb-2">Protagonista</p>
+                  <div className="text-4xl mb-2">👩‍🌾</div>
+                  <p className="text-sm font-black uppercase">Alexandra Kollontai</p>
+                  <p className="text-[9px] text-black/60 mt-1">Revolucionaria. Mujer. Inevitable.</p>
                 </div>
-
-                {/* Género */}
-                <div>
-                  <label className="text-[10px] font-black uppercase tracking-widest opacity-60 block mb-2">
-                    Identidad Revolucionaria
-                  </label>
-                  <div className="flex gap-2">
-                    {(['Camarada', 'Compañera'] as const).map((g) => (
-                      <button
-                        key={g}
-                        onClick={() => setGeneroSelected(g)}
-                        className={`flex-1 p-3 border-2 font-black text-xs uppercase tracking-widest transition-all ${
-                          generoSelected === g
-                            ? 'bg-soviet-red border-soviet-red text-white shadow-[3px_3px_0_rgba(0,0,0,0.3)]'
-                            : 'bg-white border-black text-black hover:bg-gray-100'
-                        }`}
-                      >
-                        {g}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* CTA */}
-                <button
-                  onClick={iniciarRevolucion}
-                  className="w-full bg-black text-white p-4 font-black uppercase tracking-widest text-sm hover:bg-soviet-red transition-all shadow-[4px_4px_0px_0px_theme(colors.soviet-red)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 mt-2"
-                >
-                  ¡A LA REVOLUCIÓN! (FULLSCREEN)
-                </button>
-
-                <p className="text-center text-[9px] opacity-40 uppercase tracking-widest">
-                  1905 · San Petersburgo · Fábrica Putilov
-                </p>
               </div>
+
+              <button
+                onClick={iniciarRevolucion}
+                className="w-full bg-black text-white p-4 font-black uppercase tracking-widest text-sm hover:bg-soviet-red transition-all shadow-[4px_4px_0px_0px_theme(colors.soviet-red)] hover:shadow-none hover:translate-x-1 hover:translate-y-1"
+              >
+                ¡A LA REVOLUCIÓN!
+              </button>
+
+              <p className="text-center text-[9px] opacity-40 uppercase tracking-widest mt-4">
+                7 misiones · Point & Click · Música · Historia
+              </p>
             </div>
           </motion.div>
         )}
@@ -175,44 +122,8 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             className="flex-1 flex flex-col relative min-h-screen"
           >
-            {/* HUD SUPERIOR */}
-            <div className="absolute top-0 left-0 right-0 z-40 flex justify-between items-start px-4 pt-4 pointer-events-none">
-              {/* Info jugador */}
-              <div className="pointer-events-auto">
-                <div className="bg-black/80 border border-yellow-400/40 px-3 py-1.5">
-                  <p className="text-yellow-400 text-[10px] font-black uppercase tracking-widest leading-tight">
-                    {gameState.genero} {gameState.nombre}
-                  </p>
-                  <p className="text-white/60 text-[9px] uppercase tracking-widest">
-                    Año {gameState.año} · {gameState.ubicacion}
-                  </p>
-                </div>
-              </div>
-
-              {/* Barra de fervor */}
-              <div className="pointer-events-auto text-right">
-                <div className="bg-black/80 border border-yellow-400/40 px-3 py-1.5">
-                  <p className="text-yellow-400 text-[9px] font-black uppercase tracking-widest mb-1">
-                    Fervor Revolucionario
-                  </p>
-                  <div className="w-36 h-2.5 bg-black border border-yellow-400/40 overflow-hidden">
-                    <motion.div
-                      className="h-full bg-soviet-red"
-                      initial={{ width: 0 }}
-                      animate={{ width: `${gameState.fervor}%` }}
-                      transition={{ duration: 0.6, ease: 'easeOut' }}
-                    />
-                  </div>
-                  <p className="text-white/40 text-[8px] uppercase tracking-widest mt-0.5 text-right">
-                    {gameState.fervor}%
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* MOTOR POINT & CLICK */}
             <div className="flex-1 w-full h-full">
-              <PointAndClickEngine
+              <AdventureEngine
                 misionId={misionActual}
                 onCompletar={avanzarMision}
               />
@@ -236,15 +147,17 @@ export default function Home() {
                 1924
               </h2>
               <p className="text-white/80 text-lg mb-2">
-                Lenin murió. La revolución sobrevivió. Vos también (por ahora).
+                Alexandra caminó por la historia. De la fábrica al mausoleo. Del pan duro al piano.
               </p>
-              <p className="text-white/40 text-sm mb-8 italic">
-                El camarada Stalin quiere verte en su oficina.
+              <p className="text-white/40 text-sm mb-2 italic">
+                La revolución no fue un evento. Fue un oficio.
+              </p>
+              <p className="text-yellow-400/60 text-xs uppercase tracking-widest mb-8">
+                Misiones completadas: {gameState.misionesCompletadas.length + 1}
               </p>
               <button
                 onClick={() => {
                   setFase('menu');
-                  setNombreInput('');
                 }}
                 className="bg-soviet-red text-white px-8 py-3 font-black uppercase tracking-widest hover:bg-yellow-400 hover:text-black transition-all"
               >
