@@ -1,4 +1,4 @@
-// src/components/scenes/AdventureEngine.tsx
+// src/components/scenes/AdventureEngine.tsx - REWRITE: 2D movement + direct hotspot interaction
 "use client";
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -15,9 +15,8 @@ interface Props {
 // ── Constantes ─────────────────────────────────────────────────────────────
 const PERSONAJE_ANCHO = 48;
 const PERSONAJE_ALTO = 80;
-const VELOCIDAD_CAMINATA = 220; // px por segundo
-const RADIO_INTERACCION = 90;
-const ALTURA_SUELO = 120; // px desde abajo donde camina el personaje
+const VELOCIDAD_CAMINATA = 300; // px por segundo (más rápido)
+const RADIO_INTERACCION = Infinity; // Click directo en hotspots, sin necesidad de acercarse
 
 // Notas del puzle musical (La Internacional: C-E-G-C)
 const NOTAS_PIANO = [
@@ -74,12 +73,13 @@ export default function AdventureEngine({ misionId, onCompletar }: Props) {
   const { gameState, setGameState } = useGame();
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // ── Estado del personaje ────────────────────────────────────────────────
+  // ── Estado del personaje (2D) ───────────────────────────────────────────
   const [personajeX, setPersonajeX] = useState(150);
-  const [personajeY, setPersonajeY] = useState(0);
+  const [personajeY, setPersonajeY] = useState(400); // Y en px desde arriba
   const [direccion, setDireccion] = useState<'izq' | 'der'>('der');
   const [caminando, setCaminando] = useState(false);
   const [objetivoX, setObjetivoX] = useState<number | null>(null);
+  const [objetivoY, setObjetivoY] = useState<number | null>(null);
   const [objetivoHotspot, setObjetivoHotspot] = useState<Hotspot | null>(null);
 
   // ── Estado del mundo ────────────────────────────────────────────────────
@@ -126,14 +126,21 @@ export default function AdventureEngine({ misionId, onCompletar }: Props) {
       setSubEscenaActual(mision.escenaInicial);
       const escena = mision.subEscenas[mision.escenaInicial];
       setMensaje(escena.descripcion);
-      setPersonajeX(150);
     } else {
       setSubEscenaActual(null);
       setMensaje(mision.descripcion ?? '');
+    }
+    // Posición inicial: izquierda, centro vertical del viewport
+    if (containerRef.current) {
       setPersonajeX(150);
+      setPersonajeY(containerRef.current.clientHeight / 2 - PERSONAJE_ALTO / 2);
+    } else {
+      setPersonajeX(150);
+      setPersonajeY(400);
     }
     setSubMensaje('');
     setObjetivoX(null);
+    setObjetivoY(null);
     setCaminando(false);
   }, [misionId]);
 
@@ -171,6 +178,7 @@ export default function AdventureEngine({ misionId, onCompletar }: Props) {
       setSubEscenaActual(destino);
       setItemSeleccionado(null);
       setObjetivoX(null);
+      setObjetivoY(null);
       setCaminando(false);
       setDialogoActivo(null);
       const nuevaEscena = mision.subEscenas[destino];
@@ -185,30 +193,36 @@ export default function AdventureEngine({ misionId, onCompletar }: Props) {
     if (padre) navegarA(padre);
   }, [escenaActiva, navegarA]);
 
-  // ── Loop de caminata ────────────────────────────────────────────────────
+  // ── Loop de caminata 2D ────────────────────────────────────────────────
   useEffect(() => {
-    if (objetivoX === null) return;
+    if (objetivoX === null || objetivoY === null) return;
     setCaminando(true);
     const startTime = performance.now();
     const startX = personajeX;
-    const distancia = objetivoX - startX;
-    const duracion = Math.abs(distancia) / VELOCIDAD_CAMINATA * 1000;
+    const startY = personajeY;
+    const distX = objetivoX - startX;
+    const distY = objetivoY - startY;
+    const distanciaTotal = Math.sqrt(distX ** 2 + distY ** 2);
+    const duracion = distanciaTotal / VELOCIDAD_CAMINATA * 1000;
 
-    if (distancia > 0) setDireccion('der');
-    else if (distancia < 0) setDireccion('izq');
+    if (distX > 5) setDireccion('der');
+    else if (distX < -5) setDireccion('izq');
 
     let raf: number;
     const animate = (now: number) => {
       const elapsed = now - startTime;
       const progress = Math.min(elapsed / duracion, 1);
-      const newX = startX + distancia * progress;
+      const newX = startX + distX * progress;
+      const newY = startY + distY * progress;
       setPersonajeX(newX);
+      setPersonajeY(newY);
 
       if (progress < 1) {
         raf = requestAnimationFrame(animate);
       } else {
         setCaminando(false);
         setObjetivoX(null);
+        setObjetivoY(null);
         if (objetivoHotspot) {
           ejecutarInteraccion(objetivoHotspot);
           setObjetivoHotspot(null);
@@ -217,9 +231,9 @@ export default function AdventureEngine({ misionId, onCompletar }: Props) {
     };
     raf = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(raf);
-  }, [objetivoX, objetivoHotspot]);
+  }, [objetivoX, objetivoY]);
 
-  // ── Cámara sigue al personaje ───────────────────────────────────────────
+  // ── Cámara sigue al personaje (2D) ─────────────────────────────────────
   useEffect(() => {
     if (!containerRef.current) return;
     const viewportW = containerRef.current.clientWidth;
@@ -228,51 +242,41 @@ export default function AdventureEngine({ misionId, onCompletar }: Props) {
     setCameraX(targetCam);
   }, [personajeX, anchoMundo]);
 
-  // ── Distancia a hotspot ─────────────────────────────────────────────────
-  const distanciaA = (hs: Hotspot) => {
-    const hsX = (hs.x / 100) * anchoMundo;
-    const hsY = (hs.y / 100) * (containerRef.current?.clientHeight ?? 600);
-    const px = personajeX + PERSONAJE_ANCHO / 2;
-    const py = (containerRef.current?.clientHeight ?? 600) - ALTURA_SUELO + PERSONAJE_ALTO / 2;
-    return Math.sqrt((px - hsX) ** 2 + (py - hsY) ** 2);
-  };
-
-  const puedeInteractuar = (hs: Hotspot) => distanciaA(hs) <= RADIO_INTERACCION;
-
-  // ── Click en el escenario ───────────────────────────────────────────────
+  // ── Click en el escenario (2D) ─────────────────────────────────────────
   const handleSceneClick = (e: React.MouseEvent) => {
     if (completando || dialogoActivo || mostrarPiano) return;
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     const clickX = e.clientX - rect.left + cameraX;
-    const clickWorldX = Math.max(50, Math.min(clickX, anchoMundo - 50));
+    const clickY = e.clientY - rect.top;
 
-    // Buscar si clickó cerca de un hotspot
+    // Clamp positions
+    const worldX = Math.max(50, Math.min(clickX, anchoMundo - 50));
+    const worldY = Math.max(50, Math.min(clickY, rect.height - PERSONAJE_ALTO - 20));
+
+    // Buscar si clickó cerca de un hotspot (radio más grande para facilitar)
     const hsCercano = hotspotsActuales.find((hs) => {
+      if (hotspotsBloqueados.has(hs.id)) return false;
       const hsX = (hs.x / 100) * anchoMundo;
       const hsY = (hs.y / 100) * rect.height;
-      const dist = Math.sqrt((clickWorldX - hsX) ** 2 + ((e.clientY - rect.top) - hsY) ** 2);
-      return dist < 60 && !hotspotsBloqueados.has(hs.id);
+      const dist = Math.sqrt((clickX - hsX) ** 2 + (clickY - hsY) ** 2);
+      return dist < 80 && !hotspotsBloqueados.has(hs.id);
     });
 
     if (hsCercano) {
-      const hsX = (hsCercano.x / 100) * anchoMundo;
-      setObjetivoX(hsX);
-      setObjetivoHotspot(hsCercano);
+      // Click directo en hotspot: interactuar inmediatamente sin caminar
+      ejecutarInteraccion(hsCercano);
     } else {
-      setObjetivoX(clickWorldX);
+      // Click en el suelo: caminar hasta ahí (2D)
+      setObjetivoX(worldX);
+      setObjetivoY(worldY);
       setObjetivoHotspot(null);
     }
   };
 
-  // ── Ejecutar interacción ────────────────────────────────────────────────
+  // ── Ejecutar interacción (sin verificar distancia - click directo) ─────
   const ejecutarInteraccion = (hs: Hotspot) => {
     if (completando || hotspotsBloqueados.has(hs.id)) return;
-
-    if (!puedeInteractuar(hs) && hs.tipo !== 'navegar') {
-      mostrarMensaje('Demasiado lejos. Acercate un poco, camarada.', '👣 Acércate');
-      return;
-    }
 
     // ── CON ITEM EN MANO ────────────────────────────────────────────
     if (itemSeleccionado) {
@@ -488,7 +492,7 @@ export default function AdventureEngine({ misionId, onCompletar }: Props) {
     ? '⏳ Avanzando al próximo año histórico...'
     : caminando
     ? 'Caminando...'
-    : 'Click en el suelo para caminar. Acercate a los objetos para interactuar.';
+    : 'Click en el suelo para caminar. Click directo en los iconos para interactuar.';
 
   return (
     <div
@@ -514,12 +518,9 @@ export default function AdventureEngine({ misionId, onCompletar }: Props) {
         />
         <div className="absolute inset-0 bg-black/20" />
 
-        {/* Hotspots visuales */}
+        {/* Hotspots visuales - SIEMPRE visibles y clickeables */}
         {hotspotsActuales.map((hs) => {
           if (hotspotsBloqueados.has(hs.id)) return null;
-          const cerca = puedeInteractuar(hs);
-          const hsX = (hs.x / 100) * anchoMundo;
-          const hsY = (hs.y / 100) * 100;
 
           return (
             <div
@@ -531,39 +532,30 @@ export default function AdventureEngine({ misionId, onCompletar }: Props) {
                 transform: 'translate(-50%, -50%)',
               }}
             >
-              {/* Indicador de interacción */}
-              <div
-                className={[
-                  'rounded-full flex items-center justify-center transition-all duration-300',
-                  cerca
-                    ? 'w-16 h-16 bg-yellow-400/60 border-2 border-yellow-300 animate-pulse shadow-[0_0_15px_4px_rgba(250,204,21,0.6)]'
-                    : 'w-12 h-12 bg-white/5 border border-white/20',
-                ].join(' ')}
-              >
+              {/* Indicador de interacción - siempre visible */}
+              <div className="rounded-full flex items-center justify-center transition-all duration-300 w-14 h-14 bg-yellow-400/40 border-2 border-yellow-300/60 animate-pulse shadow-[0_0_15px_4px_rgba(250,204,21,0.4)]">
                 <span className="text-lg">
                   {hs.tipo === 'recoger' ? '📦' : hs.tipo === 'hablar' ? '💬' : hs.tipo === 'navegar' ? '🚪' : hs.tipo === 'examinar' ? '👁' : '🔧'}
                 </span>
               </div>
-              {/* Label flotante */}
-              {cerca && (
-                <motion.div
-                  initial={{ opacity: 0, y: 5 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="absolute -top-10 left-1/2 -translate-x-1/2 bg-black/90 text-yellow-400 text-[10px] font-black uppercase tracking-wider px-3 py-1 whitespace-nowrap border border-yellow-400/60"
-                >
-                  {hs.label}
-                </motion.div>
-              )}
+              {/* Label flotante - siempre visible */}
+              <motion.div
+                initial={{ opacity: 0, y: 5 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="absolute -top-8 left-1/2 -translate-x-1/2 bg-black/90 text-yellow-400 text-[10px] font-black uppercase tracking-wider px-3 py-1 whitespace-nowrap border border-yellow-400/60"
+              >
+                {hs.label}
+              </motion.div>
             </div>
           );
         })}
 
-        {/* ── PERSONAJE ── */}
+        {/* ── PERSONAJE (2D) ── */}
         <div
           className="absolute z-20"
           style={{
             left: personajeX,
-            bottom: ALTURA_SUELO - PERSONAJE_ALTO + 20,
+            top: personajeY,
             width: PERSONAJE_ANCHO,
             height: PERSONAJE_ALTO,
             transform: `scaleX(${direccion === 'izq' ? -1 : 1})`,
@@ -598,148 +590,98 @@ export default function AdventureEngine({ misionId, onCompletar }: Props) {
                 <line x1="28" y1="42" x2="30" y2="65" stroke="#1a1a1a" strokeWidth="4" strokeLinecap="round" />
               </>
             )}
-            {/* Botas */}
-            <rect x="12" y="62" width="10" height="8" rx="2" fill="#3E2723" />
-            <rect x="26" y="62" width="10" height="8" rx="2" fill="#3E2723" />
-            {/* Brazos */}
-            <line x1="14" y1="30" x2="6" y2="44" stroke="#FDBCB4" strokeWidth="3" strokeLinecap="round" />
-            <line x1="34" y1="30" x2="42" y2="44" stroke="#FDBCB4" strokeWidth="3" strokeLinecap="round" />
           </svg>
         </div>
       </div>
 
-      {/* ── HUD SUPERIOR ── */}
-      <div className="absolute top-0 left-0 right-0 z-40 flex justify-between items-start px-4 pt-4 pointer-events-none">
-        <div className="pointer-events-auto">
-          <div className="bg-black/80 border border-yellow-400/40 px-3 py-1.5">
-            <p className="text-yellow-400 text-[10px] font-black uppercase tracking-widest leading-tight">
-              {gameState.genero} {gameState.nombre}
-            </p>
-            <p className="text-white/60 text-[9px] uppercase tracking-widest">
-              Año {gameState.año} · {gameState.ubicacion}
-            </p>
+      {/* ── BARRA INFERIOR DE MENSAJES ── */}
+      <div className="absolute bottom-0 left-0 right-0 z-30 bg-gradient-to-t from-black via-black/95 to-transparent pt-16 pb-4 px-6">
+        <div className="max-w-3xl mx-auto">
+          {/* Año y ubicación */}
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-yellow-400 text-[10px] font-black uppercase tracking-widest">
+              {mision.año} · {escenaActiva?.id ? escenaActiva.id.replace('_', ' ').toUpperCase() : mision.ubicacion}
+            </span>
+            {subEscenaActual && (
+              <button
+                onClick={(e) => { e.stopPropagation(); volverAtras(); }}
+                className="text-yellow-400/60 text-[10px] font-black uppercase tracking-widest hover:text-yellow-400 transition-colors"
+              >
+                [ ← Volver ]
+              </button>
+            )}
           </div>
-        </div>
 
-        <div className="pointer-events-auto text-right">
-          <div className="bg-black/80 border border-yellow-400/40 px-3 py-1.5">
-            <p className="text-yellow-400 text-[9px] font-black uppercase tracking-widest mb-1">
-              Fervor Revolucionario
-            </p>
-            <div className="w-36 h-2.5 bg-black border border-yellow-400/40 overflow-hidden">
-              <motion.div
-                className="h-full bg-soviet-red"
-                animate={{ width: `${gameState.fervor}%` }}
-                transition={{ duration: 0.6, ease: 'easeOut' }}
-              />
-            </div>
-            <p className="text-white/40 text-[8px] uppercase tracking-widest mt-0.5 text-right">
-              {gameState.fervor}%
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Botón Volver */}
-      {escenaActiva?.escenaAnterior && (
-        <div className="absolute top-20 left-4 z-30">
-          <button
-            onClick={(e) => { e.stopPropagation(); volverAtras(); }}
-            className="bg-black/80 text-white border border-white/30 px-3 py-2 text-[10px] font-black uppercase tracking-widest hover:bg-white/20 transition-all pointer-events-auto"
-          >
-            ← Volver
-          </button>
-        </div>
-      )}
-
-      {/* Título de escena */}
-      <div className="absolute top-20 left-1/2 -translate-x-1/2 z-30 pointer-events-none text-center">
-        <p className="text-[11px] font-black uppercase tracking-[0.2em] text-yellow-400 bg-black/60 px-4 py-1 border border-yellow-400/30">
-          {mision.año} · {mision.titulo}
-          {escenaActiva && escenaActiva.id !== mision.escenaInicial && (
-            <span className="text-white/50"> › {escenaActiva.id.replace(/_/g, ' ')}</span>
-          )}
-        </p>
-      </div>
-
-      {/* ── INVENTARIO ── */}
-      <div className="absolute top-20 right-4 z-30 flex flex-col items-end gap-2 pointer-events-auto">
-        <span className="text-[9px] font-black uppercase tracking-widest text-yellow-400/80 bg-black/60 px-2 py-0.5">
-          Inventario
-        </span>
-        <div className="flex gap-2 flex-wrap justify-end max-w-xs">
-          {gameState.inventario.map((item) => (
-            <button
-              key={item.id}
-              onClick={(e) => {
-                e.stopPropagation();
-                setItemSeleccionado((prev) => (prev?.id === item.id ? null : item));
-              }}
-              title={`${item.nombre}: ${item.desc}`}
-              className={[
-                'w-14 h-14 flex items-center justify-center text-2xl border-2 transition-all duration-150 shadow-lg relative group',
-                itemSeleccionado?.id === item.id
-                  ? 'bg-red-700 border-white scale-110 shadow-[0_0_12px_2px_rgba(255,255,255,0.5)]'
-                  : 'bg-black/80 border-yellow-400/60 hover:border-yellow-300 hover:scale-105',
-              ].join(' ')}
-            >
-              {item.icono}
-              <span className="opacity-0 group-hover:opacity-100 pointer-events-none absolute -bottom-8 left-1/2 -translate-x-1/2 bg-black/95 text-white text-[9px] font-black uppercase px-2 py-0.5 whitespace-nowrap border border-yellow-400/40 transition-opacity">
-                {item.nombre}
-              </span>
-            </button>
-          ))}
-          {gameState.inventario.length === 0 && (
-            <span className="text-[10px] text-white/40 italic py-2 px-1">vacío</span>
-          )}
-        </div>
-      </div>
-
-      {/* ── CAJA DE MENSAJES ── */}
-      <div className="absolute bottom-0 left-0 right-0 z-30 bg-black/95 border-t-4 border-yellow-400/80 min-h-[110px] flex flex-col justify-center px-8 py-4">
-        <AnimatePresence mode="wait">
-          {subMensaje && (
-            <motion.p
-              key={subMensaje + mensaje}
-              initial={{ opacity: 0, y: -4 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="text-yellow-400 text-[10px] font-black uppercase tracking-[0.25em] mb-1"
-            >
-              {subMensaje}
-            </motion.p>
-          )}
-        </AnimatePresence>
-
-        <p className="text-[10px] font-black uppercase tracking-widest text-red-400/70 mb-1">
-          {textoAccion}
-        </p>
-
-        <div className="flex items-center justify-between mb-2">
+          {/* Sub-mensaje */}
           <AnimatePresence mode="wait">
-            <TypewriterMessage key={mensaje} text={mensaje} />
+            {subMensaje && (
+              <motion.p
+                key={subMensaje + mensaje}
+                initial={{ opacity: 0, y: -4 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="text-yellow-400 text-[10px] font-black uppercase tracking-[0.25em] mb-1"
+              >
+                {subMensaje}
+              </motion.p>
+            )}
           </AnimatePresence>
-          <button
-            onClick={(e) => { e.stopPropagation(); setMostrarPista((p) => !p); }}
-            className="ml-4 text-[10px] font-black uppercase tracking-widest text-yellow-400/60 hover:text-yellow-400 transition-colors shrink-0"
-          >
-            {mostrarPista ? '[ Ocultar Pista ]' : '[ ¿Pista? ]'}
-          </button>
-        </div>
 
-        <AnimatePresence>
-          {mostrarPista && PISTAS[misionId] && (
-            <motion.p
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="text-yellow-300/80 text-xs italic border-l-2 border-yellow-400/40 pl-3 mt-1"
+          {/* Texto de acción */}
+          <p className="text-[10px] font-black uppercase tracking-widest text-red-400/70 mb-1">
+            {textoAccion}
+          </p>
+
+          {/* Mensaje principal + botón de pista */}
+          <div className="flex items-center justify-between mb-2">
+            <AnimatePresence mode="wait">
+              <TypewriterMessage key={mensaje} text={mensaje} />
+            </AnimatePresence>
+            <button
+              onClick={(e) => { e.stopPropagation(); setMostrarPista((p) => !p); }}
+              className="ml-4 text-[10px] font-black uppercase tracking-widest text-yellow-400/60 hover:text-yellow-400 transition-colors shrink-0"
             >
-              💡 {PISTAS[misionId]}
-            </motion.p>
-          )}
-        </AnimatePresence>
+              {mostrarPista ? '[ Ocultar Pista ]' : '[ ¿Pista? ]'}
+            </button>
+          </div>
+
+          {/* Pista */}
+          <AnimatePresence>
+            {mostrarPista && PISTAS[misionId] && (
+              <motion.p
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                className="text-yellow-300/80 text-xs italic border-l-2 border-yellow-400/40 pl-3 mt-1"
+              >
+                💡 {PISTAS[misionId]}
+              </motion.p>
+            )}
+          </AnimatePresence>
+        </div>
+      </div>
+
+      {/* ── INVENTARIO (barra lateral) ── */}
+      <div className="absolute right-4 top-1/2 -translate-y-1/2 z-30 flex flex-col gap-2">
+        {gameState.inventario.map((item) => (
+          <button
+            key={item.id}
+            onClick={(e) => {
+              e.stopPropagation();
+              setItemSeleccionado(itemSeleccionado?.id === item.id ? null : item);
+            }}
+            className={[
+              'w-12 h-12 rounded-lg border-2 flex items-center justify-center text-xl transition-all',
+              itemSeleccionado?.id === item.id
+                ? 'bg-yellow-400/30 border-yellow-400 shadow-[0_0_10px_rgba(250,204,21,0.5)]'
+                : 'bg-black/60 border-white/30 hover:border-yellow-400/60',
+            ].join(' ')}
+            title={item.nombre}
+          >
+            {item.icono}
+          </button>
+        ))}
       </div>
 
       {/* ── DIÁLOGO CON OPCIONES ── */}
