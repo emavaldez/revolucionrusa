@@ -521,6 +521,7 @@ export default function AdventureEngine({ misionId, onCompletar }: Props) {
         {/* Hotspots visuales - SIEMPRE visibles y clickeables */}
         {hotspotsActuales.map((hs) => {
           if (hotspotsBloqueados.has(hs.id)) return null;
+          const rectHeight = containerRef.current?.clientHeight ?? 600;
 
           return (
             <div
@@ -530,6 +531,10 @@ export default function AdventureEngine({ misionId, onCompletar }: Props) {
                 left: `${hs.x}%`,
                 top: `${hs.y}%`,
                 transform: 'translate(-50%, -50%)',
+              }}
+              onClick={(e) => {
+                e.stopPropagation();
+                ejecutarInteraccion(hs);
               }}
             >
               {/* Indicador de interacción - siempre visible */}
