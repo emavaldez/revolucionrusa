@@ -25,9 +25,9 @@ export class SnowParticles {
     geo.setAttribute('position', new THREE.BufferAttribute(this.positions, 3));
     this.material = new THREE.PointsMaterial({
       color: 0xffffff,
-      size: 0.15,
+      size: 0.25,
       transparent: true,
-      opacity: 0.8,
+      opacity: 0.9,
       blending: THREE.AdditiveBlending,
       depthWrite: false,
     });
