@@ -317,6 +317,8 @@ export default function ThreeEngine({ misionId, onCompletar }: Props) {
         y: 50 + hs.z * 10,
         tipo: hs.tipo,
         id: hs.id,
+        itemId: hs.item?.id,
+        label: hs.label,
       }));
     scene.setHotspots(hs3d);
 
@@ -344,6 +346,8 @@ export default function ThreeEngine({ misionId, onCompletar }: Props) {
         y: 50 + hs.z * 10,
         tipo: hs.tipo,
         id: hs.id,
+        itemId: hs.item?.id,
+        label: hs.label,
       }));
     sceneRef.current.setHotspots(hs3d);
   }, [hotspotsBloqueados, misionId, itemSeleccionado]);

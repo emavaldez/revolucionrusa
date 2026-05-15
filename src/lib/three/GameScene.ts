@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { SnowParticles } from './SnowParticles';
 import { CharacterModel } from './CharacterModel';
 import { CrowdSystem } from './CrowdSystem';
+import { crearProp, hotspotToProp } from './PropFactory';
 
 export interface GameSceneConfig {
   anchoMundo: number;
@@ -221,36 +222,65 @@ export class GameScene {
     );
   }
 
-  setHotspots(hotspots: { x: number; y: number; tipo: string; id: string }[]) {
+  setHotspots(hotspots: { x: number; y: number; tipo: string; id: string; itemId?: string; label?: string }[]) {
     this.hotspotMeshes.forEach((m) => { if (m.parent) m.parent.remove(m); });
     this.hotspotMeshes = [];
 
-    const mat = new THREE.MeshStandardMaterial({
-      color: 0xff6644,
-      emissive: 0xff4400,
-      emissiveIntensity: 0.4,
-      transparent: true,
-      opacity: 0.35,
-    });
-
     hotspots.forEach((hs) => {
-      const mesh = new THREE.Mesh(new THREE.SphereGeometry(0.5, 8, 8), mat);
-      mesh.position.set(
-        hs.x - this.config.anchoMundo / 2,
-        1.2,
-        -(hs.y / 100) * 10 + 2
-      );
-      mesh.userData = { hotspotId: hs.id, tipo: hs.tipo };
-      this.scene.add(mesh);
-      this.hotspotMeshes.push(mesh);
+      // Determinar tipo de prop 3D según el hotspot
+      const propTipo = hotspotToProp(hs.tipo, hs.itemId, hs.label);
+      const propGroup = crearProp(propTipo, hs.label);
+
+      // Posicionar en el mundo
+      const worldX = hs.x - this.config.anchoMundo / 2;
+      const worldZ = -(hs.y / 100) * 10 + 2;
+      propGroup.position.set(worldX, 0, worldZ);
+
+      // Escalar NPCs un poco para que se vean bien
+      if (hs.tipo === 'hablar' || hs.tipo === 'debatir') {
+        propGroup.scale.setScalar(0.8);
+      }
+
+      // Añadir aro indicador tenue debajo del prop (mejor que esfera roja)
+      const ringGeo = new THREE.RingGeometry(0.25, 0.35, 16);
+      const ringMat = new THREE.MeshBasicMaterial({
+        color: 0xff6644,
+        transparent: true,
+        opacity: 0.2,
+        side: THREE.DoubleSide,
+      });
+      const ring = new THREE.Mesh(ringGeo, ringMat);
+      ring.rotation.x = -Math.PI / 2;
+      ring.position.y = 0.02;
+      propGroup.add(ring);
+
+      // Pulsar el anillo (guardamos referencia)
+      (propGroup as any).__ring = ring;
+      (propGroup as any).__ringTimer = Math.random() * 100;
+
+      propGroup.userData = { hotspotId: hs.id, tipo: hs.tipo };
+      this.scene.add(propGroup);
+      this.hotspotMeshes.push(propGroup as any);
     });
   }
 
   getClickedHotspot(ray: THREE.Raycaster): { id: string; tipo: string } | null {
-    const intersects = ray.intersectObjects(this.hotspotMeshes);
+    const meshes: THREE.Object3D[] = [];
+    this.hotspotMeshes.forEach((group) => {
+      group.traverse((child) => {
+        if (child.type === 'Mesh') meshes.push(child);
+      });
+    });
+    const intersects = ray.intersectObjects(meshes);
     if (intersects.length > 0) {
-      const obj = intersects[0].object;
-      return { id: obj.userData.hotspotId as string, tipo: obj.userData.tipo as string };
+      // Walk up to find the group's userData
+      let obj: THREE.Object3D | null = intersects[0].object;
+      while (obj) {
+        if (obj.userData.hotspotId) {
+          return { id: obj.userData.hotspotId as string, tipo: obj.userData.tipo as string };
+        }
+        obj = obj.parent;
+      }
     }
     return null;
   }
@@ -284,12 +314,15 @@ export class GameScene {
     this.camera.position.x += (target - camX) * 0.05;
     this.camera.lookAt(this.cameraTargetX * 0.8 + 2, 0.5, 0);
 
-    // Hotspot glow pulsante
+    // Animate hotspot glow
     this.hotspotMeshes.forEach((m, i) => {
-      const sc = 1 + Math.sin(now * 0.002 + i) * 0.3;
-      m.scale.setScalar(sc);
-      (m.material as THREE.MeshStandardMaterial).emissiveIntensity =
-        0.25 + Math.sin(now * 0.003 + i) * 0.25;
+      const ring = (m as any).__ring;
+      if (ring) {
+        const t = (now + i * 300) * 0.002;
+        const scale = 1 + Math.sin(t) * 0.2;
+        ring.scale.setScalar(scale);
+        ring.material.opacity = 0.15 + Math.sin(t) * 0.15;
+      }
     });
 
     this.character.update(delta);
