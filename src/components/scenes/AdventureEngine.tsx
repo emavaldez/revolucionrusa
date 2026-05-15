@@ -168,9 +168,23 @@ export default function AdventureEngine({ misionId, onCompletar }: Props) {
   );
 
   const completarMision = useCallback(() => {
+    // Check if all mission-ending hotspots are completed
+    const hotspotsDeMision = getHotspotsActivos(mision, subEscenaActual, flags);
+    const hotspotsQueAcabanMision = hotspotsDeMision.filter(hs => hs.completaMision);
+    
+    // Only complete mission if ALL ending hotspots are already blocked (completed)
+    const todosCompletados = hotspotsQueAcabanMision.every(hs => 
+      hotspotsBloqueados.has(hs.id) || hs.puzle === 'piano'
+    );
+    
+    if (!todosCompletados && hotspotsQueAcabanMision.length > 0) {
+      mostrarMensaje('No podés irte aún. Hay trabajo que hacer, camarada.', '❌ Aún falta trabajo');
+      return;
+    }
+    
     setCompletando(true);
     setTimeout(() => onCompletar(), 4500);
-  }, [onCompletar]);
+  }, [mision, subEscenaActual, flags, hotspotsBloqueados, onCompletar, mostrarMensaje]);
 
   const navegarA = useCallback(
     (destino: string, spawnX?: number) => {
@@ -257,8 +271,8 @@ export default function AdventureEngine({ misionId, onCompletar }: Props) {
     // Buscar si clickó cerca de un hotspot (radio más grande para facilitar)
     const hsCercano = hotspotsActuales.find((hs) => {
       if (hotspotsBloqueados.has(hs.id)) return false;
-      const hsX = (hs.x / 100) * anchoMundo;
-      const hsY = (hs.y / 100) * rect.height;
+      const hsX = hs.x;  // x/y are already pixel coordinates
+      const hsY = hs.y;
       const dist = Math.sqrt((clickX - hsX) ** 2 + (clickY - hsY) ** 2);
       return dist < 80 && !hotspotsBloqueados.has(hs.id);
     });
@@ -518,40 +532,37 @@ export default function AdventureEngine({ misionId, onCompletar }: Props) {
         />
         <div className="absolute inset-0 bg-black/20" />
 
-        {/* Hotspots visuales - SIEMPRE visibles y clickeables */}
+        {/* Hotspots con efecto al pasar el mouse */}
         {hotspotsActuales.map((hs) => {
           if (hotspotsBloqueados.has(hs.id)) return null;
-          const rectHeight = containerRef.current?.clientHeight ?? 600;
+          
+          const hsX = `${hs.x}px`;
+          const hsY = `${hs.y}px`;
 
           return (
             <div
               key={hs.id}
               className="absolute z-10"
               style={{
-                left: `${hs.x}%`,
-                top: `${hs.y}%`,
+                left: hsX,
+                top: hsY,
+                width: 80,
+                height: 80,
                 transform: 'translate(-50%, -50%)',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.boxShadow = '0 0 25px 8px rgba(255, 215, 0, 0.7)';
+                e.currentTarget.style.cursor = 'pointer';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.boxShadow = '';
+                e.currentTarget.style.cursor = 'default';
               }}
               onClick={(e) => {
                 e.stopPropagation();
                 ejecutarInteraccion(hs);
               }}
-            >
-              {/* Indicador de interacción - siempre visible */}
-              <div className="rounded-full flex items-center justify-center transition-all duration-300 w-14 h-14 bg-yellow-400/40 border-2 border-yellow-300/60 animate-pulse shadow-[0_0_15px_4px_rgba(250,204,21,0.4)]">
-                <span className="text-lg">
-                  {hs.tipo === 'recoger' ? '📦' : hs.tipo === 'hablar' ? '💬' : hs.tipo === 'navegar' ? '🚪' : hs.tipo === 'examinar' ? '👁' : '🔧'}
-                </span>
-              </div>
-              {/* Label flotante - siempre visible */}
-              <motion.div
-                initial={{ opacity: 0, y: 5 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="absolute -top-8 left-1/2 -translate-x-1/2 bg-black/90 text-yellow-400 text-[10px] font-black uppercase tracking-wider px-3 py-1 whitespace-nowrap border border-yellow-400/60"
-              >
-                {hs.label}
-              </motion.div>
-            </div>
+            />
           );
         })}
 

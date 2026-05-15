@@ -69,6 +69,12 @@ body {
   100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
 }
 
+/* Parpadeo suave para hotpots 3D interactivos */
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.1); }
+}
+
 /* Scrollbar personalizada */
 ::-webkit-scrollbar {
   width: 6px;
@@ -79,4 +85,36 @@ body {
 ::-webkit-scrollbar-thumb {
   background: #be1111;
   border-radius: 3px;
+}
+
+/* Canvas Three.js ocupa todo */
+canvas {
+  display: block;
+}
+
+/* Animación de entrada para textos */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.3s ease-out;
+}
+
+/* Efecto de daño/impacto */
+@keyframes screenShake {
+  0%, 100% { transform: translate(0); }
+  25% { transform: translate(-2px, 1px); }
+  50% { transform: translate(2px, -1px); }
+  75% { transform: translate(-1px, 2px); }
+}
+
+.screen-shake {
+  animation: screenShake 0.1s ease-in-out 3;
+}
+
+/* Margen bottom para el HUD de mensajes */
+.hud-safe-bottom {
+  padding-bottom: max(20px, env(safe-area-inset-bottom));
 }

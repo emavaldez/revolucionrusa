@@ -185,9 +185,19 @@ export const MISIONES: Record<number, Mision> = {
         x: 750, y: 480,
         tipo: 'hablar',
         label: 'Obrero Cansado',
+        usarCon: [
+          {
+            requiere: 'pan_duro',
+            mensajeExito:
+              'Le diste el pan. El obrero lo miró con ojos de revolucionario hambriento y suspiró: "Gracias, compañera. El pan es el primer derecho del trabajador."',
+            consumir: true,
+            setFlag: 'pan_dado_obrero',
+          },
+        ],
         dialogos: [
           {
             texto: 'Compañera, si me vas a hablar de plusvalía, primero consígueme fuego.',
+            requiereItem: 'pan_duro',
           },
           {
             requiereFlag: 'puerta_abierta',
