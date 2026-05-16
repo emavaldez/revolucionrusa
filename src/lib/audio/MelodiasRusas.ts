@@ -104,7 +104,7 @@ export function tocarMelodiaRusa(
         osc.frequency.value = nota.freq;
         filter.type = 'lowpass';
         filter.frequency.value = 1500;
-        gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.03, audioCtx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + nota.duracion * 0.8);
         osc.connect(filter);
         filter.connect(gain);
@@ -117,7 +117,7 @@ export function tocarMelodiaRusa(
         const gain2 = audioCtx.createGain();
         osc2.type = 'sine';
         osc2.frequency.value = nota.freq * 1.5;
-        gain2.gain.setValueAtTime(0.02, audioCtx.currentTime);
+        gain2.gain.setValueAtTime(0.01, audioCtx.currentTime);
         gain2.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + nota.duracion * 0.6);
         osc2.connect(gain2);
         gain2.connect(audioCtx.destination);

@@ -46,7 +46,7 @@ export class MusicEngine {
 
     const ctx = this.getCtx();
     this.masterGain = ctx.createGain();
-    this.masterGain.gain.value = 0.15;
+    this.masterGain.gain.value = 0.08;
     this.masterGain.connect(ctx.destination);
 
     switch (mood) {
@@ -282,7 +282,7 @@ export class MusicEngine {
 export function moodForYear(misionId: number): MoodType {
   switch (misionId) {
     case 1905: return 'invierno';
-    case 1905.1: return 'protesta';
+    case 1905.1: return 'invierno';
     case 1912: return 'sigilo';
     case 1917: return 'tren';
     case 1917.1: return 'sigilo';

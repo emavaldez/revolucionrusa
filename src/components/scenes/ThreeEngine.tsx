@@ -58,7 +58,7 @@ interface HotspotData {
   setFlag?: string;
   completaMision?: boolean;
   consumir?: boolean;
-  usarCon?: { requiere: string; mensajeExito?: string; setFlag?: string; consumir?: boolean; dandoItem?: Item }[];
+  usarCon?: { requiere: string; mensajeExito?: string; setFlag?: string; consumir?: boolean; dandoItem?: Item; completaMision?: boolean }[];
   puzle?: 'piano';
   dialogo?: string;
   opciones?: { texto: string; setFlag: string; respuestaNPC: string }[];
@@ -89,7 +89,7 @@ const MISIONES_DATA: Record<number, MisionData> = {
       { id: 'volante_suelo', x: 35, z: 0, label: 'Volante Pisoteado', tipo: 'recoger', item: { id: 'volante', nombre: 'Volante del POSDR', desc: 'Manchado de barro y teoría marxista.', icono: '📄' }, mensaje: 'Un volante en el piso. Alguien lo pisó. Típico.' },
       { id: 'obrero_fundicion', x: 55, z: -1, label: 'Obrero de Fundición', tipo: 'hablar', dialogo: 'Compañera, ¿traés algo para comer? Huelga es linda en los panfletos, fea en el estómago.' },
       { id: 'caldera', x: 70, z: 2, label: 'Caldera', tipo: 'examinar', mensaje: 'Una caldera gigante. Hierve con el resentimiento de mil obreros.', codigoAbierto: 'kollontai' },
-      { id: 'puerta_fabrica', x: 85, z: 0, label: 'Puerta de la Fábrica', tipo: 'usar', requiereFlag: 'pan_dado', mensajeExito: '¡La puerta se abre! Los obreros te miran. La huelga está viva.', setFlag: 'puerta_abierta', completaMision: true, mensajeFallo: 'Está trabada. Necesitás el permiso del capataz para abrirla.' },
+{ id: 'puerta_fabrica', x: 85, z: 0, label: 'Puerta de la F\u00e1brica', tipo: 'usar', usarCon: [{ requiere: 'permiso', mensajeExito: '\u00a1La puerta se abre! Los obreros te miran. La huelga est\u00e1 viva.', setFlag: 'puerta_abierta', completaMision: true }], mensajeFallo: 'Necesit\u00e1s seleccionar el permiso del capataz primero.' },
     ],
   },
 
@@ -446,7 +446,7 @@ export default function ThreeEngine({ misionId, onCompletar }: Props) {
             setGameState((s) => ({ ...s, inventario: s.inventario.filter((i) => i.id !== itemSeleccionado.id) }));
           }
           setItemSeleccionado(null);
-          if (hs.completaMision) completarMision();
+          if (hs.completaMision || match.completaMision) completarMision();
           return;
         }
       }
@@ -505,7 +505,7 @@ export default function ThreeEngine({ misionId, onCompletar }: Props) {
               setGameState((s) => ({ ...s, inventario: s.inventario.filter((i) => i.id !== (itemSeleccionado as Item).id) }));
             }
             setItemSeleccionado(null);
-            if (hs.completaMision) completarMision();
+            if (hs.completaMision || match.completaMision) completarMision();
             return;
           }
         }
@@ -517,7 +517,13 @@ export default function ThreeEngine({ misionId, onCompletar }: Props) {
           return;
         }
 
-        // Sin item seleccionado: comprobar flags y ejecutar
+        // Si el hotspot tiene usarCon, solo se activa usando un item (no click directo)
+        if (hs.usarCon && hs.usarCon.length > 0) {
+          setMensaje(hs.mensajeFallo ?? 'Necesit\u00e1s usar un objeto con esto.');
+          return;
+        }
+
+        // Sin item y sin usarCon: ejecutar acci\u00f3n directa (flag-based)
         setMensaje(hs.mensajeExito ?? '');
         if (hs.setFlag) setGameState((s) => ({ ...s, flags: { ...s.flags, [hs.setFlag!]: true } }));
         if (hs.completaMision) completarMision();
@@ -552,7 +558,15 @@ export default function ThreeEngine({ misionId, onCompletar }: Props) {
       case 'decision': {
         const decisions = mision.decisiones;
         if (decisions && decisions.length > 0) {
-          setMostrarDecision(decisions[0]);
+          // Verificar si ya se tomó una decisión en esta misión
+          const yaDecidio = decisions[0].opciones.some((o) =>
+            o.setFlag && gameState.flags[o.setFlag]
+          );
+          if (yaDecidio) {
+            setMensaje('Ya tomaste una decisi\u00f3n en esta situaci\u00f3n. La historia sigue su curso.');
+          } else {
+            setMostrarDecision(decisions[0]);
+          }
         } else {
           setMensaje(hs.mensaje ?? 'No hay decisiones que tomar ahora.');
         }
@@ -825,6 +839,10 @@ export default function ThreeEngine({ misionId, onCompletar }: Props) {
                       }));
                       setMensaje(op.descripcionResultado);
                       setMostrarDecision(null);
+                      // Si la misión solo tenía la decisión como gameplay, avanzar
+                      if (mision.decisiones && mision.hotspots.filter(h => h.tipo !== 'examinar' && h.tipo !== 'decision' && h.tipo !== 'debatir').length === 0) {
+                        setTimeout(() => completarMision(), 2500);
+                      }
                     }}
                     className="w-full text-left p-3 border border-white/20 hover:bg-red-900/30 hover:border-red-500 transition-all"
                   >

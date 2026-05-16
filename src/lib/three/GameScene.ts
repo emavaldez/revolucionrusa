@@ -135,7 +135,7 @@ export class GameScene {
 
     // Character — empieza a la izquierda del mundo
     this.character = new CharacterModel();
-    this.character.setPosition(-config.anchoMundo / 2 + 4, 0);
+    this.character.setPosition(0, 0);
     this.scene.add(this.character.group);
 
     // Snow
@@ -438,12 +438,15 @@ export class GameScene {
     const delta = Math.min((now - this.lastTime) / 1000, 0.05);
     this.lastTime = now;
 
-    // Cámara sigue al personaje con interpolación suave (lerp más lento)
+    // Cámara sigue al personaje con interpolación extra suave
     const target = this.cameraTargetX;
     const camX = this.camera.position.x;
-    // lerp con factor bajo para movimiento muy suave
-    this.camera.position.x += (target - camX) * 0.02;
-    this.camera.lookAt(this.cameraTargetX * 0.6 + 2, 0.5, 0);
+    // lerp muy bajo + distancia a target como factor = aceleración/deceleración natural
+    const dist = target - camX;
+    const speed = Math.min(Math.abs(dist) * 0.015, 0.8);
+    this.camera.position.x += dist > 0 ? speed : -speed;
+    // Cámara mira suavemente al frente, no salta
+    this.camera.lookAt((camX + target) / 2 * 0.6 + 2, 0.5, 0);
 
     // Animate hotspot glow
     this.hotspotMeshes.forEach((m, i) => {
