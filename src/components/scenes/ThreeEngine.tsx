@@ -389,7 +389,7 @@ export default function ThreeEngine({ misionId, onCompletar }: Props) {
         // Walk to position with smooth movement
         const groundHit = sceneRef.current.getGroundIntersection(mouseX, mouseY);
         if (groundHit) {
-          sceneRef.current.character.moveTo(groundHit.x, groundHit.z, 3.5);
+          sceneRef.current.character.moveTo(groundHit.x, groundHit.z, 3.5, mision.anchoMundo / 2);
           sceneRef.current.setCameraTarget(groundHit.x);
           sceneRef.current.character.setAnimation('walk');
         }
@@ -439,10 +439,8 @@ export default function ThreeEngine({ misionId, onCompletar }: Props) {
           setMensaje(match.mensajeExito ?? '¡Funciona!');
           if (match.setFlag) setGameState((s) => ({ ...s, flags: { ...s.flags, [match.setFlag!]: true } }));
           if (match.dandoItem) {
-            setGameState((s) => ({
-              ...s,
-              inventario: [...s.inventario, match.dandoItem!],
-            }));
+            // Usar animación de pickup también para items dados por NPCs
+            setPendingItem(match.dandoItem);
           }
           if (match.consumir !== false) {
             setGameState((s) => ({ ...s, inventario: s.inventario.filter((i) => i.id !== itemSeleccionado.id) }));
@@ -452,6 +450,14 @@ export default function ThreeEngine({ misionId, onCompletar }: Props) {
           return;
         }
       }
+    }
+
+    // Si el jugador tiene un item seleccionado y no funcionó con nada: mensaje y deseleccionar
+    // (excepto en hotspots tipo 'usar' que pueden tener su propia lógica)
+    if (itemSeleccionado && hs.tipo !== 'usar') {
+      setMensaje(`No pod\u00e9s usar "${itemSeleccionado.nombre}" con "${hs.label}". Esto no es magia burguesa.`);
+      setItemSeleccionado(null);
+      return;
     }
 
     switch (hs.tipo) {
@@ -487,13 +493,16 @@ export default function ThreeEngine({ misionId, onCompletar }: Props) {
         }
 
         // Check usarCon
-        if (itemSeleccionado && hs.usarCon) {
-          const match = hs.usarCon.find((u) => u.requiere === itemSeleccionado.id);
+        if (hs.usarCon) {
+          const match = hs.usarCon.find((u) => u.requiere === (itemSeleccionado as Item).id);
           if (match) {
             setMensaje(match.mensajeExito ?? '¡Funciona!');
             if (match.setFlag) setGameState((s) => ({ ...s, flags: { ...s.flags, [match.setFlag!]: true } }));
+            if (match.dandoItem) {
+              setPendingItem(match.dandoItem);
+            }
             if (match.consumir !== false) {
-              setGameState((s) => ({ ...s, inventario: s.inventario.filter((i) => i.id !== itemSeleccionado.id) }));
+              setGameState((s) => ({ ...s, inventario: s.inventario.filter((i) => i.id !== (itemSeleccionado as Item).id) }));
             }
             setItemSeleccionado(null);
             if (hs.completaMision) completarMision();
@@ -501,13 +510,12 @@ export default function ThreeEngine({ misionId, onCompletar }: Props) {
           }
         }
 
-        setMensaje(hs.mensajeExito ?? 'Usaste el item correctamente.');
+        setMensaje(hs.mensajeExito ?? `No funciona con ${(itemSeleccionado as Item)?.nombre ?? 'eso'}.`);
         if (hs.setFlag) setGameState((s) => ({ ...s, flags: { ...s.flags, [hs.setFlag!]: true } }));
-        if (hs.consumir && itemSeleccionado) {
-          setGameState((s) => ({ ...s, inventario: s.inventario.filter((i) => i.id !== itemSeleccionado.id) }));
+        if (hs.consumir) {
+          setGameState((s) => ({ ...s, inventario: s.inventario.filter((i) => i.id !== (itemSeleccionado as Item).id) }));
         }
         setItemSeleccionado(null);
-        if (hs.completaMision) completarMision();
         break;
       }
 
@@ -599,6 +607,16 @@ export default function ThreeEngine({ misionId, onCompletar }: Props) {
   }, [gameState.flags['piano_tocado']]);
 
   // Confirmar pickup de item
+  // Pista dinámica según lo que ya se hizo
+  const dynamicPista = useCallback(() => {
+    if (misionId === 1905) {
+      if (gameState.flags['pan_dado'] && gameState.flags['puerta_abierta']) return mision.pista + ' \u00a1La puerta se abri\u00f3!';
+      if (gameState.flags['pan_dado']) return 'Ya ten\u00e9s el permiso del capataz. Usalo en la puerta de la f\u00e1brica (al fondo a la derecha).';
+      return mision.pista;
+    }
+    return mision.pista;
+  }, [misionId, gameState.flags, mision.pista]);
+
   const handlePickupConfirm = useCallback(() => {
     if (pendingItem) {
       setGameState((s) => ({ ...s, inventario: [...s.inventario, pendingItem] }));
@@ -723,7 +741,7 @@ export default function ThreeEngine({ misionId, onCompletar }: Props) {
               animate={{ opacity: 1, height: 'auto' }}
               className="text-yellow-300/60 text-xs italic border-l-2 border-yellow-400/40 pl-3 mt-1"
             >
-              💡 {mision.pista}
+              💡 {dynamicPista()}
             </motion.p>
           )}
         </div>
