@@ -93,8 +93,8 @@ export class CharacterModel {
     this.group.add(rightEye);
 
     // Escalamos el grupo entero para que sea del mismo tamaño que los NPCs
-    // Player body radius 0.8 * scale = NPC body radius 0.2 * 0.7 = 0.14 → scale = 0.175
-    this.group.scale.set(0.18, 0.18, 0.18);
+    // Player height 2.9 * scale = NPC height 1.15 * 0.7 = 0.805 → scale = 0.28
+    this.group.scale.set(0.28, 0.28, 0.28);
   }
 
   setPosition(x: number, z: number) {

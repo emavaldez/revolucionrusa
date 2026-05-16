@@ -152,25 +152,39 @@ export function crearProp(tipo: PropTipo, label?: string): THREE.Group {
       break;
     }
     case 'puerta': {
-      // Pared de edificio que contiene la puerta
+      // Edificio completo que contiene la puerta
       const paredMat = new THREE.MeshStandardMaterial({ color: 0x556677, roughness: 0.85 });
-      const pared = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.9, 0.12), paredMat);
-      pared.position.y = 0.45;
-      grupo.add(pared);
-      // Puerta (hueco en la pared no es fácil con geometría simple, simulamos con marco)
-      const marcoMat = new THREE.MeshStandardMaterial({ color: 0x6B4423, roughness: 0.9 });
-      const marco = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.7, 0.06), marcoMat);
-      marco.position.y = 0.4;
-      marco.position.z = 0.02;
+      const techoMat = new THREE.MeshStandardMaterial({ color: 0x554433, roughness: 0.9 });
+      // Pared frontal
+      const frente = new THREE.Mesh(new THREE.BoxGeometry(1.2, 1.0, 0.12), paredMat);
+      frente.position.y = 0.5;
+      grupo.add(frente);
+      // Pared lateral izq
+      const lateral = new THREE.Mesh(new THREE.BoxGeometry(0.12, 1.0, 0.8), paredMat);
+      lateral.position.set(-0.66, 0.5, 0.34);
+      grupo.add(lateral);
+      // Pared lateral der
+      const lateral2 = lateral.clone();
+      lateral2.position.set(0.66, 0.5, 0.34);
+      grupo.add(lateral2);
+      // Techo
+      const techo = new THREE.Mesh(new THREE.BoxGeometry(1.3, 0.08, 0.85), techoMat);
+      techo.position.set(0, 1.04, 0.35);
+      grupo.add(techo);
+      // Piso
+      const piso = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.05, 0.8), techoMat);
+      piso.position.set(0, 0.025, 0.34);
+      grupo.add(piso);
+      // Puerta (marco + tablero)
+      const marcoMat = new THREE.MeshStandardMaterial({ color: 0x5A3A1A, roughness: 0.9 });
+      const marco = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.65, 0.06), marcoMat);
+      marco.position.set(0, 0.38, 0.08);
       grupo.add(marco);
-      // Puerta (tablero más oscuro)
-      const tablero = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.6, 0.04), new THREE.MeshStandardMaterial({ color: 0x3A2510, roughness: 0.9 }));
-      tablero.position.y = 0.38;
-      tablero.position.z = 0.04;
+      const tablero = new THREE.Mesh(new THREE.BoxGeometry(0.32, 0.55, 0.04), new THREE.MeshStandardMaterial({ color: 0x3A2510, roughness: 0.95 }));
+      tablero.position.set(0, 0.36, 0.1);
       grupo.add(tablero);
-      // Manija
-      const manija = new THREE.Mesh(new THREE.SphereGeometry(0.03, 6, 6), new THREE.MeshStandardMaterial({ color: 0xDDAA44, metalness: 0.8 }));
-      manija.position.set(0.15, 0.35, 0.08);
+      const manija = new THREE.Mesh(new THREE.SphereGeometry(0.025, 6, 6), new THREE.MeshStandardMaterial({ color: 0xDDAA44, metalness: 0.8 }));
+      manija.position.set(0.12, 0.33, 0.12);
       grupo.add(manija);
       break;
     }

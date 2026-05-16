@@ -510,12 +510,17 @@ export default function ThreeEngine({ misionId, onCompletar }: Props) {
           }
         }
 
-        setMensaje(hs.mensajeExito ?? `No funciona con ${(itemSeleccionado as Item)?.nombre ?? 'eso'}.`);
-        if (hs.setFlag) setGameState((s) => ({ ...s, flags: { ...s.flags, [hs.setFlag!]: true } }));
-        if (hs.consumir) {
-          setGameState((s) => ({ ...s, inventario: s.inventario.filter((i) => i.id !== (itemSeleccionado as Item).id) }));
+        // Si no hay match en usarCon y el usuario tiene item seleccionado: mensaje de fallo
+        if (itemSeleccionado) {
+          setMensaje(hs.mensajeFallo ?? `No pod\u00e9s usar "${(itemSeleccionado as Item).nombre}" con "${hs.label}".`);
+          setItemSeleccionado(null);
+          return;
         }
-        setItemSeleccionado(null);
+
+        // Sin item seleccionado: comprobar flags y ejecutar
+        setMensaje(hs.mensajeExito ?? '');
+        if (hs.setFlag) setGameState((s) => ({ ...s, flags: { ...s.flags, [hs.setFlag!]: true } }));
+        if (hs.completaMision) completarMision();
         break;
       }
 
