@@ -158,11 +158,47 @@ export class GameScene {
   }
 
   private createBuildings(worldWidth: number) {
-    const buildingMat = new THREE.MeshStandardMaterial({ color: 0x556677, roughness: 0.85, metalness: 0.1 });
-    const darkMat = new THREE.MeshStandardMaterial({ color: 0x445566, roughness: 0.85, metalness: 0.05 });
-    const warmMat = new THREE.MeshStandardMaterial({ color: 0x887766, roughness: 0.9 });
-    const churchMat = new THREE.MeshStandardMaterial({ color: 0x779988, roughness: 0.8 });
-    const roofMat = new THREE.MeshStandardMaterial({ color: 0x556644, roughness: 0.9 });
+    // ── CARGAR TEXTURAS CC0 (brick, stone, wood) ──
+    // Fallback a colores sólidos si falla la carga
+    const texLoader = new THREE.TextureLoader();
+
+    function loadTex(path: string, repeatX: number, repeatY: number): THREE.Texture | null {
+      try {
+        const tex = texLoader.load(path);
+        tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+        tex.repeat.set(repeatX, repeatY);
+        tex.anisotropy = 4;
+        return tex;
+      } catch {
+        return null;
+      }
+    }
+
+    const brickTex = loadTex('/textures/brick.webp', 2, 3);
+    const stoneTex = loadTex('/textures/stone.webp', 2, 2);
+    const woodTex  = loadTex('/textures/wood.webp', 1, 2);
+
+    // Fallback colors por si las texturas no cargan
+    const brickColor  = 0x8c7e55; // ladrillo rojizo
+    const stoneColor  = 0x67594b; // piedra gris
+    const woodColor   = 0x5a3e2b; // madera oscura
+    const roofColor   = 0x556644;
+
+    function matWithTex(tex: THREE.Texture | null, fallbackColor: number, roughness = 0.85, metalness = 0.1) {
+      return new THREE.MeshStandardMaterial({
+        map: tex ?? undefined,
+        color: tex ? 0xffffff : fallbackColor,
+        roughness,
+        metalness,
+      });
+    }
+
+    const buildingMat = matWithTex(brickTex, brickColor, 0.85, 0.1);
+    const darkMat     = matWithTex(null,    0x445566, 0.85, 0.05);
+    const warmMat     = matWithTex(stoneTex, stoneColor, 0.9, 0.0);
+    const churchMat   = matWithTex(stoneTex, 0x779988, 0.8, 0.0);
+    const roofMat     = new THREE.MeshStandardMaterial({ color: roofColor, roughness: 0.9 });
+
     const winMat = new THREE.MeshStandardMaterial({
       color: 0xffaa44, emissive: 0xffaa44, emissiveIntensity: 0.6,
     });
@@ -248,7 +284,7 @@ export class GameScene {
     }
 
     // ── CHIMENEAS DE FÁBRICA (Putilov) ──
-    const chimneyMat = new THREE.MeshStandardMaterial({ color: 0x554433, roughness: 0.95 });
+    const chimneyMat = matWithTex(brickTex, 0x554433, 0.95, 0.0);
     for (let i = 0; i < 3; i++) {
       const chX = -worldWidth / 2 + 2 + i * 1.5;
       const chimney = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.2, 3.5, 8), chimneyMat);
@@ -296,7 +332,7 @@ export class GameScene {
 
     // ── ÁRBOLES (esferas verdes) ──
     const treeMat = new THREE.MeshStandardMaterial({ color: 0x334433, roughness: 0.95 });
-    const trunkMat = new THREE.MeshStandardMaterial({ color: 0x443322, roughness: 0.95 });
+    const trunkMat = matWithTex(woodTex, 0x443322, 0.95, 0.0);
     for (let x = -worldWidth / 2 + 6; x < worldWidth / 2 - 6; x += 4) {
       if (Math.random() > 0.6) continue;
       const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.06, 0.5, 6), trunkMat);
@@ -402,11 +438,12 @@ export class GameScene {
     const delta = Math.min((now - this.lastTime) / 1000, 0.05);
     this.lastTime = now;
 
-    // Cámara sigue al personaje
+    // Cámara sigue al personaje con interpolación suave (lerp más lento)
     const target = this.cameraTargetX;
     const camX = this.camera.position.x;
-    this.camera.position.x += (target - camX) * 0.05;
-    this.camera.lookAt(this.cameraTargetX * 0.8 + 2, 0.5, 0);
+    // lerp con factor bajo para movimiento muy suave
+    this.camera.position.x += (target - camX) * 0.02;
+    this.camera.lookAt(this.cameraTargetX * 0.6 + 2, 0.5, 0);
 
     // Animate hotspot glow
     this.hotspotMeshes.forEach((m, i) => {

@@ -89,7 +89,7 @@ const MISIONES_DATA: Record<number, MisionData> = {
       { id: 'volante_suelo', x: 35, z: 0, label: 'Volante Pisoteado', tipo: 'recoger', item: { id: 'volante', nombre: 'Volante del POSDR', desc: 'Manchado de barro y teoría marxista.', icono: '📄' }, mensaje: 'Un volante en el piso. Alguien lo pisó. Típico.' },
       { id: 'obrero_fundicion', x: 55, z: -1, label: 'Obrero de Fundición', tipo: 'hablar', dialogo: 'Compañera, ¿traés algo para comer? Huelga es linda en los panfletos, fea en el estómago.' },
       { id: 'caldera', x: 70, z: 2, label: 'Caldera', tipo: 'examinar', mensaje: 'Una caldera gigante. Hierve con el resentimiento de mil obreros.', codigoAbierto: 'kollontai' },
-      { id: 'puerta_fabrica', x: 85, z: 0, label: 'Puerta de la Fábrica', tipo: 'usar', requiere: 'pan_dado', mensajeExito: '¡La puerta se abre! Los obreros te miran. La huelga está viva.', setFlag: 'puerta_abierta', completaMision: true, mensajeFallo: 'Está trabada. Necesitás un motivo para abrirla.' },
+      { id: 'puerta_fabrica', x: 85, z: 0, label: 'Puerta de la Fábrica', tipo: 'usar', requiereFlag: 'pan_dado', mensajeExito: '¡La puerta se abre! Los obreros te miran. La huelga está viva.', setFlag: 'puerta_abierta', completaMision: true, mensajeFallo: 'Está trabada. Necesitás el permiso del capataz para abrirla.' },
     ],
   },
 
