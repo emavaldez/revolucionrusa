@@ -152,11 +152,25 @@ export function crearProp(tipo: PropTipo, label?: string): THREE.Group {
       break;
     }
     case 'puerta': {
-      const marco = new THREE.Mesh(new THREE.BoxGeometry(0.6, 1.0, 0.1), madera);
-      marco.position.y = 0.5;
+      // Pared de edificio que contiene la puerta
+      const paredMat = new THREE.MeshStandardMaterial({ color: 0x556677, roughness: 0.85 });
+      const pared = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.9, 0.12), paredMat);
+      pared.position.y = 0.45;
+      grupo.add(pared);
+      // Puerta (hueco en la pared no es fácil con geometría simple, simulamos con marco)
+      const marcoMat = new THREE.MeshStandardMaterial({ color: 0x6B4423, roughness: 0.9 });
+      const marco = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.7, 0.06), marcoMat);
+      marco.position.y = 0.4;
+      marco.position.z = 0.02;
       grupo.add(marco);
-      const manija = new THREE.Mesh(new THREE.SphereGeometry(0.04, 6, 6), new THREE.MeshStandardMaterial({ color: 0xDDAA44, metalness: 0.8 }));
-      manija.position.set(0.2, 0.4, 0.06);
+      // Puerta (tablero más oscuro)
+      const tablero = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.6, 0.04), new THREE.MeshStandardMaterial({ color: 0x3A2510, roughness: 0.9 }));
+      tablero.position.y = 0.38;
+      tablero.position.z = 0.04;
+      grupo.add(tablero);
+      // Manija
+      const manija = new THREE.Mesh(new THREE.SphereGeometry(0.03, 6, 6), new THREE.MeshStandardMaterial({ color: 0xDDAA44, metalness: 0.8 }));
+      manija.position.set(0.15, 0.35, 0.08);
       grupo.add(manija);
       break;
     }

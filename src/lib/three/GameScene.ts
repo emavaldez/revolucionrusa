@@ -331,9 +331,9 @@ export class GameScene {
       // hs.x y hs.y vienen en coordenadas mundiales desde ThreeEngine
       propGroup.position.set(hs.x, 0, hs.y);
 
-      // Escalar NPCs
+      // Escalar NPCs para que coincidan con el personaje principal
       if (hs.tipo === 'hablar' || hs.tipo === 'debatir') {
-        propGroup.scale.setScalar(0.8);
+        propGroup.scale.setScalar(0.7);
       }
 
       // Aro indicador tenue bajo cada prop

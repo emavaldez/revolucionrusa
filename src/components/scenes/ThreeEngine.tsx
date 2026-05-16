@@ -19,6 +19,7 @@ import type { RondaDuelo } from '@/lib/game/DueloDialecticoData';
 import DueloDialog from '@/components/ui/DueloDialog';
 import CodexPanel from '@/components/ui/CodexPanel';
 import PianoModal from '@/components/ui/PianoModal';
+import ItemPickupAnimation from '@/components/ui/ItemPickupAnimation';
 
 interface Props {
   misionId: number;
@@ -57,7 +58,7 @@ interface HotspotData {
   setFlag?: string;
   completaMision?: boolean;
   consumir?: boolean;
-  usarCon?: { requiere: string; mensajeExito?: string; setFlag?: string; consumir?: boolean }[];
+  usarCon?: { requiere: string; mensajeExito?: string; setFlag?: string; consumir?: boolean; dandoItem?: Item }[];
   puzle?: 'piano';
   dialogo?: string;
   opciones?: { texto: string; setFlag: string; respuestaNPC: string }[];
@@ -82,8 +83,9 @@ const MISIONES_DATA: Record<number, MisionData> = {
       { id: 'pañuelo_rojo', nombre: 'Pañuelo de la Internacional', desc: 'Rojo como la revolución.', icono: '🟥' },
     ],
     hotspots: [
-      { id: 'capataz', x: 20, z: 1, label: 'Capataz', tipo: 'hablar', dialogo: 'No hay trabajo. No hay pan. Andate antes de que llame a la policía.',
-        usarCon: [{ requiere: 'pan_duro', mensajeExito: 'Le das el pan duro. El capataz lo mira y suspira: "Tomá, llevale esto a los de la fundición. Y que se apuren."', consumir: true, setFlag: 'pan_dado' }] },
+{ id: 'capataz', x: 20, z: 1, label: 'Capataz', tipo: 'hablar', dialogo: 'No hay trabajo. No hay pan. Andate antes de que llame a la polic\u00eda.',
+        usarCon: [{ requiere: 'pan_duro', mensajeExito: 'El capataz agarra el pan y asiente. "Tom\u00e1 \u2014 te dice \u2014 el permiso de la f\u00e1brica. Mostralo en la puerta."', consumir: true, setFlag: 'pan_dado',
+        dandoItem: { id: 'permiso', nombre: 'Permiso de la F\u00e1brica', desc: 'Un papel arrugado con el sello de Putilov. El capataz lo firm\u00f3.', icono: '\ud83d\udcc4' } }] },
       { id: 'volante_suelo', x: 35, z: 0, label: 'Volante Pisoteado', tipo: 'recoger', item: { id: 'volante', nombre: 'Volante del POSDR', desc: 'Manchado de barro y teoría marxista.', icono: '📄' }, mensaje: 'Un volante en el piso. Alguien lo pisó. Típico.' },
       { id: 'obrero_fundicion', x: 55, z: -1, label: 'Obrero de Fundición', tipo: 'hablar', dialogo: 'Compañera, ¿traés algo para comer? Huelga es linda en los panfletos, fea en el estómago.' },
       { id: 'caldera', x: 70, z: 2, label: 'Caldera', tipo: 'examinar', mensaje: 'Una caldera gigante. Hierve con el resentimiento de mil obreros.', codigoAbierto: 'kollontai' },
@@ -298,6 +300,9 @@ export default function ThreeEngine({ misionId, onCompletar }: Props) {
   const [mostrarDecision, setMostrarDecision] = useState<Decision | null>(null);
   const [dialogo, setDialogo] = useState<{ npc: string; texto: string; respuestas?: { texto: string; setFlag: string }[] } | null>(null);
 
+  // Item pendiente de confirmación (animación pickup)
+  const [pendingItem, setPendingItem] = useState<Item | null>(null);
+
   // Nueva entrada de codex
   const [nuevoCodex, setNuevoCodex] = useState<string | null>(null);
 
@@ -433,6 +438,12 @@ export default function ThreeEngine({ misionId, onCompletar }: Props) {
         if (match) {
           setMensaje(match.mensajeExito ?? '¡Funciona!');
           if (match.setFlag) setGameState((s) => ({ ...s, flags: { ...s.flags, [match.setFlag!]: true } }));
+          if (match.dandoItem) {
+            setGameState((s) => ({
+              ...s,
+              inventario: [...s.inventario, match.dandoItem!],
+            }));
+          }
           if (match.consumir !== false) {
             setGameState((s) => ({ ...s, inventario: s.inventario.filter((i) => i.id !== itemSeleccionado.id) }));
           }
@@ -446,12 +457,14 @@ export default function ThreeEngine({ misionId, onCompletar }: Props) {
     switch (hs.tipo) {
       case 'recoger': {
         if (!hs.item) return;
-        setGameState((s) => {
-          if (s.inventario.some((i) => i.id === hs.item!.id)) return s;
-          return { ...s, inventario: [...s.inventario, hs.item!] };
-        });
+        const yaEnInventario = gameState.inventario.some((i) => i.id === hs.item!.id);
+        if (yaEnInventario) {
+          setMensaje('Ya te llevaste esto. Dej\u00e1 de saquear.');
+          return;
+        }
+        // Mostrar animación de pickup antes de agregar al inventario
+        setPendingItem(hs.item);
         setHotspotsBloqueados((p) => new Set([...p, hs.id]));
-        setMensaje(hs.mensaje ?? `Recogiste: ${hs.item?.nombre}.`);
         setItemSeleccionado(null);
         break;
       }
@@ -582,7 +595,17 @@ export default function ThreeEngine({ misionId, onCompletar }: Props) {
         sceneRef.current?.character.stopDance();
       }, 8000);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameState.flags['piano_tocado']]);
+
+  // Confirmar pickup de item
+  const handlePickupConfirm = useCallback(() => {
+    if (pendingItem) {
+      setGameState((s) => ({ ...s, inventario: [...s.inventario, pendingItem] }));
+      setMensaje(`Recogiste: ${pendingItem.nombre}.`);
+      setPendingItem(null);
+    }
+  }, [pendingItem, setGameState]);
 
   return (
     <div className="relative w-full h-full min-h-screen bg-black overflow-hidden">
@@ -798,6 +821,16 @@ export default function ThreeEngine({ misionId, onCompletar }: Props) {
       <AnimatePresence>
         {mostrarCodex && (
           <CodexPanel flags={gameState.flags} onCerrar={() => setMostrarCodex(false)} />
+        )}
+      </AnimatePresence>
+
+      {/* Modal: Item Pickup Animation */}
+      <AnimatePresence>
+        {pendingItem && (
+          <ItemPickupAnimation
+            item={pendingItem}
+            onConfirm={handlePickupConfirm}
+          />
         )}
       </AnimatePresence>
 

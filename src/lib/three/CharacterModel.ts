@@ -92,8 +92,8 @@ export class CharacterModel {
     rightEye.position.set(0.15, 2.5, 0.46);
     this.group.add(rightEye);
 
-    // Escalamos el grupo entero a la mitad
-    this.group.scale.set(0.5, 0.5, 0.5);
+    // Escalamos el grupo entero para que sea del mismo tamaño que los NPCs
+    this.group.scale.set(0.7, 0.7, 0.7);
   }
 
   setPosition(x: number, z: number) {
