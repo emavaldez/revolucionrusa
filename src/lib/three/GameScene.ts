@@ -133,8 +133,9 @@ export class GameScene {
       this.scene.fog = new THREE.FogExp2(fogColor, 0.008);
     }
 
-    // Character
+    // Character — empieza a la izquierda del mundo
     this.character = new CharacterModel();
+    this.character.setPosition(-config.anchoMundo / 2 + 4, 0);
     this.scene.add(this.character.group);
 
     // Snow
@@ -157,54 +158,149 @@ export class GameScene {
   }
 
   private createBuildings(worldWidth: number) {
-    // Material de edificios más claro (antes era 0x2a2a3a — casi negro)
-    const buildingMat = new THREE.MeshStandardMaterial({
-      color: 0x445566,
-      roughness: 0.85,
-      metalness: 0.1,
+    const buildingMat = new THREE.MeshStandardMaterial({ color: 0x556677, roughness: 0.85, metalness: 0.1 });
+    const darkMat = new THREE.MeshStandardMaterial({ color: 0x445566, roughness: 0.85, metalness: 0.05 });
+    const warmMat = new THREE.MeshStandardMaterial({ color: 0x887766, roughness: 0.9 });
+    const churchMat = new THREE.MeshStandardMaterial({ color: 0x779988, roughness: 0.8 });
+    const roofMat = new THREE.MeshStandardMaterial({ color: 0x556644, roughness: 0.9 });
+    const winMat = new THREE.MeshStandardMaterial({
+      color: 0xffaa44, emissive: 0xffaa44, emissiveIntensity: 0.6,
     });
-    const windowMat = new THREE.MeshStandardMaterial({
-      color: 0xffaa44,
-      emissive: 0xffaa44,
-      emissiveIntensity: 0.5, // más brillo
+    const paleWinMat = new THREE.MeshStandardMaterial({
+      color: 0x88ccff, emissive: 0x4488cc, emissiveIntensity: 0.3,
     });
 
-    for (let x = -worldWidth / 2 + 2; x < worldWidth / 2 - 2; x += 2.5) {
-      if (Math.random() > 0.65) continue;
+    // ── IGLESIA ORTODOXA (cúpula de cebolla) ──
+    // Se coloca a la derecha del mundo
+    const churchX = worldWidth / 2 - 8;
+    const churchBody = new THREE.Mesh(
+      new THREE.BoxGeometry(2.0, 3.0, 2.0),
+      churchMat
+    );
+    churchBody.position.set(churchX, 1.5, -4);
+    churchBody.castShadow = true;
+    this.scene.add(churchBody);
 
-      const h = 2.5 + Math.random() * 4;
-      const building = new THREE.Mesh(new THREE.BoxGeometry(1.8, h, 1.5), buildingMat);
+    // Cúpula de cebolla (dos esferas achatadas apiladas)
+    const domeMat = new THREE.MeshStandardMaterial({ color: 0x88AA88, roughness: 0.6, metalness: 0.3 });
+    const domeBase = new THREE.Mesh(new THREE.SphereGeometry(0.8, 10, 8), domeMat);
+    domeBase.scale.set(1, 0.4, 1);
+    domeBase.position.set(churchX, 3.3, -4);
+    this.scene.add(domeBase);
+
+    const domeTop = new THREE.Mesh(new THREE.SphereGeometry(0.5, 10, 8), domeMat);
+    domeTop.scale.set(1, 0.5, 1);
+    domeTop.position.set(churchX, 3.8, -4);
+    this.scene.add(domeTop);
+
+    // Cruz en la punta
+    const crossMat = new THREE.MeshStandardMaterial({ color: 0xDDAA44, metalness: 0.8 });
+    const crossV = new THREE.Mesh(new THREE.BoxGeometry(0.03, 0.25, 0.03), crossMat);
+    crossV.position.set(churchX, 4.2, -4);
+    this.scene.add(crossV);
+    const crossH = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.03, 0.03), crossMat);
+    crossH.position.set(churchX, 4.15, -4);
+    this.scene.add(crossH);
+
+    // ── EDIFICIOS PRINCIPALES ──
+    let buildingIndex = 0;
+    for (let x = -worldWidth / 2 + 3; x < worldWidth / 2 - 3; x += 2.8) {
+      if (Math.random() > 0.6) continue;
+      buildingIndex++;
+
+      const mat = buildingIndex % 3 === 0 ? darkMat : buildingIndex % 3 === 1 ? buildingMat : warmMat;
+      const h = 2.5 + Math.random() * 5;
+      const w = 1.5 + Math.random() * 0.8;
+      const d = 1.2 + Math.random() * 0.8;
+
+      const building = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
       building.position.set(x, h / 2, -4.5);
       building.castShadow = true;
       building.receiveShadow = true;
       this.scene.add(building);
 
-      // Windows
-      if (Math.random() > 0.3) {
-        const win = new THREE.Mesh(new THREE.PlaneGeometry(0.25, 0.35), windowMat);
-        win.position.set(x, 1.2 + Math.random() * (h - 1.8), -3.7);
-        this.scene.add(win);
+      // Ventanas en dos filas
+      const winRows = Math.floor(h / 1.2);
+      for (let row = 0; row < winRows; row++) {
+        for (let col = -1; col <= 1; col++) {
+          if (Math.random() > 0.5) continue;
+          const wMat = Math.random() > 0.3 ? winMat : paleWinMat;
+          const win = new THREE.Mesh(new THREE.PlaneGeometry(0.15, 0.22), wMat);
+          win.position.set(
+            x + col * 0.35,
+            0.8 + row * 1.0 + Math.random() * 0.2,
+            -4.5 + d / 2 + 0.01
+          );
+          this.scene.add(win);
+        }
+      }
+
+      // Techo a dos aguas (para dar variedad)
+      if (Math.random() > 0.5 && h > 3) {
+        const roof = new THREE.Mesh(
+          new THREE.ConeGeometry(w * 0.7, 0.6, 4),
+          roofMat
+        );
+        roof.position.set(x, h + 0.3, -4.5);
+        roof.rotation.y = Math.PI / 4;
+        this.scene.add(roof);
       }
     }
 
-    // Farolas (point lights tenues a lo largo de la calle)
+    // ── CHIMENEAS DE FÁBRICA (Putilov) ──
+    const chimneyMat = new THREE.MeshStandardMaterial({ color: 0x554433, roughness: 0.95 });
+    for (let i = 0; i < 3; i++) {
+      const chX = -worldWidth / 2 + 2 + i * 1.5;
+      const chimney = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.2, 3.5, 8), chimneyMat);
+      chimney.position.set(chX, 1.75, -4);
+      this.scene.add(chimney);
+
+      // Humo (esferas semitransparentes)
+      if (Math.random() > 0.3) {
+        const smokeMat = new THREE.MeshStandardMaterial({
+          color: 0x889999, transparent: true, opacity: 0.15,
+        });
+        const smoke = new THREE.Mesh(new THREE.SphereGeometry(0.2, 6, 6), smokeMat);
+        smoke.position.set(chX, 3.8 + Math.random() * 0.5, -4);
+        this.scene.add(smoke);
+      }
+    }
+
+    // ── FAROLAS ──
     const lampMat = new THREE.MeshStandardMaterial({
-      color: 0xffaa44,
-      emissive: 0xffaa44,
-      emissiveIntensity: 0.8,
+      color: 0xffaa44, emissive: 0xffaa44, emissiveIntensity: 0.8,
     });
+    const postMat = new THREE.MeshStandardMaterial({ color: 0x222222 });
     for (let x = -worldWidth / 2 + 4; x < worldWidth / 2 - 4; x += 5) {
-      const lamp = new THREE.Mesh(new THREE.SphereGeometry(0.1, 6, 6), lampMat);
+      const lamp = new THREE.Mesh(new THREE.SphereGeometry(0.1, 8, 8), lampMat);
       lamp.position.set(x, 1.8, 0);
       this.scene.add(lamp);
 
-      // Poste
-      const post = new THREE.Mesh(
-        new THREE.CylinderGeometry(0.04, 0.05, 1.8, 4),
-        new THREE.MeshStandardMaterial({ color: 0x333333 })
-      );
+      const post = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.04, 1.8, 6), postMat);
       post.position.set(x, 0.9, 0);
       this.scene.add(post);
+    }
+
+    // ── CERCA / REJA ──
+    const fenceMat = new THREE.MeshStandardMaterial({ color: 0x222222, roughness: 0.9 });
+    for (let x = -worldWidth / 2 + 2; x < worldWidth / 2 - 2; x += 1.5) {
+      if (Math.random() > 0.5) continue;
+      const bar = new THREE.Mesh(new THREE.BoxGeometry(0.03, 0.4, 0.03), fenceMat);
+      bar.position.set(x, 0.2, 2.5);
+      this.scene.add(bar);
+    }
+
+    // ── ÁRBOLES (esferas verdes) ──
+    const treeMat = new THREE.MeshStandardMaterial({ color: 0x334433, roughness: 0.95 });
+    const trunkMat = new THREE.MeshStandardMaterial({ color: 0x443322, roughness: 0.95 });
+    for (let x = -worldWidth / 2 + 6; x < worldWidth / 2 - 6; x += 4) {
+      if (Math.random() > 0.6) continue;
+      const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.06, 0.5, 6), trunkMat);
+      trunk.position.set(x, 0.25, 3.5);
+      this.scene.add(trunk);
+      const foliage = new THREE.Mesh(new THREE.SphereGeometry(0.25, 6, 6), treeMat);
+      foliage.position.set(x, 0.7, 3.5);
+      this.scene.add(foliage);
     }
   }
 
@@ -216,10 +312,8 @@ export class GameScene {
   }
 
   setCameraTarget(x: number) {
-    this.cameraTargetX = Math.max(
-      -this.config.anchoMundo / 2 + 8,
-      Math.min(x, this.config.anchoMundo / 2 - 8)
-    );
+    const halfWorld = this.config.anchoMundo / 2;
+    this.cameraTargetX = Math.max(-halfWorld + 8, Math.min(x, halfWorld - 8));
   }
 
   setHotspots(hotspots: { x: number; y: number; tipo: string; id: string; itemId?: string; label?: string }[]) {
@@ -227,21 +321,18 @@ export class GameScene {
     this.hotspotMeshes = [];
 
     hotspots.forEach((hs) => {
-      // Determinar tipo de prop 3D según el hotspot
       const propTipo = hotspotToProp(hs.tipo, hs.itemId, hs.label);
       const propGroup = crearProp(propTipo, hs.label);
 
-      // Posicionar en el mundo
-      const worldX = hs.x - this.config.anchoMundo / 2;
-      const worldZ = -(hs.y / 100) * 10 + 2;
-      propGroup.position.set(worldX, 0, worldZ);
+      // hs.x y hs.y vienen en coordenadas mundiales desde ThreeEngine
+      propGroup.position.set(hs.x, 0, hs.y);
 
-      // Escalar NPCs un poco para que se vean bien
+      // Escalar NPCs
       if (hs.tipo === 'hablar' || hs.tipo === 'debatir') {
         propGroup.scale.setScalar(0.8);
       }
 
-      // Añadir aro indicador tenue debajo del prop (mejor que esfera roja)
+      // Aro indicador tenue bajo cada prop
       const ringGeo = new THREE.RingGeometry(0.25, 0.35, 16);
       const ringMat = new THREE.MeshBasicMaterial({
         color: 0xff6644,
@@ -254,7 +345,6 @@ export class GameScene {
       ring.position.y = 0.02;
       propGroup.add(ring);
 
-      // Pulsar el anillo (guardamos referencia)
       (propGroup as any).__ring = ring;
       (propGroup as any).__ringTimer = Math.random() * 100;
 

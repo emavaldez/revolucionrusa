@@ -7,6 +7,7 @@ import type { Item } from '@/context/GameContext';
 import { GameScene } from '@/lib/three/GameScene';
 import type { GameSceneConfig } from '@/lib/three/GameScene';
 import { MusicEngine, moodForYear } from '@/lib/audio/MusicEngine';
+import { tocarMelodiaRusa, melodiaParaMision } from '@/lib/audio/MelodiasRusas';
 import { DECISIONES, calcularEpilogo } from '@/lib/game/FervorSystem';
 import type { Decision } from '@/lib/game/FervorSystem';
 import { checkCombinacion } from '@/lib/game/ItemCombination';
@@ -281,6 +282,7 @@ export default function ThreeEngine({ misionId, onCompletar }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const sceneRef = useRef<GameScene | null>(null);
   const musicRef = useRef<MusicEngine | null>(null);
+  const songPlayerRef = useRef<{ stop: () => void } | null>(null);
 
   // Estado de juego
   const [mensaje, setMensaje] = useState('');
@@ -307,14 +309,16 @@ export default function ThreeEngine({ misionId, onCompletar }: Props) {
 
     const scene = new GameScene(containerRef.current, mision.tresScene);
     sceneRef.current = scene;
-    scene.character.setPosition(0, 0);
+    // Posición ya seteada en GameScene constructor
 
     // Mostrar hotspots en 3D
     const hs3d = mision.hotspots
       .filter((hs) => !hotspotsBloqueados.has(hs.id))
       .map((hs) => ({
-        x: (hs.x / 100) * mision.anchoMundo,
-        y: 50 + hs.z * 10,
+        // Convertir porcentaje a coordenada mundial
+        x: (hs.x / 100) * mision.anchoMundo - mision.anchoMundo / 2,
+        // z es profundidad: mapear -5..5 a -10..10 metros
+        y: hs.z * 2,
         tipo: hs.tipo,
         id: hs.id,
         itemId: hs.item?.id,
@@ -322,10 +326,15 @@ export default function ThreeEngine({ misionId, onCompletar }: Props) {
       }));
     scene.setHotspots(hs3d);
 
-    // Música
+    // Música ambiente + canción rusa de época
     const music = new MusicEngine();
     musicRef.current = music;
     music.playMood(moodForYear(misionId));
+
+    // Canción rusa melódica (se reproduce en loop sobre la música ambiente)
+    const ctx = new AudioContext();
+    const cancion = melodiaParaMision(misionId);
+    songPlayerRef.current = tocarMelodiaRusa(ctx, cancion, undefined, true);
 
     // Mensaje inicial
     setMensaje(mision.descripcion);
@@ -333,6 +342,7 @@ export default function ThreeEngine({ misionId, onCompletar }: Props) {
     return () => {
       scene.destroy();
       music.stop();
+      songPlayerRef.current?.stop();
     };
   }, [misionId]);
 
@@ -342,8 +352,8 @@ export default function ThreeEngine({ misionId, onCompletar }: Props) {
     const hs3d = mision.hotspots
       .filter((hs) => !hotspotsBloqueados.has(hs.id))
       .map((hs) => ({
-        x: (hs.x / 100) * mision.anchoMundo,
-        y: 50 + hs.z * 10,
+        x: (hs.x / 100) * mision.anchoMundo - mision.anchoMundo / 2,
+        y: hs.z * 2,
         tipo: hs.tipo,
         id: hs.id,
         itemId: hs.item?.id,

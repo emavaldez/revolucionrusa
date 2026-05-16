@@ -91,8 +91,8 @@ export class CharacterModel {
     this.group.add(rightEye);
   }
 
-  setPosition(x: number, y: number) {
-    this.group.position.set(x - 15, 0, y - 10);
+  setPosition(x: number, z: number) {
+    this.group.position.set(x, 0, z);
   }
 
   lookAt(direction: 'izq' | 'der') {
