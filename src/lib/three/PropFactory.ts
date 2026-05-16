@@ -23,12 +23,12 @@ const matBandera = new THREE.MeshStandardMaterial({ color: 0xbe1111, roughness: 
 const matTinta = new THREE.MeshStandardMaterial({ color: 0x330000, roughness: 0.8 });
 
 export type PropTipo =
-  | 'npc' | 'npc_mujer' | 'npc_obrero' | 'npc_capataz'
+  | 'npc_ruso' | 'npc_rusa' | 'npc_capataz_ruso' | 'npc_lenin' | 'npc_trotsky'
   | 'volante' | 'pan' | 'caldera' | 'puerta' | 'engranaje'
   | 'grasa' | 'schnapps' | 'sello' | 'tiza' | 'racion'
   | 'carbon' | 'botella_vacia' | 'partitura' | 'piano'
   | 'foto' | 'documentos' | 'llave_inglesa' | 'mapa'
-  | 'tintero' | 'bandera' | 'mesa' | 'reloj' | 'farol'
+  | 'tintero' | 'bandera' | 'mesa' | 'reloj' | 'farol_gas'
   | 'monumento' | 'caja' | 'generic' | 'generic_peq' | 'generic_grande';
 
 // ── GENERADOR PRINCIPAL ───────────────────────────────────────────────
@@ -36,37 +36,89 @@ export function crearProp(tipo: PropTipo, label?: string): THREE.Group {
   const grupo = new THREE.Group();
 
   switch (tipo) {
-    // ── NPCs ─────────────────────────────────────────────────────────
-    case 'npc': {
-      construirHumanoide(grupo, telaMarron, telaAzul, matPiel);
+    // ── NPCs RUSOS ──────────────────────────────────────────────────
+    case 'npc_ruso': {
+      // Obrero con tulup (abrigo largo ruso) y ushanka
+      const rusoMat = new THREE.MeshStandardMaterial({ color: 0x6B4423, roughness: 0.9 });
+      construirHumanoide(grupo, rusoMat, telaAzul, matPiel);
+      // Ushanka (gorro de piel ruso)
+      const ushBody = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.26, 0.1, 8), rusoMat);
+      ushBody.position.set(0, 1.63, 0);
+      grupo.add(ushBody);
+      const ushTop = new THREE.Mesh(new THREE.SphereGeometry(0.18, 8, 6), rusoMat);
+      ushTop.scale.set(1, 0.3, 1);
+      ushTop.position.set(0, 1.68, 0);
+      grupo.add(ushTop);
+      // Bigote ruso
+      const bigoteMat = new THREE.MeshStandardMaterial({ color: 0x332211 });
+      const bigote = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.02, 0.02), bigoteMat);
+      bigote.position.set(0, 0.95, 0.15);
+      grupo.add(bigote);
       break;
     }
-    case 'npc_mujer': {
-      const bufMat = new THREE.MeshStandardMaterial({ color: 0x554433, roughness: 0.85 });
+    case 'npc_rusa': {
+      // Mujer con pañuelo en la cabeza (platok)
+      const bufMat = new THREE.MeshStandardMaterial({ color: 0x887766, roughness: 0.9 });
       construirHumanoide(grupo, bufMat, telaRoja, matPiel);
-      // Pañuelo extra
-      const buf = new THREE.Mesh(new THREE.TorusGeometry(0.3, 0.05, 6, 10, Math.PI), telaRoja);
-      buf.position.set(0, 1.35, 0);
-      buf.rotation.x = Math.PI;
-      grupo.add(buf);
+      // Pañuelo ruso (platok)
+      const platok = new THREE.Mesh(new THREE.TorusGeometry(0.26, 0.06, 6, 10, Math.PI), telaRoja);
+      platok.position.set(0, 1.35, 0);
+      platok.rotation.x = Math.PI;
+      grupo.add(platok);
+      // Segundo pañuelo
+      const platok2 = new THREE.Mesh(new THREE.TorusGeometry(0.2, 0.04, 6, 8, Math.PI * 0.8), telaRoja);
+      platok2.position.set(0, 1.38, -0.05);
+      platok2.rotation.x = Math.PI * 0.8;
+      grupo.add(platok2);
       break;
     }
-    case 'npc_obrero': {
-      const overol = new THREE.MeshStandardMaterial({ color: 0x334466, roughness: 0.9 });
-      construirHumanoide(grupo, overol, overol, matPiel);
-      // Gorra
-      const gorra = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.25, 0.08, 8), overol);
-      gorra.position.set(0, 1.65, 0);
-      grupo.add(gorra);
-      break;
-    }
-    case 'npc_capataz': {
+    case 'npc_capataz_ruso': {
+      // Capataz con chaleco y gorra de visera
       const chaleco = new THREE.MeshStandardMaterial({ color: 0x553322, roughness: 0.8 });
       construirHumanoide(grupo, telaMarron, chaleco, matPiel);
-      // Sombrero
-      const sombrero = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.25, 0.1, 8), telaMarron);
-      sombrero.position.set(0, 1.68, 0);
-      grupo.add(sombrero);
+      // Gorra de visera (furazhka)
+      const visera = new THREE.Mesh(new THREE.CylinderGeometry(0.23, 0.26, 0.08, 8), new THREE.MeshStandardMaterial({ color: 0x222222, roughness: 0.9 }));
+      visera.position.set(0, 1.64, 0);
+      grupo.add(visera);
+      const ala = new THREE.Mesh(new THREE.BoxGeometry(0.28, 0.02, 0.06), new THREE.MeshStandardMaterial({ color: 0x111111 }));
+      ala.position.set(0, 1.62, 0.15);
+      grupo.add(ala);
+      break;
+    }
+    case 'npc_lenin': {
+      // Lenin: calvo, perilla, traje, corbata
+      const trajeMat = new THREE.MeshStandardMaterial({ color: 0x222233, roughness: 0.6 });
+      construirHumanoide(grupo, trajeMat, trajeMat, matPiel);
+      // Cabeza calva
+      const calvaMat = new THREE.MeshStandardMaterial({ color: 0xE8C8B0, roughness: 0.7 });
+      // Perilla (goatee)
+      const perilla = new THREE.Mesh(new THREE.SphereGeometry(0.04, 6, 6), new THREE.MeshStandardMaterial({ color: 0x332211 }));
+      perilla.position.set(0, 0.9, 0.16);
+      perilla.scale.set(1, 1.2, 0.8);
+      grupo.add(perilla);
+      // Corbata
+      const corbata = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.15, 0.02), new THREE.MeshStandardMaterial({ color: 0x881111 }));
+      corbata.position.set(0, 0.6, 0.2);
+      grupo.add(corbata);
+      break;
+    }
+    case 'npc_trotsky': {
+      // Trotsky: pince-nez, uniforme militar, barba
+      const milMat = new THREE.MeshStandardMaterial({ color: 0x334433, roughness: 0.8 });
+      construirHumanoide(grupo, milMat, milMat, matPiel);
+      // Anteojos pince-nez
+      const oroMat = new THREE.MeshStandardMaterial({ color: 0xDDAA44, metalness: 0.8 });
+      const lente = new THREE.Mesh(new THREE.TorusGeometry(0.04, 0.008, 6, 8), oroMat);
+      lente.position.set(-0.04, 1.02, 0.15);
+      grupo.add(lente);
+      const lente2 = new THREE.Mesh(new THREE.TorusGeometry(0.04, 0.008, 6, 8), oroMat);
+      lente2.position.set(0.04, 1.02, 0.15);
+      grupo.add(lente2);
+      // Barba
+      const barba = new THREE.Mesh(new THREE.SphereGeometry(0.05, 6, 6), new THREE.MeshStandardMaterial({ color: 0x111111 }));
+      barba.position.set(0, 0.88, 0.16);
+      barba.scale.set(1, 1.3, 0.8);
+      grupo.add(barba);
       break;
     }
 
@@ -257,15 +309,20 @@ export function crearProp(tipo: PropTipo, label?: string): THREE.Group {
       grupo.add(esfera);
       break;
     }
-    case 'farol': {
-      const poste = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.04, 0.8, 6), new THREE.MeshStandardMaterial({ color: 0x333333 }));
+    // Farol a gas (más tenue, llama anaranjada — período 1905)
+    case 'farol_gas': {
+      const poste = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.04, 0.8, 6), new THREE.MeshStandardMaterial({ color: 0x222222, roughness: 0.9 }));
       poste.position.y = 0.4;
       grupo.add(poste);
-      const luz = new THREE.Mesh(new THREE.SphereGeometry(0.08, 8, 8), new THREE.MeshStandardMaterial({
-        color: 0xffaa44, emissive: 0xffaa44, emissiveIntensity: 0.6
+      // Farol de gas (vidrio + llama tenue)
+      const cuerpo = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.1, 0.08), matVidrio);
+      cuerpo.position.y = 0.82;
+      grupo.add(cuerpo);
+      const llama = new THREE.Mesh(new THREE.SphereGeometry(0.035, 6, 6), new THREE.MeshStandardMaterial({
+        color: 0xff6633, emissive: 0xff4400, emissiveIntensity: 0.3
       }));
-      luz.position.y = 0.85;
-      grupo.add(luz);
+      llama.position.y = 0.82;
+      grupo.add(llama);
       break;
     }
     case 'monumento': {
@@ -312,11 +369,14 @@ export function hotspotToProp(
   label?: string
 ): PropTipo {
   if (tipo === 'hablar' || tipo === 'debatir') {
-    if (label?.toLowerCase().includes('capataz')) return 'npc_capataz';
-    if (label?.toLowerCase().includes('obrero')) return 'npc_obrero';
-    if (label?.toLowerCase().includes('mujer') || label?.toLowerCase().includes('kollontai')) return 'npc_mujer';
-    if (label?.toLowerCase().includes('trotsky') || label?.toLowerCase().includes('lenin')) return 'npc';
-    return 'npc';
+    if (label?.toLowerCase().includes('lenin')) return 'npc_lenin';
+    if (label?.toLowerCase().includes('trotsky')) return 'npc_trotsky';
+    if (label?.toLowerCase().includes('capataz')) return 'npc_capataz_ruso';
+    if (label?.toLowerCase().includes('obrero')) return 'npc_ruso';
+    if (label?.toLowerCase().includes('mecánico') || label?.toLowerCase().includes('impresor') || label?.toLowerCase().includes('maquinista')) return 'npc_ruso';
+    if (label?.toLowerCase().includes('mujer') || label?.toLowerCase().includes('kollontai') || label?.toLowerCase().includes('krúpskaya')) return 'npc_rusa';
+    if (label?.toLowerCase().includes('delegado') || label?.toLowerCase().includes('guardia') || label?.toLowerCase().includes('menchevique')) return 'npc_capataz_ruso';
+    return 'npc_ruso';
   }
   if (tipo === 'recoger') {
     switch (itemId) {
@@ -338,13 +398,13 @@ export function hotspotToProp(
       default: return 'generic_peq';
     }
   }
-  if (tipo === 'usar') {
+    if (tipo === 'usar') {
     if (label?.toLowerCase().includes('puerta')) return 'puerta';
     if (label?.toLowerCase().includes('engranaje')) return 'engranaje';
     if (label?.toLowerCase().includes('piano')) return 'piano';
     if (label?.toLowerCase().includes('mesa')) return 'mesa';
     if (label?.toLowerCase().includes('reloj')) return 'reloj';
-    if (label?.toLowerCase().includes('farol')) return 'farol';
+    if (label?.toLowerCase().includes('farol')) return 'farol_gas';
     if (label?.toLowerCase().includes('caldera')) return 'caldera';
     if (label?.toLowerCase().includes('monumento') || label?.toLowerCase().includes('mausoleo')) return 'monumento';
     if (label?.toLowerCase().includes('caja')) return 'caja';

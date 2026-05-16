@@ -20,6 +20,8 @@ export class CharacterModel {
   private animState: AnimState = { tipo: 'idle', tiempo: 0 };
   private walkPhase = 0;
   private isMoving = false;
+  private moveTarget: { x: number; z: number } | null = null;
+  private moveSpeed = 0;
 
   constructor() {
     this.group = new THREE.Group();
@@ -89,6 +91,9 @@ export class CharacterModel {
     const rightEye = new THREE.Mesh(eyeGeo, eyeMat);
     rightEye.position.set(0.15, 2.5, 0.46);
     this.group.add(rightEye);
+
+    // Escalamos el grupo entero a la mitad
+    this.group.scale.set(0.5, 0.5, 0.5);
   }
 
   setPosition(x: number, z: number) {
@@ -111,8 +116,46 @@ export class CharacterModel {
     this.animState = { tipo: 'idle', tiempo: 0 };
   }
 
+  moveTo(targetX: number, targetZ: number, speed: number) {
+    this.moveTarget = { x: targetX, z: targetZ };
+    this.moveSpeed = speed;
+    this.isMoving = true;
+  }
+
+  isAtTarget(): boolean {
+    return !this.isMoving;
+  }
+
   update(delta: number) {
     this.animState.tiempo += delta;
+
+    // Movimiento interpolado hacia el target
+    if (this.isMoving && this.moveTarget) {
+      const dx = this.moveTarget.x - this.group.position.x;
+      const dz = this.moveTarget.z - this.group.position.z;
+      const dist = Math.sqrt(dx * dx + dz * dz);
+
+      if (dist < 0.1) {
+        // Snap al target y detener
+        this.group.position.x = this.moveTarget.x;
+        this.group.position.z = this.moveTarget.z;
+        this.isMoving = false;
+        this.moveTarget = null;
+      } else {
+        // Interpolar hacia el target
+        const step = this.moveSpeed * delta;
+        if (step >= dist) {
+          this.group.position.x = this.moveTarget.x;
+          this.group.position.z = this.moveTarget.z;
+          this.isMoving = false;
+          this.moveTarget = null;
+        } else {
+          const ratio = step / dist;
+          this.group.position.x += dx * ratio;
+          this.group.position.z += dz * ratio;
+        }
+      }
+    }
 
     switch (this.animState.tipo) {
       case 'dance': {

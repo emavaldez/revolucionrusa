@@ -82,8 +82,8 @@ const MISIONES_DATA: Record<number, MisionData> = {
       { id: 'pañuelo_rojo', nombre: 'Pañuelo de la Internacional', desc: 'Rojo como la revolución.', icono: '🟥' },
     ],
     hotspots: [
-      { id: 'capataz', x: 20, z: 1, label: 'Capataz', tipo: 'hablar', dialogo: 'No hay trabajo. No hay pan. Andate antes de que llame a la policía.' },
-      { id: 'pan_dar', x: 20, z: 1, label: 'Capataz', tipo: 'usar', requiere: 'pan_duro', mensajeExito: 'Le das el pan duro. El capataz lo mira y suspira: "Tomá, llevale esto a los de la fundición. Y que se apuren."', consumir: true, setFlag: 'pan_dado' },
+      { id: 'capataz', x: 20, z: 1, label: 'Capataz', tipo: 'hablar', dialogo: 'No hay trabajo. No hay pan. Andate antes de que llame a la policía.',
+        usarCon: [{ requiere: 'pan_duro', mensajeExito: 'Le das el pan duro. El capataz lo mira y suspira: "Tomá, llevale esto a los de la fundición. Y que se apuren."', consumir: true, setFlag: 'pan_dado' }] },
       { id: 'volante_suelo', x: 35, z: 0, label: 'Volante Pisoteado', tipo: 'recoger', item: { id: 'volante', nombre: 'Volante del POSDR', desc: 'Manchado de barro y teoría marxista.', icono: '📄' }, mensaje: 'Un volante en el piso. Alguien lo pisó. Típico.' },
       { id: 'obrero_fundicion', x: 55, z: -1, label: 'Obrero de Fundición', tipo: 'hablar', dialogo: 'Compañera, ¿traés algo para comer? Huelga es linda en los panfletos, fea en el estómago.' },
       { id: 'caldera', x: 70, z: 2, label: 'Caldera', tipo: 'examinar', mensaje: 'Una caldera gigante. Hierve con el resentimiento de mil obreros.', codigoAbierto: 'kollontai' },
@@ -381,12 +381,12 @@ export default function ThreeEngine({ misionId, onCompletar }: Props) {
         const hs = mision.hotspots.find((h) => h.id === hotspotHit.id);
         if (hs) handleHotspot(hs);
       } else {
-        // Walk to position
+        // Walk to position with smooth movement
         const groundHit = sceneRef.current.getGroundIntersection(mouseX, mouseY);
         if (groundHit) {
-          sceneRef.current.character.setPosition(groundHit.x, groundHit.z);
+          sceneRef.current.character.moveTo(groundHit.x, groundHit.z, 3.5);
           sceneRef.current.setCameraTarget(groundHit.x);
-          sceneRef.current.character.setMoving(true);
+          sceneRef.current.character.setAnimation('walk');
         }
       }
     },
@@ -410,18 +410,36 @@ export default function ThreeEngine({ misionId, onCompletar }: Props) {
       return;
     }
 
-    // CON ITEM SELECCIONADO - check combination
-    if (itemSeleccionado && hs.tipo === 'usar') {
-      const match = COMBINACIONES_RAPIDAS[itemSeleccionado.id]?.[hs.id];
-      if (match) {
-        setMensaje(match.mensaje);
-        if (match.setFlag) setGameState((s) => ({ ...s, flags: { ...s.flags, [match.setFlag!]: true } }));
-        if (match.consumir) {
-          setGameState((s) => ({ ...s, inventario: s.inventario.filter((i) => i.id !== itemSeleccionado.id) }));
+    // CON ITEM SELECCIONADO - check combination or usarCon (any hotspot type)
+    if (itemSeleccionado) {
+      // Check COMBINACIONES_RAPIDAS (type-specific combos)
+      if (hs.tipo === 'usar') {
+        const match = COMBINACIONES_RAPIDAS[itemSeleccionado.id]?.[hs.id];
+        if (match) {
+          setMensaje(match.mensaje);
+          if (match.setFlag) setGameState((s) => ({ ...s, flags: { ...s.flags, [match.setFlag!]: true } }));
+          if (match.consumir) {
+            setGameState((s) => ({ ...s, inventario: s.inventario.filter((i) => i.id !== itemSeleccionado.id) }));
+          }
+          setItemSeleccionado(null);
+          if (match.completaMision) completarMision();
+          return;
         }
-        setItemSeleccionado(null);
-        if (match.completaMision) completarMision();
-        return;
+      }
+
+      // Check usarCon en cualquier tipo de hotspot (NPCs, objetos, etc.)
+      if (hs.usarCon && hs.usarCon.length > 0) {
+        const match = hs.usarCon.find((u) => u.requiere === itemSeleccionado.id);
+        if (match) {
+          setMensaje(match.mensajeExito ?? '¡Funciona!');
+          if (match.setFlag) setGameState((s) => ({ ...s, flags: { ...s.flags, [match.setFlag!]: true } }));
+          if (match.consumir !== false) {
+            setGameState((s) => ({ ...s, inventario: s.inventario.filter((i) => i.id !== itemSeleccionado.id) }));
+          }
+          setItemSeleccionado(null);
+          if (hs.completaMision) completarMision();
+          return;
+        }
       }
     }
 

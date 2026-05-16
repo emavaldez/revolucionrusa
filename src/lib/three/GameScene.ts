@@ -266,19 +266,23 @@ export class GameScene {
       }
     }
 
-    // ── FAROLAS ──
-    const lampMat = new THREE.MeshStandardMaterial({
-      color: 0xffaa44, emissive: 0xffaa44, emissiveIntensity: 0.8,
-    });
-    const postMat = new THREE.MeshStandardMaterial({ color: 0x222222 });
-    for (let x = -worldWidth / 2 + 4; x < worldWidth / 2 - 4; x += 5) {
-      const lamp = new THREE.Mesh(new THREE.SphereGeometry(0.1, 8, 8), lampMat);
-      lamp.position.set(x, 1.8, 0);
-      this.scene.add(lamp);
-
+    // ── FAROLAS A GAS (1905 — San Petersburgo) ──
+    const vidrioGas = new THREE.MeshStandardMaterial({ color: 0x88bbcc, roughness: 0.1, transparent: true, opacity: 0.5 });
+    const llamaGas = new THREE.MeshStandardMaterial({ color: 0xff6633, emissive: 0xff4400, emissiveIntensity: 0.3 });
+    const postMat = new THREE.MeshStandardMaterial({ color: 0x222222, roughness: 0.9 });
+    for (let x = -worldWidth / 2 + 4; x < worldWidth / 2 - 4; x += 6) {
+      if (Math.random() > 0.7) continue;
       const post = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.04, 1.8, 6), postMat);
       post.position.set(x, 0.9, 0);
       this.scene.add(post);
+      // Caja de vidrio del farol
+      const caja = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.12, 0.08), vidrioGas);
+      caja.position.set(x, 1.85, 0);
+      this.scene.add(caja);
+      // Llama
+      const llama = new THREE.Mesh(new THREE.SphereGeometry(0.035, 6, 6), llamaGas);
+      llama.position.set(x, 1.85, 0);
+      this.scene.add(llama);
     }
 
     // ── CERCA / REJA ──
