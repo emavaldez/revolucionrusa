@@ -63,6 +63,7 @@ interface HotspotData {
   dialogo?: string;
   opciones?: { texto: string; setFlag: string; respuestaNPC: string }[];
   codigoAbierto?: string; // codex id que desbloquea al examinar
+  ocultarSiNoFlag?: string; // oculta el hotspot si NO tiene este flag
 }
 
 // MISIONES en formato Three.js
@@ -95,18 +96,22 @@ const MISIONES_DATA: Record<number, MisionData> = {
 
   1905.1: {
     titulo: 'Domingo Sangriento',
-    año: 1905,
+    a\u00f1o: 1905,
     ubicacion: 'Plaza del Palacio, San Petersburgo',
-    descripcion: '9 de enero. Miles de obreros marchan hacia el Palacio de Invierno. Creen que el Zar los escuchará.',
+    descripcion: '9 de enero. Miles de obreros marchan hacia el Palacio de Invierno. Creen que el Zar los escuchar\u00e1.',
     anchoMundo: 35,
     tresScene: { anchoMundo: 35, nieve: true, multitud: true, hora: 'dia', colorFondo: 0x444455, colorSuelo: 0x556677 },
-    pista: 'Decidí qué hacer cuando los soldados apunten. Cada camino tiene consecuencias.',
+    pista: 'Tom\u00e1 una decisi\u00f3n sobre qu\u00e9 hacer. Despu\u00e9s, avanz\u00e1 hacia el Palacio para continuar.',
     siguiente: 1912,
     decisiones: DECISIONES[1905],
     hotspots: [
-      { id: 'marchar', x: 40, z: 0, label: 'Marchar con los obreros', tipo: 'decision', mensaje: '¿TE UNÍS A LA MARCHA? Los soldados están formados. El silencio es ensordecedor.' },
-      { id: 'gapón', x: 30, z: -1, label: 'Padre Gapón', tipo: 'debatir', mensaje: 'El sacerdote te mira: "Compañera, ¿sabés por qué estamos aquí?"' },
-      { id: 'palacio_lejos', x: 70, z: 1, label: 'Palacio de Invierno', tipo: 'examinar', mensaje: 'El Palacio. 1500 ventanas. Un Zar. Y 200.000 personas que quieren hablar con él.' },
+      { id: 'marchar', x: 40, z: 0, label: '\u00bfQU\u00c9 HACER?', tipo: 'decision', mensaje: 'Los soldados est\u00e1n formados. La multitud espera. \u00bfCu\u00e1l es tu decisi\u00f3n?' },
+      { id: 'gap\u00f3n', x: 30, z: -1, label: 'Padre Gap\u00f3n', tipo: 'debatir', mensaje: 'El sacerdote te mira: "Compa\u00f1era, \u00bfsab\u00e9s por qu\u00e9 estamos aqu\u00ed?"' },
+      { id: 'palacio_lejos', x: 70, z: 1, label: 'Palacio de Invierno', tipo: 'examinar', mensaje: 'El Palacio. 1500 ventanas. Un Zar. Y miles de personas que quieren hablar con \u00e9l.' },
+      { id: 'avanzar_historia', x: 55, z: 0, label: 'Avanzar en la Historia', tipo: 'usar',
+        ocultarSiNoFlag: 'bs_decidio',
+        mensajeExito: 'La historia contin\u00faa... Las consecuencias de tus decisiones resonar\u00e1n por d\u00e9cadas.',
+        setFlag: '1905_1_completa', completaMision: true, mensajeFallo: 'Primero tom\u00e1 una decisi\u00f3n sobre la marcha.' },
     ],
   },
 
@@ -318,7 +323,7 @@ export default function ThreeEngine({ misionId, onCompletar }: Props) {
 
     // Mostrar hotspots en 3D
     const hs3d = mision.hotspots
-      .filter((hs) => !hotspotsBloqueados.has(hs.id))
+      .filter((hs) => !hotspotsBloqueados.has(hs.id) && !(hs.ocultarSiNoFlag && !gameState.flags[hs.ocultarSiNoFlag]))
       .map((hs) => ({
         // Convertir porcentaje a coordenada mundial
         x: (hs.x / 100) * mision.anchoMundo - mision.anchoMundo / 2,
@@ -355,7 +360,7 @@ export default function ThreeEngine({ misionId, onCompletar }: Props) {
   useEffect(() => {
     if (!sceneRef.current) return;
     const hs3d = mision.hotspots
-      .filter((hs) => !hotspotsBloqueados.has(hs.id))
+      .filter((hs) => !hotspotsBloqueados.has(hs.id) && !(hs.ocultarSiNoFlag && !gameState.flags[hs.ocultarSiNoFlag]))
       .map((hs) => ({
         x: (hs.x / 100) * mision.anchoMundo - mision.anchoMundo / 2,
         y: hs.z * 2,
@@ -835,14 +840,15 @@ export default function ThreeEngine({ misionId, onCompletar }: Props) {
                       setGameState((s) => ({
                         ...s,
                         fervor: Math.max(0, Math.min(100, s.fervor + delta)),
-                        flags: { ...s.flags, [op.setFlag || '']: true },
+                        flags: {
+                          ...s.flags,
+                          [op.setFlag || '']: true,
+                          // Todas las decisiones también activan bs_decidio
+                          ...(op.setFlag ? { bs_decidio: true } : {}),
+                        },
                       }));
                       setMensaje(op.descripcionResultado);
                       setMostrarDecision(null);
-                      // Si la misión solo tenía la decisión como gameplay, avanzar
-                      if (mision.decisiones && mision.hotspots.filter(h => h.tipo !== 'examinar' && h.tipo !== 'decision' && h.tipo !== 'debatir').length === 0) {
-                        setTimeout(() => completarMision(), 2500);
-                      }
                     }}
                     className="w-full text-left p-3 border border-white/20 hover:bg-red-900/30 hover:border-red-500 transition-all"
                   >

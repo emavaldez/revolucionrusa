@@ -29,7 +29,8 @@ export type PropTipo =
   | 'carbon' | 'botella_vacia' | 'partitura' | 'piano'
   | 'foto' | 'documentos' | 'llave_inglesa' | 'mapa'
   | 'tintero' | 'bandera' | 'mesa' | 'reloj' | 'farol_gas'
-  | 'monumento' | 'caja' | 'generic' | 'generic_peq' | 'generic_grande';
+  | 'monumento' | 'caja' | 'generic' | 'generic_peq' | 'generic_grande'
+  | 'tren_vagon' | 'tren_vagon_dentro';
 
 // ── GENERADOR PRINCIPAL ───────────────────────────────────────────────
 export function crearProp(tipo: PropTipo, label?: string): THREE.Group {
@@ -380,6 +381,134 @@ export function crearProp(tipo: PropTipo, label?: string): THREE.Group {
       grupo.add(g);
       break;
     }
+    // ── TREN (1917 — vagón de carga/pasajeros) ────────────────────────
+    case 'tren_vagon': {
+      const carroMat = new THREE.MeshStandardMaterial({ color: 0x3a3a2a, roughness: 0.85 });
+      const techoMat = new THREE.MeshStandardMaterial({ color: 0x4a4a3a, roughness: 0.8 });
+      const ruedaMat = new THREE.MeshStandardMaterial({ color: 0x222222, roughness: 0.9, metalness: 0.3 });
+      const chimeMat = new THREE.MeshStandardMaterial({ color: 0x444444, roughness: 0.7, metalness: 0.5 });
+
+      // Cuerpo principal del vagón
+      const cuerpo = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.5, 0.7), carroMat);
+      cuerpo.position.y = 0.35;
+      cuerpo.castShadow = true;
+      grupo.add(cuerpo);
+
+      // Techo ligeramente abovedado (dos planos inclinados)
+      const techo = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.04, 0.75), techoMat);
+      techo.position.y = 0.62;
+      grupo.add(techo);
+
+      // Chimenea (stack) — tubo cilíndrico
+      const chime = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.08, 0.25, 8), chimeMat);
+      chime.position.set(0.5, 0.65, 0);
+      grupo.add(chime);
+
+      // Boca de chimenea (aro en la punta)
+      const boca = new THREE.Mesh(new THREE.TorusGeometry(0.07, 0.015, 6, 8), chimeMat);
+      boca.position.set(0.5, 0.78, 0);
+      boca.rotation.x = Math.PI / 2;
+      grupo.add(boca);
+
+      // Ruedas (3 pares)
+      for (let i = -1; i <= 1; i++) {
+        const rDer = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 0.03, 10), ruedaMat);
+        rDer.rotation.z = Math.PI / 2;
+        rDer.position.set(i * 0.5, 0.08, 0.4);
+        grupo.add(rDer);
+        const rIzq = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 0.03, 10), ruedaMat);
+        rIzq.rotation.z = Math.PI / 2;
+        rIzq.position.set(i * 0.5, 0.08, -0.4);
+        grupo.add(rIzq);
+      }
+
+      // Ejes (barra conectando ruedas)
+      const ejeMat = new THREE.MeshStandardMaterial({ color: 0x333333, roughness: 0.8 });
+      for (let i = -1; i <= 1; i++) {
+        const eje = new THREE.Mesh(new THREE.CylinderGeometry(0.015, 0.015, 0.8, 6), ejeMat);
+        eje.rotation.x = Math.PI / 2;
+        eje.position.set(i * 0.5, 0.08, 0);
+        grupo.add(eje);
+      }
+
+      // Ventanas (2 a cada lado)
+      const winV = new THREE.MeshStandardMaterial({
+        color: 0x88ccff, emissive: 0x4488cc, emissiveIntensity: 0.2,
+      });
+      for (let i = -1; i <= 1; i += 2) {
+        const w = new THREE.Mesh(new THREE.PlaneGeometry(0.1, 0.12), winV);
+        w.position.set(i * 0.4, 0.4, 0.36);
+        grupo.add(w);
+      }
+
+      // Enganche (gancho frontal)
+      const gancho = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.04, 0.06), chimeMat);
+      gancho.position.set(0.85, 0.12, 0);
+      grupo.add(gancho);
+      break;
+    }
+
+    // ── INTERIOR DE VAGÓN DE TREN ────────────────────────────────────
+    case 'tren_vagon_dentro': {
+      const paredMat = new THREE.MeshStandardMaterial({ color: 0x5a4a3a, roughness: 0.85 });
+      const pisoMat = new THREE.MeshStandardMaterial({ color: 0x3a2a1a, roughness: 0.9 });
+      const asientoMat = new THREE.MeshStandardMaterial({ color: 0x6b3a1a, roughness: 0.85 });
+      const ventanaMat = new THREE.MeshStandardMaterial({
+        color: 0x88bbdd, emissive: 0x446688, emissiveIntensity: 0.15,
+      });
+
+      // Piso
+      const piso = new THREE.Mesh(new THREE.BoxGeometry(1.4, 0.04, 0.5), pisoMat);
+      piso.position.y = 0.02;
+      grupo.add(piso);
+
+      // Pared trasera (fondo del vagón)
+      const fondo = new THREE.Mesh(new THREE.BoxGeometry(1.4, 0.5, 0.04), paredMat);
+      fondo.position.set(0, 0.27, -0.27);
+      grupo.add(fondo);
+
+      // Pared delantera (frente)
+      const frente = new THREE.Mesh(new THREE.BoxGeometry(1.4, 0.5, 0.04), paredMat);
+      frente.position.set(0, 0.27, 0.27);
+      grupo.add(frente);
+
+      // Asientos laterales (izquierdo)
+      for (let i = -1; i <= 1; i += 0.5) {
+        const as = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.15, 0.2), asientoMat);
+        as.position.set(-0.6, 0.15, i * 0.3);
+        grupo.add(as);
+        // Respaldo
+        const resp = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.25, 0.18), asientoMat);
+        resp.position.set(-0.6, 0.32, i * 0.3);
+        grupo.add(resp);
+      }
+
+      // Asientos laterales (derecho)
+      for (let i = -1; i <= 1; i += 0.5) {
+        const as = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.15, 0.2), asientoMat);
+        as.position.set(0.6, 0.15, i * 0.3);
+        grupo.add(as);
+        const resp = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.25, 0.18), asientoMat);
+        resp.position.set(0.6, 0.32, i * 0.3);
+        grupo.add(resp);
+      }
+
+      // Ventana con vista nevada (luz azulada)
+      const ventana = new THREE.Mesh(new THREE.PlaneGeometry(0.6, 0.3), ventanaMat);
+      ventana.position.set(0, 0.25, -0.25);
+      ventana.rotation.y = Math.PI;
+      grupo.add(ventana);
+
+      // Lámpara de techo tenue
+      const lampMat = new THREE.MeshStandardMaterial({
+        color: 0xffaa44, emissive: 0xff8800, emissiveIntensity: 0.15,
+      });
+      const lamp = new THREE.Mesh(new THREE.SphereGeometry(0.04, 6, 6), lampMat);
+      lamp.position.set(0, 0.5, 0);
+      grupo.add(lamp);
+      break;
+    }
+
     default: {
       const g = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.15, 0.2), new THREE.MeshStandardMaterial({ color: 0x778899, roughness: 0.7 }));
       g.position.y = 0.1;
@@ -437,6 +566,7 @@ export function hotspotToProp(
     if (label?.toLowerCase().includes('monumento') || label?.toLowerCase().includes('mausoleo')) return 'monumento';
     if (label?.toLowerCase().includes('caja')) return 'caja';
     if (label?.toLowerCase().includes('bandera')) return 'bandera';
+    if (label?.toLowerCase().includes('tren')) return 'tren_vagon';
     return 'generic';
   }
   if (tipo === 'examinar') {
@@ -446,7 +576,7 @@ export function hotspotToProp(
     if (label?.toLowerCase().includes('mapa') || label?.toLowerCase().includes('carta')) return 'documentos';
     if (label?.toLowerCase().includes('bandera')) return 'bandera';
     if (label?.toLowerCase().includes('nieve')) return 'generic_peq';
-    if (label?.toLowerCase().includes('tren')) return 'generic_grande';
+    if (label?.toLowerCase().includes('tren')) return 'tren_vagon';
     return 'generic';
   }
   if (tipo === 'decision') {

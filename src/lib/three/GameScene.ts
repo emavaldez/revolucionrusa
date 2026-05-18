@@ -210,10 +210,10 @@ export class GameScene {
     // Se coloca a la derecha del mundo
     const churchX = worldWidth / 2 - 8;
     const churchBody = new THREE.Mesh(
-      new THREE.BoxGeometry(2.0, 3.0, 2.0),
+      new THREE.BoxGeometry(2.0, 2.0, 2.0),
       churchMat
     );
-    churchBody.position.set(churchX, 1.5, -4);
+    churchBody.position.set(churchX, 1.0, -4);
     churchBody.castShadow = true;
     this.scene.add(churchBody);
 
@@ -221,21 +221,21 @@ export class GameScene {
     const domeMat = new THREE.MeshStandardMaterial({ color: 0x88AA88, roughness: 0.6, metalness: 0.3 });
     const domeBase = new THREE.Mesh(new THREE.SphereGeometry(0.8, 10, 8), domeMat);
     domeBase.scale.set(1, 0.4, 1);
-    domeBase.position.set(churchX, 3.3, -4);
+    domeBase.position.set(churchX, 2.3, -4);
     this.scene.add(domeBase);
 
     const domeTop = new THREE.Mesh(new THREE.SphereGeometry(0.5, 10, 8), domeMat);
     domeTop.scale.set(1, 0.5, 1);
-    domeTop.position.set(churchX, 3.8, -4);
+    domeTop.position.set(churchX, 2.8, -4);
     this.scene.add(domeTop);
 
     // Cruz en la punta
     const crossMat = new THREE.MeshStandardMaterial({ color: 0xDDAA44, metalness: 0.8 });
     const crossV = new THREE.Mesh(new THREE.BoxGeometry(0.03, 0.25, 0.03), crossMat);
-    crossV.position.set(churchX, 4.2, -4);
+    crossV.position.set(churchX, 3.2, -4);
     this.scene.add(crossV);
     const crossH = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.03, 0.03), crossMat);
-    crossH.position.set(churchX, 4.15, -4);
+    crossH.position.set(churchX, 3.15, -4);
     this.scene.add(crossH);
 
     // ── EDIFICIOS PRINCIPALES ──
@@ -245,7 +245,7 @@ export class GameScene {
       buildingIndex++;
 
       const mat = buildingIndex % 3 === 0 ? darkMat : buildingIndex % 3 === 1 ? buildingMat : warmMat;
-      const h = 2.5 + Math.random() * 5;
+      const h = 1.5 + Math.random() * 3;
       const w = 1.5 + Math.random() * 0.8;
       const d = 1.2 + Math.random() * 0.8;
 
@@ -287,8 +287,8 @@ export class GameScene {
     const chimneyMat = matWithTex(brickTex, 0x554433, 0.95, 0.0);
     for (let i = 0; i < 3; i++) {
       const chX = -worldWidth / 2 + 2 + i * 1.5;
-      const chimney = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.2, 3.5, 8), chimneyMat);
-      chimney.position.set(chX, 1.75, -4);
+      const chimney = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.2, 2.0, 8), chimneyMat);
+      chimney.position.set(chX, 1.0, -4);
       this.scene.add(chimney);
 
       // Humo (esferas semitransparentes)
@@ -297,7 +297,7 @@ export class GameScene {
           color: 0x889999, transparent: true, opacity: 0.15,
         });
         const smoke = new THREE.Mesh(new THREE.SphereGeometry(0.2, 6, 6), smokeMat);
-        smoke.position.set(chX, 3.8 + Math.random() * 0.5, -4);
+        smoke.position.set(chX, 2.8 + Math.random() * 0.5, -4);
         this.scene.add(smoke);
       }
     }
@@ -308,16 +308,16 @@ export class GameScene {
     const postMat = new THREE.MeshStandardMaterial({ color: 0x222222, roughness: 0.9 });
     for (let x = -worldWidth / 2 + 4; x < worldWidth / 2 - 4; x += 6) {
       if (Math.random() > 0.7) continue;
-      const post = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.04, 1.8, 6), postMat);
-      post.position.set(x, 0.9, 0);
+      const post = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.04, 1.2, 6), postMat);
+      post.position.set(x, 0.6, 0);
       this.scene.add(post);
       // Caja de vidrio del farol
       const caja = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.12, 0.08), vidrioGas);
-      caja.position.set(x, 1.85, 0);
+      caja.position.set(x, 1.25, 0);
       this.scene.add(caja);
       // Llama
       const llama = new THREE.Mesh(new THREE.SphereGeometry(0.035, 6, 6), llamaGas);
-      llama.position.set(x, 1.85, 0);
+      llama.position.set(x, 1.25, 0);
       this.scene.add(llama);
     }
 
