@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useGame } from '@/context/GameContext';
+import * as THREE from 'three';
 import type { Item } from '@/context/GameContext';
 import { GameScene } from '@/lib/three/GameScene';
 import type { GameSceneConfig } from '@/lib/three/GameScene';
@@ -335,6 +336,107 @@ export default function ThreeEngine({ misionId, onCompletar }: Props) {
         label: hs.label,
       }));
     scene.setHotspots(hs3d);
+
+    // ── TREN 1917: agregar vías y vagones directamente al escenario ──
+    if (misionId === 1917) {
+      // Vías del tren (dos rieles paralelos)
+      const rielMat = new THREE.MeshStandardMaterial({ color: 0x555555, metalness: 0.6, roughness: 0.4 });
+      const durmienteMat = new THREE.MeshStandardMaterial({ color: 0x4A3520, roughness: 0.9 });
+      const vagonMat = new THREE.MeshStandardMaterial({ color: 0x3a3a2a, roughness: 0.85 });
+      const techoMat = new THREE.MeshStandardMaterial({ color: 0x4a4a3a, roughness: 0.8 });
+      const ruedaMat = new THREE.MeshStandardMaterial({ color: 0x222222, roughness: 0.9 });
+
+      // Durmientes
+      for (let x = -18; x <= 18; x += 0.6) {
+        const d = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.04, 1.2), durmienteMat);
+        d.position.set(x, 0.02, 0);
+        scene.scene.add(d);
+      }
+      // Rieles
+      for (let z = -0.5; z <= 0.5; z += 1.0) {
+        const r = new THREE.Mesh(new THREE.BoxGeometry(36, 0.03, 0.04), rielMat);
+        r.position.set(0, 0.04, z);
+        r.receiveShadow = true;
+        scene.scene.add(r);
+      }
+
+      // LOCOMOTORA (izquierda, más grande, con chimenea)
+      const locoPos = -12;
+      const caldera = new THREE.Mesh(new THREE.CylinderGeometry(0.35, 0.4, 1.0, 10), new THREE.MeshStandardMaterial({ color: 0x222222, roughness: 0.6 }));
+      caldera.rotation.z = Math.PI / 2;
+      caldera.position.set(locoPos, 0.5, -0.4);
+      scene.scene.add(caldera);
+      // Cabina
+      const cabina = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.6, 0.6), vagonMat);
+      cabina.position.set(locoPos + 0.7, 0.4, -0.4);
+      scene.scene.add(cabina);
+      // Chimenea
+      const chime = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.08, 0.3, 8), rielMat);
+      chime.position.set(locoPos - 0.3, 0.8, -0.4);
+      scene.scene.add(chime);
+      // Ruedas locomotora
+      for (let x = -0.4; x <= 0.6; x += 0.4) {
+        const r = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 0.03, 10), ruedaMat);
+        r.rotation.z = Math.PI / 2;
+        r.position.set(locoPos + x, 0.06, -0.4);
+        scene.scene.add(r);
+      }
+      // Enganche trasero
+      const enganche = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.04, 0.1), rielMat);
+      enganche.position.set(locoPos + 1.0, 0.15, -0.4);
+      scene.scene.add(enganche);
+
+      // VAGÓN ALEMÁN (verde, centro)
+      const vagon1x = -4;
+      const v1body = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.5, 0.7), new THREE.MeshStandardMaterial({ color: 0x3a5a3a, roughness: 0.8 }));
+      v1body.position.set(vagon1x, 0.35, -0.4);
+      scene.scene.add(v1body);
+      const v1techo = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.04, 0.75), techoMat);
+      v1techo.position.set(vagon1x, 0.62, -0.4);
+      scene.scene.add(v1techo);
+      // Ventanas del vagón alemán
+      const winMatVerde = new THREE.MeshStandardMaterial({ color: 0x88ccff, emissive: 0x4488cc, emissiveIntensity: 0.2 });
+      for (let i = -0.6; i <= 0.6; i += 0.4) {
+        const w = new THREE.Mesh(new THREE.PlaneGeometry(0.1, 0.15), winMatVerde);
+        w.position.set(vagon1x + i, 0.45, -0.05);
+        scene.scene.add(w);
+      }
+      // Ruedas vagón alemán
+      for (let x = -0.6; x <= 0.6; x += 0.6) {
+        const r = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 0.03, 10), ruedaMat);
+        r.rotation.z = Math.PI / 2;
+        r.position.set(vagon1x + x, 0.06, -0.4);
+        scene.scene.add(r);
+      }
+
+      // VAGÓN RUSO (marrón, derecha)
+      const vagon2x = 4;
+      const v2body = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.5, 0.7), vagonMat);
+      v2body.position.set(vagon2x, 0.35, -0.4);
+      scene.scene.add(v2body);
+      const v2techo = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.04, 0.75), techoMat);
+      v2techo.position.set(vagon2x, 0.62, -0.4);
+      scene.scene.add(v2techo);
+      // Ventanas vagón ruso
+      const winMatMarron = new THREE.MeshStandardMaterial({ color: 0xffaa44, emissive: 0xff8800, emissiveIntensity: 0.2 });
+      for (let i = -0.6; i <= 0.6; i += 0.4) {
+        const w = new THREE.Mesh(new THREE.PlaneGeometry(0.1, 0.15), winMatMarron);
+        w.position.set(vagon2x + i, 0.45, -0.05);
+        scene.scene.add(w);
+      }
+      // Ruedas vagón ruso
+      for (let x = -0.6; x <= 0.6; x += 0.6) {
+        const r = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 0.03, 10), ruedaMat);
+        r.rotation.z = Math.PI / 2;
+        r.position.set(vagon2x + x, 0.06, -0.4);
+        scene.scene.add(r);
+      }
+
+      // Línea de tiza entre los vagones (en el piso)
+      const tizaLine = new THREE.Mesh(new THREE.BoxGeometry(0.01, 0.01, 0.8), new THREE.MeshStandardMaterial({ color: 0xEFEFEF }));
+      tizaLine.position.set(0, 0.01, -0.4);
+      scene.scene.add(tizaLine);
+    }
 
     // Música ambiente + canción rusa de época
     const music = new MusicEngine();
