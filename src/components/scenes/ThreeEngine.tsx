@@ -65,6 +65,7 @@ interface HotspotData {
   opciones?: { texto: string; setFlag: string; respuestaNPC: string }[];
   codigoAbierto?: string; // codex id que desbloquea al examinar
   ocultarSiNoFlag?: string; // oculta el hotspot si NO tiene este flag
+  compartimento?: string; // para misiones con sub-escenas (ej: tren 1917)
 }
 
 // MISIONES en formato Three.js
@@ -134,26 +135,59 @@ const MISIONES_DATA: Record<number, MisionData> = {
   },
 
   1917: {
-    titulo: 'El Expreso de la Revolución',
-    año: 1917,
-    ubicacion: 'Gottmadingen → Petrogrado',
-    descripcion: 'Abril 1917. El tren sellado alemán espera. Lenin quiere volver a casa.',
-    anchoMundo: 40,
-    tresScene: { anchoMundo: 40, nieve: false, multitud: false, hora: 'atardecer', colorFondo: 0x554433, colorSuelo: 0x443322 },
-    pista: 'El maquinista duerme. El oficial alemán está aburrido. Lenin necesita... el baño.',
+    titulo: 'El Expreso de la Revoluci\u00f3n',
+    a\u00f1o: 1917,
+    ubicacion: 'Tren Sellado \u2014 Gottmadingen',
+    descripcion: 'Est\u00e1s adentro del tren sellado alem\u00e1n. Hay tres compartimentos: la locomotora, el vag\u00f3n alem\u00e1n y el vag\u00f3n ruso. Movete entre ellos para completar la misi\u00f3n.',
+    anchoMundo: 12,
+    tresScene: { anchoMundo: 12, nieve: false, multitud: false, hora: 'noche', colorFondo: 0x1a1410, colorSuelo: 0x3a2a1a, bruma: false },
+    pista: 'Despert\u00e1 al maquinista con el schnapps, consegu\u00ed la hora, dec\u00edsela a Lenin y sell\u00e1 el decreto con el sello imperial.',
     siguiente: 1917.1,
     duelo: DUELOS_POR_MISION[1917],
     decisiones: DECISIONES[1917],
     hotspots: [
-      { id: 'maquinista', x: 20, z: 1, label: 'Maquinista', tipo: 'hablar', dialogo: 'Zzzz... Neun... Zzz... Cerveza... Zzzz.' },
-      { id: 'schnapps', x: 70, z: 1, label: 'Schnapps Alemán', tipo: 'recoger', item: { id: 'schnapps', nombre: 'Schnapps Alemán', desc: 'Líquido que podría derretir acero.', icono: '🍾' }, mensaje: 'Tomaste la botella con discreción bolchevique.' },
-      { id: 'despertar_maquinista', x: 20, z: 1, label: 'Maquinista', tipo: 'usar', requiere: 'schnapps', mensajeExito: '¡AAAACH! ¡DAS BRENNT! El maquinista despierta. "El reloj marca las 04:00."', consumir: true, setFlag: 'maquinista_despierto' },
-      { id: 'reloj', x: 25, z: 0, label: 'Reloj de Bronce', tipo: 'examinar', requiereFlag: 'maquinista_despierto', mensaje: 'Son las 04:10. Un reloj de precisión prusiana.', setFlag: 'hora_conocida' },
-      { id: 'banio_humo', x: 50, z: -1, label: 'Puerta del Baño', tipo: 'examinar', mensaje: 'Sale humo por debajo. Parece que queman El Capital ahí dentro.' },
-      { id: 'tiza_suelo', x: 80, z: 0, label: 'Tiza en el Suelo', tipo: 'recoger', item: { id: 'tiza', nombre: 'Tiza Blanca', desc: 'Para dibujar mapas, fronteras... o líneas en el piso.', icono: '🪨' }, mensaje: 'Un trozo de tiza. Arma poderosa para redefinir fronteras.' },
-      { id: 'lenin', x: 55, z: 1, label: 'Lenin', tipo: 'hablar', requiereFlag: 'hora_conocida', dialogo: '¡Las 04:10! Con ese dato, redacto el Decreto Provisional del Turno de Baño.', setFlag: 'pidio_orden' },
-      { id: 'sello', x: 40, z: 0, label: 'Sello Imperial', tipo: 'recoger', item: { id: 'sello', nombre: 'Sello Imperial Alemán', desc: 'Bronce. Águila bicéfala. Pesa como un imperio.', icono: '🦅' }, mensaje: 'El sello del águila. Ahora es parte de la revolución.' },
-      { id: 'firmar_decreto', x: 55, z: 1, label: 'Lenin', tipo: 'usar', requiere: 'sello', requiereFlag: 'pidio_orden', mensajeExito: '¡El decreto está sellado! Los fumadores abren la puerta. ¡La higiene proletaria triunfa!', consumir: false, setFlag: 'mision_1917_completa', completaMision: true },
+      // ── LOCOMOTORA ──
+      { id: 'loco_ir_vagon', x: 90, z: 0, label: 'Ir al Vag\u00f3n Alem\u00e1n', tipo: 'navegar', compartimento: 'locomotora',
+        mensaje: 'Camin\u00e1s hacia el vag\u00f3n alem\u00e1n.' },
+      { id: 'maquinista', x: 30, z: 1, label: 'Maquinista', tipo: 'hablar', compartimento: 'locomotora',
+        dialogo: 'Zzzz... Neun... Zzz... Cerveza... Zzzz.' },
+      { id: 'despertar_maquinista', x: 30, z: 1, label: 'Maquinista', tipo: 'usar', compartimento: 'locomotora',
+        requiere: 'schnapps', mensajeExito: '\u00a1AAAACH! \u00a1DAS BRENNT! El maquinista despierta. "El reloj marca las 04:00."', consumir: true, setFlag: 'maquinista_despierto' },
+      { id: 'reloj', x: 50, z: 0, label: 'Reloj de Bronce', tipo: 'examinar', compartimento: 'locomotora',
+        requiereFlag: 'maquinista_despierto', mensaje: 'Son las 04:10. Un reloj de precisi\u00f3n prusiana.', setFlag: 'hora_conocida' },
+      { id: 'caldera_fuego', x: 70, z: -1, label: 'Caldera', tipo: 'examinar', compartimento: 'locomotora',
+        mensaje: 'El coraz\u00f3n de hierro del tren. Las brasas arden con la intensidad de un mitin obrero.' },
+
+      // ── VAG\u00d3N ALEM\u00c1N ──
+      { id: 'alem_ir_loco', x: 5, z: 0, label: 'Ir a la Locomotora', tipo: 'navegar', compartimento: 'vagon_aleman',
+        mensaje: 'Volv\u00e9s hacia la locomotora.' },
+      { id: 'alem_ir_ruso', x: 95, z: 0, label: 'Ir al Vag\u00f3n Ruso', tipo: 'navegar', compartimento: 'vagon_aleman',
+        mensaje: 'Camin\u00e1s hacia el vag\u00f3n ruso.' },
+      { id: 'oficial_aleman', x: 40, z: 1, label: 'Oberst Kraneblstrang', tipo: 'hablar', compartimento: 'vagon_aleman',
+        dialogo: 'Ustedes las rusas se quedan de su lado de la tiza. Mi trabajo no es ser su gu\u00eda tur\u00edstico.' },
+      { id: 'schnapps', x: 70, z: 1, label: 'Schnapps Alem\u00e1n', tipo: 'recoger', compartimento: 'vagon_aleman',
+        item: { id: 'schnapps', nombre: 'Schnapps Alem\u00e1n', desc: 'L\u00edquido que podr\u00eda derretir acero.', icono: '\ud83c\udf7e' },
+        mensaje: 'Tomaste la botella con discreci\u00f3n bolchevique.' },
+      { id: 'sello', x: 80, z: 0, label: 'Sello Imperial', tipo: 'recoger', compartimento: 'vagon_aleman',
+        item: { id: 'sello', nombre: 'Sello Imperial Alem\u00e1n', desc: 'Bronce. \u00c1guila bic\u00e9fala. Pesa como un imperio.', icono: '\ud83e\udd85' },
+        mensaje: 'El sello del \u00e1guila. Ahora es parte de la revoluci\u00f3n.' },
+      { id: 'tiza_suelo', x: 50, z: -1, label: 'L\u00ednea de Tiza', tipo: 'recoger', compartimento: 'vagon_aleman',
+        item: { id: 'tiza', nombre: 'Tiza Blanca', desc: 'Para dibujar mapas, fronteras... o l\u00edneas en el piso.', icono: '\ud83e\udea8' },
+        mensaje: 'La l\u00ednea de tiza divide el tren en dos soberan\u00edas.' },
+
+      // ── VAG\u00d3N RUSO ──
+      { id: 'ruso_ir_alem', x: 5, z: 0, label: 'Ir al Vag\u00f3n Alem\u00e1n', tipo: 'navegar', compartimento: 'vagon_ruso',
+        mensaje: 'Volv\u00e9s hacia el vag\u00f3n alem\u00e1n.' },
+      { id: 'lenin', x: 70, z: 1, label: 'Lenin', tipo: 'hablar', compartimento: 'vagon_ruso',
+        requiereFlag: 'hora_conocida', dialogo: '\u00a1Las 04:10! Con ese dato, redacto el Decreto Provisional del Turno de Ba\u00f1o.', setFlag: 'pidio_orden' },
+      { id: 'firmar_decreto', x: 70, z: 1, label: 'Lenin', tipo: 'usar', compartimento: 'vagon_ruso',
+        requiere: 'sello', requiereFlag: 'pidio_orden',
+        mensajeExito: '\u00a1El decreto est\u00e1 sellado! Los fumadores abren la puerta. \u00a1La higiene proletaria triunfa!',
+        consumir: false, setFlag: 'mision_1917_completa', completaMision: true },
+      { id: 'krupskaya', x: 50, z: 1, label: 'Kr\u00fapskaya', tipo: 'hablar', compartimento: 'vagon_ruso',
+        dialogo: 'Si esto sigue as\u00ed, Vladimir va a fundar un partido dedicado a la reforma sanitaria de los ferrocarriles.' },
+      { id: 'banio_humo', x: 30, z: -1, label: 'Puerta del Ba\u00f1o', tipo: 'examinar', compartimento: 'vagon_ruso',
+        mensaje: 'Sale tanto humo por debajo que parece que est\u00e1n quemando El Capital ah\u00ed dentro.' },
     ],
   },
 
@@ -310,6 +344,9 @@ export default function ThreeEngine({ misionId, onCompletar }: Props) {
   const [pendingItem, setPendingItem] = useState<Item | null>(null);
 
   // Nueva entrada de codex
+  // Compartimento actual (para misiones con sub-escenas como el tren 1917)
+  const [compartimento, setCompartimento] = useState<string | null>(null);
+
   const [nuevoCodex, setNuevoCodex] = useState<string | null>(null);
 
   const mision = MISIONES_DATA[misionId];
@@ -451,6 +488,13 @@ export default function ThreeEngine({ misionId, onCompletar }: Props) {
     // Mensaje inicial
     setMensaje(mision.descripcion);
 
+    // Inicializar compartimento (para misiones con sub-escenas como el tren 1917)
+    if (mision.hotspots.some((h) => h.compartimento)) {
+      setCompartimento(mision.hotspots[0].compartimento ?? null);
+    } else {
+      setCompartimento(null);
+    }
+
     return () => {
       scene.destroy();
       music.stop();
@@ -462,7 +506,11 @@ export default function ThreeEngine({ misionId, onCompletar }: Props) {
   useEffect(() => {
     if (!sceneRef.current) return;
     const hs3d = mision.hotspots
-      .filter((hs) => !hotspotsBloqueados.has(hs.id) && !(hs.ocultarSiNoFlag && !gameState.flags[hs.ocultarSiNoFlag]))
+      .filter((hs) =>
+        !hotspotsBloqueados.has(hs.id) &&
+        !(hs.ocultarSiNoFlag && !gameState.flags[hs.ocultarSiNoFlag]) &&
+        !(hs.compartimento && hs.compartimento !== compartimento)
+      )
       .map((hs) => ({
         x: (hs.x / 100) * mision.anchoMundo - mision.anchoMundo / 2,
         y: hs.z * 2,
@@ -472,7 +520,7 @@ export default function ThreeEngine({ misionId, onCompletar }: Props) {
         label: hs.label,
       }));
     sceneRef.current.setHotspots(hs3d);
-  }, [hotspotsBloqueados, misionId, itemSeleccionado]);
+  }, [hotspotsBloqueados, misionId, itemSeleccionado, compartimento]);
 
   // Click handler en el canvas 3D
   const handleCanvasClick = useCallback(
@@ -677,6 +725,14 @@ export default function ThreeEngine({ misionId, onCompletar }: Props) {
         } else {
           setMensaje(hs.mensaje ?? 'No hay decisiones que tomar ahora.');
         }
+        setItemSeleccionado(null);
+        break;
+      }
+
+      case 'navegar': {
+        // Navegar entre compartimentos (ej: tren 1917)
+        setMensaje(hs.mensaje ?? '');
+        setCompartimento(hs.compartimento ?? null);
         setItemSeleccionado(null);
         break;
       }
