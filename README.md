@@ -1,54 +1,31 @@
-# Revolución Rusa: Aventura Dialéctica
+# VERUSHKA — Revolución Rusa
 
-Juego point-and-click de aventura histórica sobre la Revolución Rusa (1905–1924).
+Aventura gráfica point-and-click sobre la Revolución Rusa, Petrogrado,
+23-25 de octubre de 1917. Unity 6 LTS.
 
-## Características
+Este repo empezó como un prototipo en Next.js + Three.js (1905-1924, con
+Alexandra Kollontai). Esa versión se descartó por completo y se rehizo desde
+cero en Unity con un diseño nuevo y más acotado: **Verushka**, 3 actos
+(Smolny, Výborg, Palacio de Invierno), duelos dialécticos en vez de combate,
+y cuatro finales posibles. El código y assets del prototipo viejo quedan
+disponibles en el tag `archive/nextjs-prototype`; el contenido narrativo
+reutilizable del prototipo vive en `../story-export/`.
 
-- 7 misiones históricas con puzles, diálogos y exploración
-- Personaje femenino fijo: Alexandra Kollontai
-- Motor point-and-click con personaje caminando, cámara scroll, cursores contextuales
-- Puzle musical: tocar "La Internacional" en un piano
-- Sistema de pistas integrado
-- Inventario persistente entre misiones
-- Diálogos con opciones múltiples
-- Estética constructivista/soviética con humor
+## Documentación
 
-## Tech Stack
+- `docs/prd.md` — diseño y alcance del juego
+- `docs/architecture.md` — cómo está armado en Unity
+- `docs/stories/` — trabajo pendiente, una story por archivo
+- `INSTALAR.md` — cómo abrir el proyecto y recorrido de playtest
 
-- Next.js 16 + React + TypeScript
-- Tailwind CSS
-- Framer Motion
-- Web Audio API (efectos de sonido)
+## Estado
 
-## Deploy en GitHub Pages
+Prototipo jugable de punta a punta: 3 actos, 28 hotspots, duelos dialécticos,
+inventario y los 4 finales ya escritos. Geometría placeholder (cubos/cápsulas)
+y HUD en IMGUI — ver `docs/stories/` para lo que falta.
 
-1. Crear repo en GitHub y subir el código
-2. Ir a Settings → Pages → Source: GitHub Actions
-3. Usar el workflow de Next.js oficial, o simplemente subir la carpeta `dist/` a la rama `gh-pages`
+## Método de trabajo
 
-### Opción rápida (manual)
-
-```bash
-npm run build
-# Subir el contenido de /dist a la rama gh-pages
-git subtree push --prefix dist origin gh-pages
-```
-
-## Desarrollo
-
-```bash
-npm install
-npm run dev
-```
-
-## Estructura
-
-- `src/app/page.tsx` — Flujo principal (menú → juego → fin)
-- `src/components/scenes/AdventureEngine.tsx` — Motor del juego
-- `src/data/historia.ts` — Misiones, items, diálogos, puzles
-- `src/context/GameContext.tsx` — Estado global
-- `public/escenas/` — Imágenes de fondo
-
-## Créditos
-
-Hecho con <3 y un poco de vodka digital.
+Flujo supervisor-worker con [`wf`](https://github.com/emavaldez/wf-kit):
+Claude planifica y audita, Hermes implementa. Ver `workflow/config.json`
+una vez inicializado.

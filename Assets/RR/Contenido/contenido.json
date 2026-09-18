@@ -1,0 +1,1318 @@
+{
+  "escenarioInicial": "smolny",
+  "personajes": [
+    {
+      "id": "centinela",
+      "nombre": "Centinela",
+      "color": "#9aa38c",
+      "descripcion": "Soldado campesino del regimiento Litovski. Veintidós años, fusil Mosin, analfabeto.",
+      "notaHistorica": "La guarnición de Petrogrado se pasó al Soviet en octubre. Muchos reclutas venían del campo y no sabían leer."
+    },
+    {
+      "id": "sofia",
+      "nombre": "Sofía Petrovna",
+      "color": "#c9a0a0",
+      "descripcion": "Ex celadora del Instituto. Se quedó cuando llegaron los bolcheviques porque no tenía adónde ir.",
+      "notaHistorica": "El Smolny funcionó como colegio de señoritas nobles hasta 1917. Parte del personal siguió en el edificio."
+    },
+    {
+      "id": "ivanov",
+      "nombre": "Konstantin Ivanov",
+      "color": "#e0c060",
+      "descripcion": "Un hombre bajo, calvo, afeitado, con la mejilla vendada. Le discute en voz alta al diario que está leyendo.",
+      "notaHistorica": "Lenin volvió de Finlandia con peluca, afeitado y documentos a nombre de Konstantin Ivanov. Llegó al Smolny la noche del 24 con la cara vendada."
+    },
+    {
+      "id": "martov",
+      "nombre": "Mártov",
+      "color": "#a0b8c9",
+      "descripcion": "Menshevique internacionalista. Tose, discute, vuelve a toser. Tiene razón en casi todo y no le va a servir de nada.",
+      "notaHistorica": "Yuli Mártov propuso una solución negociada entre todos los partidos socialistas. Lo abuchearon y se fue del Congreso."
+    },
+    {
+      "id": "trotski",
+      "nombre": "Trotski",
+      "color": "#d94f3d",
+      "descripcion": "Presidente del Soviet de Petrogrado y del Comité Militar Revolucionario. Habla como si taquigrafiaran.",
+      "notaHistorica": "El CMR se creó el 12 de octubre y fue el órgano que ejecutó la insurrección."
+    },
+    {
+      "id": "stalin",
+      "nombre": "Stalin",
+      "color": "#7d8a7a",
+      "descripcion": "Corrige Pravda con un lápiz rojo. Tacha más de lo que escribe.",
+      "notaHistorica": "En octubre de 1917 Stalin era director de Pravda. Su papel en la insurrección fue secundario y administrativo."
+    },
+    {
+      "id": "praskovia",
+      "nombre": "Praskovia",
+      "color": "#b9a98c",
+      "descripcion": "Cuarenta años, cuatro hijos, once horas de cola por semana. Sabe todo lo que pasa en Petrogrado.",
+      "notaHistorica": "Las colas de pan —los jvostý, las colas— eran el principal centro de información y agitación de la ciudad."
+    },
+    {
+      "id": "delegado",
+      "nombre": "Delegado del tranvía",
+      "color": "#8fa3b8",
+      "descripcion": "Del sindicato de tranviarios. Escuchó discursos toda su vida y ya no se emociona.",
+      "notaHistorica": "Los tranviarios de Petrogrado estaban entre los gremios mejor organizados y apoyaron la insurrección."
+    },
+    {
+      "id": "liudmila",
+      "nombre": "Liudmila",
+      "color": "#c9b8d9",
+      "descripcion": "Telefonista de la central de Bolshaya Morskaya. Diecinueve años. Hace catorce meses que nadie le pregunta nada.",
+      "notaHistorica": "La central telefónica fue tomada la noche del 24 al 25. Las operadoras, en su mayoría mujeres jóvenes, eran leales al Gobierno Provisional."
+    },
+    {
+      "id": "kolia",
+      "nombre": "el cadete",
+      "color": "#c0b0a0",
+      "descripcion": "Diecisiete años. Uniforme de la Escuela Vladímir dos talles grande. No comió desde ayer.",
+      "notaHistorica": "El Palacio fue defendido por junkers de las escuelas de oficiales y por el 1er Batallón Femenino de la Muerte."
+    },
+    {
+      "id": "marinero",
+      "nombre": "Marinero del Aurora",
+      "color": "#7fa8b8",
+      "descripcion": "Del comité del barco. No acepta una orden sin firma. Ya lo engañaron en julio.",
+      "notaHistorica": "El Aurora disparó una salva de fogueo a las 21:40 del 25 de octubre. Fue la señal, no un bombardeo."
+    },
+    {
+      "id": "editor",
+      "nombre": "Editor de Rech",
+      "color": "#b8a878",
+      "descripcion": "Liberal, culto, convencido de que la civilización depende de que su edición salga mañana.",
+      "notaHistorica": "Rech era el diario de los kadetes. La prensa opositora fue clausurada en los días siguientes a la insurrección."
+    },
+    {
+      "id": "cocinero",
+      "nombre": "Cocinero del Palacio",
+      "color": "#a89078",
+      "descripcion": "Treinta años sirviendo comida a gente que se va. Quiere irse a su casa.",
+      "notaHistorica": "El personal de servicio del Palacio siguió trabajando durante el asedio."
+    },
+    {
+      "id": "antonov",
+      "nombre": "Antónov-Ovséyenko",
+      "color": "#d94f3d",
+      "descripcion": "Anteojos, pelo largo, sombrero de ala ancha. Parece un poeta y viene a tomar el poder.",
+      "notaHistorica": "Dirigió la toma del Palacio y anunció el arresto del Gobierno Provisional a las 2:10 de la madrugada."
+    },
+    {
+      "id": "konovalov",
+      "nombre": "Konoválov",
+      "color": "#9a9a9a",
+      "descripcion": "Ministro del Gobierno Provisional. Sentado a la mesa, esperando que lo arresten.",
+      "notaHistorica": "Kerenski huyó la mañana del 25. Los ministros que quedaron esperaron el arresto en el Comedor Pequeño."
+    },
+    {
+      "id": "calvo_a",
+      "nombre": "Hombre calvo",
+      "color": "#8a8073",
+      "descripcion": "Espera a su cuñado hace tres horas. No es Lenin.",
+      "notaHistorica": "En el Smolny de octubre entraba y salía todo el mundo: delegados, curiosos, gente buscando a alguien."
+    },
+    {
+      "id": "calvo_b",
+      "nombre": "Fundidor",
+      "color": "#7d7468",
+      "descripcion": "Del sindicato de fundidores. Vino por lo del carbón. No es Lenin.",
+      "notaHistorica": "La crisis de combustible de octubre de 1917 paralizó fábricas enteras de Petrogrado."
+    }
+  ],
+  "items": [
+    {
+      "id": "delantal",
+      "nombre": "Delantal del Instituto",
+      "desc": "Con una etiqueta bordada en cursiva: «M. A. Dolgorúkaya, 3er curso». La chica se fue a París en marzo."
+    },
+    {
+      "id": "pata_silla",
+      "nombre": "Pata de silla",
+      "desc": "De la silla de la directora. Caoba. Arde bárbaro."
+    },
+    {
+      "id": "lapiz_rojo",
+      "nombre": "Lápiz rojo",
+      "desc": "El lápiz con el que Stalin corrige Pravda. Tacha más de lo que escribe."
+    },
+    {
+      "id": "fajo_pravda",
+      "nombre": "Fajo de Pravda",
+      "desc": "Cuarenta ejemplares que nadie pidió y que ahora son mi problema."
+    },
+    {
+      "id": "pan_negro",
+      "nombre": "Pan negro",
+      "desc": "Un octavo de libra. La ración del día. Pesa menos de lo que uno espera."
+    },
+    {
+      "id": "orden_aurora",
+      "nombre": "Orden para el Aurora",
+      "desc": "Un papel sin firma. Un papel sin firma no es nada."
+    },
+    {
+      "id": "vino",
+      "nombre": "Botella del Zar",
+      "desc": "Château d'Yquem, 1893. En la etiqueta hay un águila bicéfala. Adentro hay una idea."
+    },
+    {
+      "id": "acta",
+      "nombre": "Acta del Congreso",
+      "desc": "Hoja en blanco. Lo que escriba acá lo van a leer durante cien años."
+    }
+  ],
+  "argumentos": [
+    {
+      "id": "a_condiciones",
+      "texto": "Las condiciones materiales no están dadas."
+    },
+    {
+      "id": "a_vanguardia",
+      "texto": "El partido es la vanguardia; no puede esperar a la clase entera."
+    },
+    {
+      "id": "a_hambre",
+      "texto": "La teoría no se come."
+    },
+    {
+      "id": "a_democracia",
+      "texto": "Sin soviets libres, esto es otro zar con otro nombre."
+    },
+    {
+      "id": "a_tiempo",
+      "texto": "Mañana es tarde. Hoy ya es tarde."
+    },
+    {
+      "id": "a_quienes",
+      "texto": "¿Y quién decide qué es lo necesario?"
+    },
+    {
+      "id": "a_practica",
+      "texto": "Compañero, yo soy las condiciones materiales."
+    },
+    {
+      "id": "a_imprenta",
+      "texto": "La libertad de prensa es la libertad del que tiene la prensa."
+    }
+  ],
+  "duelos": [
+    {
+      "id": "duelo_martov",
+      "rival": "Mártov",
+      "sePierdeSiempre": true,
+      "intro": "Mártov tiene la palabra hace cuarenta minutos y no la piensa soltar. La sala lo escucha a medias. Si quiero que el Comité me mire una vez en la vida, tengo que interrumpirlo.",
+      "setFlagAlPerder": "perdi_con_martov",
+      "alPerder": "Perdí. Perdí en tres asaltos y delante de todos.\n\nPero mientras volvía a mi silla anoté cada cosa que me dijo, palabra por palabra, en el margen de un Pravda. Tres argumentos que no tenía cuando entré.\n\nDesde el fondo de la sala, Trotski me está mirando.",
+      "asaltos": [
+        {
+          "ataque": "Compañera, con todo respeto: Rusia tiene un proletariado industrial de tres millones sobre ciento sesenta. Las condiciones materiales no están dadas.",
+          "replicaId": "a_practica",
+          "aprendes": "a_condiciones",
+          "siFalla": "No tengo con qué contestarle. La sala hace ese ruido de sillas que hace la gente cuando alguien queda mal."
+        },
+        {
+          "ataque": "Y si toman el poder sin la mayoría de la democracia revolucionaria, ¿qué son? Una minoría armada. Sin soviets libres, esto es otro zar con otro nombre.",
+          "replicaId": "a_tiempo",
+          "aprendes": "a_democracia",
+          "siFalla": "Abro la boca. No sale nada. Tiene razón y las dos lo sabemos."
+        },
+        {
+          "ataque": "Le pido paciencia histórica, compañera. La historia no se apura.",
+          "replicaId": "a_hambre",
+          "aprendes": "a_tiempo",
+          "siFalla": "Paciencia histórica. Se lo voy a decir a las mujeres de la cola del pan, a ver qué opinan."
+        }
+      ]
+    },
+    {
+      "id": "duelo_tranvia",
+      "rival": "Delegado del tranvía",
+      "intro": "El delegado se cruza de brazos. Detrás suyo, catorce tranvías parados y ochenta tipos mirando cómo termina esto.",
+      "setFlagAlGanar": "tranvia_conseguido",
+      "setFlagAlPerder": "tranvia_negado",
+      "ejeConviccionAlGanar": 1,
+      "alGanar": "El delegado se queda callado un segundo largo. Después se da vuelta y grita: «¡El siete! ¡Sacá el siete!»\n\nCruzamos Petrogrado tocando la campana todo el camino. No era necesario tocar la campana. La tocó igual.",
+      "alPerder": "«Andá a pie, compañera.»\n\nY tiene razón. Me va a llevar dos horas y voy a llegar con los pies deshechos, pero tiene razón.",
+      "asaltos": [
+        {
+          "ataque": "Nosotros paramos por el aumento. Vos venís a pedirme que rompa mi propia huelga para tu revolución. ¿Y vos quién sos?",
+          "replicaId": "a_practica",
+          "aprendes": "a_quienes",
+          "siFalla": "Se me nota que no tengo respuesta. Escupe para el costado."
+        },
+        {
+          "ataque": "Escuché este discurso en el 5. Escuché este discurso en febrero. Andá a saber qué gana el tranviario.",
+          "replicaId": "a_hambre",
+          "aprendes": "a_condiciones",
+          "siFalla": "«Palabras», dice. Y no está equivocado."
+        },
+        {
+          "ataque": "¿Y por qué hoy? Mañana también hay ciudad.",
+          "replicaId": "a_tiempo",
+          "aprendes": "a_tiempo",
+          "siFalla": "No sé por qué hoy. Trotski me dijo hoy. Eso no es una razón y él lo huele."
+        }
+      ]
+    },
+    {
+      "id": "duelo_editor",
+      "rival": "Editor de Rech",
+      "intro": "El editor no se levanta de la silla. Tiene la prueba de página en la mano y la edición sale en cuarenta minutos. Atrás, la prensa rotativa espera. Podría romperla. Está a tres metros.",
+      "setFlagAlGanar": "imprenta_convencida",
+      "setFlagAlPerder": "imprenta_sale",
+      "ejeConviccionAlGanar": 1,
+      "alGanar": "Baja la prueba de página. Se saca los lentes. Los limpia con el pañuelo, que es lo que hace la gente cuando necesita diez segundos.\n\n«No voy a sacar la edición», dice. «No porque usted me convenció. Porque tiene razón y eso es insoportable.»\n\nLa prensa quedó entera. Mañana la va a volver a usar y va a decir lo que quiera. Y eso, decido, está bien.",
+      "alPerder": "«Buenas noches, señorita.»\n\nLa edición sale. Mañana media ciudad va a leer que somos agentes alemanes. Ya lo leyeron en julio y sobrevivimos.",
+      "asaltos": [
+        {
+          "ataque": "Lo que ustedes proponen es un golpe de una minoría armada contra un gobierno legítimo. Yo defiendo la libertad de prensa.",
+          "replicaId": "a_imprenta",
+          "aprendes": "a_imprenta",
+          "siFalla": "«Libertad de prensa», repite, como si el asunto estuviera cerrado. Y con esa frase, casi siempre lo está."
+        },
+        {
+          "ataque": "¿Y quién la autorizó a usted a decidir qué se imprime? ¿Un comité? ¿Un hombre con peluca en un colegio de señoritas?",
+          "replicaId": "a_quienes",
+          "aprendes": "a_quienes",
+          "siFalla": "Me quedo sin aire. Es exactamente la pregunta que me vengo haciendo desde ayer."
+        },
+        {
+          "ataque": "Váyase a su casa. En una semana esto se acabó y usted vuelve al telar.",
+          "replicaId": "a_democracia",
+          "aprendes": "a_vanguardia",
+          "siFalla": "Puede que vuelva al telar. Eso no me da miedo. Me da miedo que tenga razón en lo otro."
+        }
+      ]
+    }
+  ],
+  "finales": [
+    {
+      "id": "comisaria",
+      "titulo": "LA COMISARIA",
+      "creyendo": true,
+      "metodoDuro": true,
+      "texto": "Kronstadt, marzo de 1921.\n\nEstoy del lado de adentro. Tengo un escritorio, un teléfono que funciona y una firma que vale. Sobre la mesa hay una orden y abajo de la orden hay un renglón esperándome.\n\nLos marinos del otro lado del hielo son los mismos que me abrieron el Palacio. Piden soviets libres. Lo pidió Mártov en el 17 y yo ese día no supe qué contestarle.\n\nHoy sí sé. Hoy tengo tres argumentos buenísimos.\n\nFirmo."
+    },
+    {
+      "id": "purgada",
+      "titulo": "LA QUE NO AFLOJÓ",
+      "creyendo": true,
+      "metodoDuro": false,
+      "texto": "Kronstadt, marzo de 1921.\n\nEscribí una carta. Decía que los marinos tenían razón, que pedir soviets libres no es traición, que si hay que fusilar a los que nos abrieron el Palacio entonces el Palacio no valía la pena.\n\nLa firmé con mi nombre completo. Nikoláievna y todo.\n\nNo me van a fusilar a mí; todavía no estamos en eso. Me van a mandar a un archivo en Samara a contar expedientes, y en cada aniversario van a publicar mi nombre en la lista de los que ayudaron.\n\nHasta el año en que dejen de publicarlo."
+    },
+    {
+      "id": "exilio",
+      "titulo": "LA QUE SE FUE",
+      "creyendo": false,
+      "metodoDuro": true,
+      "texto": "Berlín, 1923. Después Buenos Aires.\n\nEn las cenas me piden que cuente lo del Palacio. Lo cuento bien: la puerta de servicio, el vino del Zar, el chico del fusil. Se ríen en las partes en que hay que reírse.\n\nCada vez que lo cuento se parece un poco más a una anécdota y un poco menos a algo que me pasó.\n\nHay una parte que nunca cuento. Ellos creen que es por modestia."
+    },
+    {
+      "id": "telar",
+      "titulo": "LA QUE VOLVIÓ ABAJO",
+      "creyendo": false,
+      "metodoDuro": false,
+      "texto": "Výborg, 1921.\n\nVolví al telar en el 19 y nadie lo notó, que es exactamente lo que esperaba.\n\nEn el taller hay un retrato de Lenin en la pared. Pasé tres noches a cuatro metros de ese hombre discutiendo si tomábamos una ciudad, y ahora lo miro desde abajo como todas.\n\nLas chicas nuevas no me creen cuando lo cuento. Hacen bien. Yo tampoco le creería a una mujer de treinta que dice que una vez movió la historia y volvió al turno de la mañana.\n\nPero la moví. Eso no me lo saca nadie."
+    }
+  ],
+  "escenarios": [
+    {
+      "id": "smolny",
+      "nombre": "INSTITUTO SMOLNY",
+      "subtitulo": "Petrogrado · 23 de octubre de 1917",
+      "acto": 1,
+      "ancho": 34,
+      "fondo": 14,
+      "alturaTecho": 7,
+      "paleta": "interior",
+      "notaHistorica": "Edificio neoclásico de Quarenghi (1806-1808), colegio para hijas de la nobleza hasta 1917. Desde agosto, sede del Soviet de Petrogrado. Corredor central de 220 m, aulas convertidas en oficinas, salón de actos con columnas blancas. Lenin ocupó la habitación 36.",
+      "hotspots": [
+        {
+          "id": "centinela",
+          "nombre": "Centinela",
+          "x": -12,
+          "y": 0,
+          "z": 2,
+          "forma": "persona",
+          "color": "#9aa38c",
+          "ancho": 0.8,
+          "alto": 1.8,
+          "prof": 0.6,
+          "mirar": "Veintidós años, fusil Mosin más alto que él, botas que no son suyas. Custodia la puerta de un colegio de señoritas como si fuera el Reichstag.",
+          "hablar": [
+            {
+              "quien": "centinela",
+              "requiereFlag": "paso_centinela",
+              "texto": "Pase, compañera instructora. Hoy hay té."
+            },
+            {
+              "quien": "centinela",
+              "requiereItem": "delantal",
+              "texto": "A ver. ¿Y esto qué es?",
+              "opciones": [
+                {
+                  "texto": "(Mostrarle la etiqueta bordada) Credencial del Instituto. Tercer curso.",
+                  "quienResponde": "centinela",
+                  "respuesta": "Se queda mirando la cursiva un rato largo. Mueve los labios. No está leyendo: está esperando que las letras se ordenen solas.\n\n«Está en regla», dice al final, y se corre.\n\nNo me mira a los ojos al decirlo. Tardo media cuadra en entender por qué.",
+                  "setFlag": "paso_centinela",
+                  "consumeItem": "delantal",
+                  "cierra": true
+                },
+                {
+                  "texto": "Es un delantal de colegiala, compañero. No sabés leer, ¿no?",
+                  "quienResponde": "centinela",
+                  "respuesta": "Se pone colorado hasta las orejas.\n\n«En mi aldea no había escuela, compañera.»\n\nMe deja pasar igual. Eso es peor.",
+                  "setFlag": "paso_centinela",
+                  "consumeItem": "delantal",
+                  "ejeConviccion": 1,
+                  "cierra": true
+                }
+              ]
+            },
+            {
+              "quien": "centinela",
+              "texto": "Sin propusk no entra nadie, compañera. Orden del Comité Militar Revolucionario.",
+              "opciones": [
+                {
+                  "texto": "Vengo de Výborg. Tres mil obreras me mandaron.",
+                  "quienResponde": "centinela",
+                  "respuesta": "«Y yo vengo de Tambov y no me dejan entrar al salón de actos. Papel, compañera. Algo con un sello. Algo escrito.»",
+                  "cierra": true
+                },
+                {
+                  "texto": "¿Qué tiene que decir el papel?",
+                  "quienResponde": "centinela",
+                  "respuesta": "Duda. «Tiene que… tener letras. De las difíciles. Las que hacen los que mandan.»\n\nAnotado.",
+                  "setFlag": "sabe_letras_dificiles",
+                  "cierra": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "guardarropa",
+          "nombre": "Guardarropa del Instituto",
+          "x": -17,
+          "y": 0,
+          "z": 5,
+          "forma": "caja",
+          "color": "#6b5b4b",
+          "ancho": 3,
+          "alto": 2.4,
+          "prof": 1,
+          "mirar": "Ciento veinte perchas numeradas. En casi todas cuelga todavía el delantal de una chica que se fue a Francia en marzo y no avisó. Cada etiqueta está bordada a mano en cursiva francesa.",
+          "usarSolo": "Descuelgo uno. «M. A. Dolgorúkaya, 3er curso», bordado con hilo de seda por alguien a quien le pagaron para eso.\n\nMe queda bien. Ese es el chiste más amargo del día.",
+          "daItemAlUsar": "delantal",
+          "setFlagAlUsar": "tengo_delantal",
+          "ocultarSiFlag": "tengo_delantal",
+          "mostrarSiFlag": "sabe_letras_dificiles"
+        },
+        {
+          "id": "muebles",
+          "nombre": "Muebles confiscados",
+          "x": -6,
+          "y": 0,
+          "z": 6,
+          "forma": "caja",
+          "color": "#5a4636",
+          "ancho": 3.5,
+          "alto": 2,
+          "prof": 2,
+          "mirar": "Una pila de dos metros: sillas doradas, un piano vertical, cuatro retratos de zarinas apoyados contra la pared mirando al revés. Confiscado a la dirección del Instituto. Nadie decidió todavía qué se hace con esto.",
+          "usarSolo": "Le arranco una pata a la silla de la directora. Caoba maciza, del año del ñaupa.\n\nEn algún lugar de París, Madame se sentaría en esta silla para decirme que las manos de una mujer se ven mejor sin callos.",
+          "daItemAlUsar": "pata_silla",
+          "setFlagAlUsar": "tengo_pata",
+          "ocultarSiFlag": "tengo_pata",
+          "mostrarSiFlag": "paso_centinela"
+        },
+        {
+          "id": "samovar",
+          "nombre": "Samovar",
+          "x": -2,
+          "y": 0,
+          "z": 7,
+          "forma": "caja",
+          "color": "#8a6a3a",
+          "ancho": 1,
+          "alto": 1.2,
+          "prof": 1,
+          "mirar": "Samovar de Tula, cobre, cuarenta litros. Apagado. Al lado, un cartel escrito a mano: «EL COMITÉ NO DELIBERA SIN TÉ».\n\nNo hay carbón en Petrogrado desde agosto.",
+          "mostrarSiFlag": "paso_centinela",
+          "usos": [
+            {
+              "item": "pata_silla",
+              "exito": "La pata de caoba entra justo. Prende con una llama alta y limpia, de madera cara.\n\nEl agua hierve en once minutos. Sirvo cuarenta tazas.\n\nLa revolución quemando el mundo viejo, literalmente, para tomar el té.",
+              "setFlag": "hay_te",
+              "consume": true
+            },
+            {
+              "item": "fajo_pravda",
+              "fallo": "¿Quemar Pravda para hacer té? Stalin me mata. Y me mata con razón."
+            }
+          ]
+        },
+        {
+          "id": "calvo_a",
+          "nombre": "Hombre calvo junto a la ventana",
+          "x": 3,
+          "y": 0,
+          "z": 8,
+          "forma": "persona",
+          "color": "#8a8073",
+          "ancho": 0.8,
+          "alto": 1.75,
+          "prof": 0.6,
+          "mostrarSiFlag": "paso_centinela",
+          "mirar": "Calvo, cincuenta y pico, abrigo bueno. Mira por la ventana el patio vacío. No lee nada.",
+          "hablar": [
+            {
+              "quien": "calvo_a",
+              "texto": "«Estoy esperando a mi cuñado, señorita. Hace tres horas.»\n\nNo es él."
+            }
+          ]
+        },
+        {
+          "id": "calvo_b",
+          "nombre": "Hombre calvo con gorra",
+          "x": 6,
+          "y": 0,
+          "z": 5,
+          "forma": "persona",
+          "color": "#7d7468",
+          "ancho": 0.8,
+          "alto": 1.7,
+          "prof": 0.6,
+          "mostrarSiFlag": "paso_centinela",
+          "mirar": "Gorra de obrero, calvo debajo. Lee el diario en voz baja, moviendo los labios, sin discutirle.",
+          "hablar": [
+            {
+              "quien": "calvo_b",
+              "texto": "«¿Eh? No, yo soy del sindicato de fundidores. Vine por lo del carbón.»\n\nNo es él."
+            }
+          ]
+        },
+        {
+          "id": "ivanov",
+          "nombre": "Hombre calvo con la mejilla vendada",
+          "x": 9,
+          "y": 0,
+          "z": 8,
+          "forma": "persona",
+          "color": "#e0c060",
+          "ancho": 0.8,
+          "alto": 1.65,
+          "prof": 0.6,
+          "mostrarSiFlag": "paso_centinela",
+          "mirar": "Bajo, calvo, afeitado hasta el hueso, la mejilla izquierda vendada. Tiene el diario a diez centímetros de la nariz y le está discutiendo en voz alta.\n\n«¡Eso es una falsedad!», le dice al papel. El papel no contesta.\n\nEs el único de los tres que discute. Es él.",
+          "setFlagAlMirar": "vi_a_lenin",
+          "hablar": [
+            {
+              "quien": "ivanov",
+              "requiereNoFlag": "vi_a_lenin",
+              "texto": "Hay tres hombres calvos en esta sala y no tengo idea de cuál es. Convendría mirarlos bien antes de hacer el ridículo.",
+              "opciones": []
+            },
+            {
+              "quien": "ivanov",
+              "requiereFlag": "lenin_me_habla",
+              "texto": "«Trotski me dijo lo del samovar. Muy bien. La revolución se hace con logística y con dos o tres ideas, en ese orden.»"
+            },
+            {
+              "quien": "ivanov",
+              "requiereFlag": "hay_te",
+              "texto": "Levanta la vista del diario. Mira la taza. Me mira a mí.\n\n«¿Usted hizo el té?»",
+              "opciones": [
+                {
+                  "texto": "Con la pata de la silla de la directora del colegio.",
+                  "quienResponde": "ivanov",
+                  "respuesta": "Se ríe. Se ríe fuerte, con la cabeza para atrás, y después se agarra la mejilla vendada porque reírse le duele.\n\n«Konstantin Ivanov», dice, y me da la mano.\n\nNos damos la mano los dos sabiendo que se llama de otra manera.",
+                  "setFlag": "lenin_me_habla",
+                  "ejeConviccion": 1,
+                  "cierra": true
+                },
+                {
+                  "texto": "Camarada Ilich, sé quién es usted.",
+                  "quienResponde": "ivanov",
+                  "respuesta": "La cara se le cierra como una puerta.\n\n«Se equivoca de hombre, señorita. Y si no se equivoca, baje la voz, que la Ojrana no se disolvió sola.»\n\nTiene razón. Bajé la voz. Tarde.",
+                  "setFlag": "lenin_desconfia",
+                  "ejeMetodo": -1,
+                  "cierra": true
+                }
+              ],
+              "requiereItem": "",
+              "requiereNoFlag": "lenin_desconfia"
+            },
+            {
+              "quien": "ivanov",
+              "texto": "Ni levanta la vista.\n\n«No doy entrevistas, no firmo nada y no soy quien usted cree. Y si va a quedarse ahí parada, tráigame un té.»"
+            }
+          ]
+        },
+        {
+          "id": "martov",
+          "nombre": "Mártov",
+          "x": 13,
+          "y": 0,
+          "z": 4,
+          "forma": "persona",
+          "color": "#a0b8c9",
+          "ancho": 0.8,
+          "alto": 1.78,
+          "prof": 0.6,
+          "mostrarSiFlag": "paso_centinela",
+          "mirar": "De pie sobre una tarima improvisada, hablándole a una sala que lo escucha a medias. Tose cada tres frases. Va a tener razón en todo y no le va a servir para nada.",
+          "hablar": [
+            {
+              "quien": "martov",
+              "requiereFlag": "perdi_con_martov",
+              "texto": "«Volvé cuando tengas un argumento propio, compañera. Los míos ya los conozco.»\n\nMe los llevé todos. No se dio cuenta."
+            },
+            {
+              "quien": "martov",
+              "requiereFlag": "hay_te",
+              "texto": "«…y por eso, compañeros, la aventura que se propone para esta semana no es una revolución: es un golpe con vocabulario marxista.»\n\nLa sala murmura. Nadie lo interrumpe. Yo podría interrumpirlo.",
+              "opciones": [
+                {
+                  "texto": "(Interrumpirlo) Compañero Mártov, con permiso.",
+                  "quienResponde": "martov",
+                  "respuesta": "Se da vuelta despacio. Cuarenta cabezas se dan vuelta con él.\n\n«Adelante, compañera. La escucho.»",
+                  "abreDuelo": "duelo_martov"
+                },
+                {
+                  "texto": "(Quedarme callada y escuchar)",
+                  "quienResponde": "martov",
+                  "respuesta": "Sigue hablando veinte minutos más. Tiene razón en casi todo.\n\nEsa es exactamente su tragedia.",
+                  "cierra": true
+                }
+              ]
+            },
+            {
+              "quien": "martov",
+              "texto": "«…y sin el apoyo de la democracia revolucionaria en su conjunto…»\n\nNo me ve. Nadie me ve todavía. Falta el té."
+            }
+          ]
+        },
+        {
+          "id": "trotski",
+          "nombre": "Trotski",
+          "x": 16,
+          "y": 0,
+          "z": 8,
+          "forma": "persona",
+          "color": "#d94f3d",
+          "ancho": 0.8,
+          "alto": 1.78,
+          "prof": 0.6,
+          "mostrarSiFlag": "perdi_con_martov",
+          "mirar": "Mesa del Comité Militar Revolucionario. Tres teléfonos, dos de ellos descolgados. Habla como si alguien lo taquigrafiara, porque alguien lo está taquigrafiando.",
+          "hablar": [
+            {
+              "quien": "trotski",
+              "requiereFlag": "tarea_dada",
+              "texto": "«¿Todavía acá? Výborg queda al norte, compañera.»"
+            },
+            {
+              "quien": "trotski",
+              "texto": "«La vi perder con Mártov.»\n\nBaja la pluma.\n\n«Perdió bien. Perdió anotando. En esta sala hay ochenta personas que ganan discusiones y ninguna anota.»",
+              "opciones": [
+                {
+                  "texto": "Deme algo que hacer.",
+                  "quienResponde": "trotski",
+                  "respuesta": "«Mañana a la noche tomamos la ciudad y tengo tres agujeros. Uno: el Aurora no se mueve sin una orden firmada y yo no puedo firmarla sin que se entere medio Petrogrado. Dos: la central telefónica de Bolshaya Morskaya sigue hablando con el Palacio. Tres: Rech saca mañana una edición que nos llama agentes alemanes.»\n\n«Cruce a Výborg. Resuelva lo que pueda. No me cuente cómo.»\n\nEsa última frase me la voy a acordar toda la vida.",
+                  "setFlag": "tarea_dada",
+                  "cierra": true
+                },
+                {
+                  "texto": "¿Y si mañana sale mal?",
+                  "quienResponde": "trotski",
+                  "respuesta": "«Entonces en veinte años una señora le va a contar a sus nietos que estuvo acá. Vaya a Výborg.»",
+                  "setFlag": "tarea_dada",
+                  "ejeConviccion": -1,
+                  "cierra": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "stalin",
+          "nombre": "Mesa de Pravda",
+          "x": 20,
+          "y": 0,
+          "z": 4,
+          "forma": "persona",
+          "color": "#7d8a7a",
+          "ancho": 0.8,
+          "alto": 1.72,
+          "prof": 0.6,
+          "mostrarSiFlag": "tarea_dada",
+          "mirar": "Un georgiano de bigote corrige pruebas de página con un lápiz rojo. Tacha párrafos enteros. Escribe poco. Tacha mucho.\n\nAl lado, un fajo de cuarenta Pravdas atados con piolín que nadie vino a buscar.",
+          "hablar": [
+            {
+              "quien": "stalin",
+              "requiereFlag": "tengo_fajo",
+              "texto": "«Ya se los llevó. Bien.»\n\nNo levanta la vista del lápiz."
+            },
+            {
+              "quien": "stalin",
+              "texto": "Sin levantar la vista:\n\n«Usted va a Výborg. Lléveselos.»\n\nSeñala el fajo con el lápiz rojo.",
+              "opciones": [
+                {
+                  "texto": "No me pidieron repartir diarios, compañero.",
+                  "quienResponde": "stalin",
+                  "respuesta": "Ahora sí levanta la vista. Dos segundos. Vuelve al lápiz.\n\n«Nadie pide nada. Se anota quién hace y quién no.»\n\nSe anota. Anotado queda.",
+                  "setFlag": "tengo_fajo",
+                  "daItem": "fajo_pravda",
+                  "cierra": true
+                },
+                {
+                  "texto": "(Agarrar el fajo sin decir nada)",
+                  "quienResponde": "stalin",
+                  "respuesta": "«Mm», dice.\n\nEs lo más parecido a un elogio que va a salir de esa mesa.",
+                  "setFlag": "tengo_fajo",
+                  "daItem": "fajo_pravda",
+                  "cierra": true
+                }
+              ]
+            }
+          ],
+          "usos": [
+            {
+              "item": "delantal",
+              "fallo": "No. A este no."
+            }
+          ]
+        },
+        {
+          "id": "lapiz",
+          "nombre": "Lápiz rojo",
+          "x": 21,
+          "y": 0,
+          "z": 5.5,
+          "forma": "caja",
+          "color": "#c8102e",
+          "ancho": 0.4,
+          "alto": 0.2,
+          "prof": 0.4,
+          "mostrarSiFlag": "tengo_fajo",
+          "ocultarSiFlag": "tengo_lapiz",
+          "mirar": "El lápiz rojo. Lo dejó sobre la mesa al ir a buscar más pruebas.\n\nEs un lápiz. No vale nada.",
+          "usarSolo": "Me lo guardo en el bolsillo del delantal.\n\nEs un lápiz. Qué puede pasar.",
+          "daItemAlUsar": "lapiz_rojo",
+          "setFlagAlUsar": "tengo_lapiz"
+        },
+        {
+          "id": "salida_smolny",
+          "nombre": "Puerta a Výborg",
+          "x": 27,
+          "y": 0,
+          "z": 2,
+          "forma": "puerta",
+          "color": "#3f6f9f",
+          "ancho": 1.6,
+          "alto": 2.6,
+          "prof": 0.4,
+          "mirar": "La puerta grande del Smolny. Del otro lado está la ciudad, el río, y un barrio donde la gente hace cola desde las cuatro de la mañana.",
+          "vaA": "vyborg",
+          "requiereFlagParaIr": "tarea_dada",
+          "textoSiNoPuedeIr": "Todavía no. Vine hasta acá para que alguien me diera algo que hacer y nadie me dio nada todavía."
+        }
+      ]
+    },
+    {
+      "id": "vyborg",
+      "nombre": "BARRIO DE VÝBORG",
+      "subtitulo": "Petrogrado · 24 de octubre de 1917",
+      "acto": 2,
+      "ancho": 44,
+      "fondo": 16,
+      "alturaTecho": 0,
+      "paleta": "exterior_noche",
+      "notaHistorica": "Distrito obrero en la orilla norte del Nevá: fábricas Nobel, Erikson, Nuevo Lessner. Bastión bolchevique desde febrero. La ración de pan en octubre de 1917 era de media libra diaria y bajando.",
+      "hotspots": [
+        {
+          "id": "cola_pan",
+          "nombre": "Cola del pan",
+          "x": -16,
+          "y": 0,
+          "z": 6,
+          "forma": "persona",
+          "color": "#b9a98c",
+          "ancho": 4,
+          "alto": 1.75,
+          "prof": 0.8,
+          "mirar": "Cuarenta mujeres desde las cuatro de la mañana. Cinco grados bajo cero. La panadería abre a las nueve y el pan alcanza hasta la número veintidós, más o menos, según el día.\n\nAcá se sabe todo lo que pasa en Petrogrado antes que en el Smolny.",
+          "hablar": [
+            {
+              "quien": "praskovia",
+              "requiereFlag": "cola_resuelta",
+              "texto": "«El puente lo cuida un chico de la Escuela Vladímir. Uno solo. Tiene más miedo que vos.»\n\nY después, más bajo:\n\n«Gracias por lo del número, m'hija. Mi hermana pudo ir a las dos colas.»"
+            },
+            {
+              "quien": "praskovia",
+              "requiereItem": "fajo_pravda",
+              "texto": "«¿Qué querés saber, m'hija?»\n\n«Nada es gratis. Acá se guarda el lugar o no se habla. Y vos no podés estar en dos colas a la vez, así que no tenés nada para ofrecer.»",
+              "opciones": [
+                {
+                  "texto": "(Repartir los Pravda con un número escrito en el margen)",
+                  "quienResponde": "praskovia",
+                  "respuesta": "Escribo un número en el margen de cada diario y los reparto. El que tiene el papel tiene el lugar. El que tiene el lugar se puede ir a otra cola.\n\nA las mujeres les lleva cuatro minutos entender el sistema y diez segundos empezar a mejorarlo.\n\nAcabo de inventar el número de turno. Seis horas antes de que exista el Estado que lo va a usar para todo.",
+                  "setFlag": "cola_resuelta",
+                  "consumeItem": "fajo_pravda",
+                  "daItem": "pan_negro",
+                  "cierra": true
+                },
+                {
+                  "texto": "Se viene algo grande. Mañana esto cambia.",
+                  "quienResponde": "praskovia",
+                  "respuesta": "Praskovia se sopla las manos.\n\n«En febrero también se venía algo grande. Mirá dónde estoy parada.»",
+                  "cierra": true
+                }
+              ]
+            },
+            {
+              "quien": "praskovia",
+              "texto": "«Andá al final, m'hija, como todas.»"
+            }
+          ]
+        },
+        {
+          "id": "tranvia",
+          "nombre": "Tranvía parado",
+          "x": -6,
+          "y": 0,
+          "z": 7,
+          "forma": "caja",
+          "color": "#7a4a3a",
+          "ancho": 6,
+          "alto": 2.8,
+          "prof": 2.2,
+          "mirar": "El siete, parado en medio de la calle con las luces apagadas. Catorce más atrás. Huelga por el aumento desde el lunes.\n\nEs la única manera de cruzar la ciudad antes de que amanezca.",
+          "hablar": [
+            {
+              "quien": "delegado",
+              "requiereFlag": "tranvia_conseguido",
+              "texto": "«Subí, compañera. Y agarrate, que voy rápido.»"
+            },
+            {
+              "quien": "delegado",
+              "requiereFlag": "tranvia_negado",
+              "texto": "«Ya te dije que no. Andá a pie.»"
+            },
+            {
+              "quien": "delegado",
+              "texto": "El delegado del sindicato se para delante del estribo.\n\n«Está parado. Y va a seguir parado.»",
+              "opciones": [
+                {
+                  "texto": "Necesito cruzar la ciudad esta noche. Es para mañana.",
+                  "quienResponde": "delegado",
+                  "respuesta": "Se cruza de brazos. Detrás suyo, ochenta tipos mirando cómo termina esto.",
+                  "abreDuelo": "duelo_tranvia"
+                },
+                {
+                  "texto": "(Subirme igual y arrancarlo yo)",
+                  "quienResponde": "delegado",
+                  "respuesta": "Levanto el pie al estribo y me quedo así.\n\nSoy obrera textil. Hace seis años que paro el telar cuando el sindicato dice parar.\n\nBajo el pie. Hay cosas que no se hacen ni por la revolución, y romper una huelga ajena es la primera.",
+                  "ejeMetodo": -1,
+                  "cierra": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "central",
+          "nombre": "Central telefónica",
+          "x": 4,
+          "y": 0,
+          "z": 9,
+          "forma": "caja",
+          "color": "#6b6258",
+          "ancho": 5,
+          "alto": 4,
+          "prof": 3,
+          "mirar": "Bolshaya Morskaya 22. Adentro, treinta telefonistas jóvenes conectando clavijas. Por esos cables el Palacio de Invierno habla con los cuarteles, con Moscú, con el frente.\n\nEl CMR quiere tomarla con veinte marinos. Sería un desastre.",
+          "requiereFlagParaIr": "",
+          "hablar": [
+            {
+              "quien": "liudmila",
+              "requiereFlag": "central_ganada",
+              "texto": "«La línea del Palacio la tenemos acá. Si hace falta que se caiga, se cae. Pero avisanos antes, ¿sí? Nos gusta saber.»"
+            },
+            {
+              "quien": "liudmila",
+              "requiereFlag": "tranvia_conseguido",
+              "texto": "Liudmila, diecinueve años, catorce meses en el tablero.\n\n«Si vienen a tomar la central, avisen. Nos van a echar igual, pero por lo menos me llevo el abrigo.»",
+              "opciones": [
+                {
+                  "texto": "No vengo a tomar nada. ¿Cuánto les pagan?",
+                  "quienResponde": "liudmila",
+                  "respuesta": "Se queda con la clavija en la mano.\n\n«…cuarenta y dos rublos. Los mismos que en el 15. El pan salía dieciocho kópeks y ahora sale uno con veinte.»\n\nY entonces empieza a hablar y no para durante veinte minutos, porque hace catorce meses que nadie le pregunta nada.\n\nAl final me dice: «El Palacio llama cada media hora al cuartel de Pávlovsk. ¿Querés escuchar?»",
+                  "setFlag": "central_ganada",
+                  "ejeConviccion": 1,
+                  "cierra": true
+                },
+                {
+                  "texto": "Vengo de parte del Comité Militar Revolucionario.",
+                  "quienResponde": "liudmila",
+                  "respuesta": "La cara se le apaga. Vuelve al tablero.\n\n«Entonces hable con el supervisor, señorita.»\n\nOtro comité más. Ya tuvieron cuatro este año.",
+                  "cierra": true
+                }
+              ]
+            },
+            {
+              "quien": "liudmila",
+              "texto": "El portón está cerrado y son las dos de la mañana. Sin cruzar la ciudad no llego."
+            }
+          ]
+        },
+        {
+          "id": "puente",
+          "nombre": "Puente Litéini",
+          "x": 12,
+          "y": 0,
+          "z": 5,
+          "forma": "persona",
+          "color": "#c0b0a0",
+          "ancho": 0.7,
+          "alto": 1.68,
+          "prof": 0.6,
+          "mirar": "Un solo cadete cuidando el puente. Diecisiete años, capote de la Escuela Vladímir dos talles más grande, fusil que no sabe si quiere.\n\nTiembla. Puede ser el frío.",
+          "hablar": [
+            {
+              "quien": "kolia",
+              "requiereFlag": "cadete_comio",
+              "texto": "«Me llamo Nikolái. Kolia.»\n\nY después de un rato:\n\n«Mi madre está en Tsárskoye Seló. Si pasa algo, ¿le puede avisar? Nikolái Aleksándrovich Rybin. Es el único Rybin de ahí.»"
+            },
+            {
+              "quien": "kolia",
+              "texto": "Me apunta con el fusil. Le tiembla tanto que el cañón hace círculos.\n\n«Al-alto. Puente cerrado por orden del Gobierno Provisional.»",
+              "opciones": [
+                {
+                  "texto": "¿Cuándo comiste por última vez?",
+                  "quienResponde": "kolia",
+                  "respuesta": "El fusil baja diez centímetros.\n\n«…ayer al mediodía. Nos mandaron sin rancho.»\n\nY se queda ahí, apuntándome mal, con hambre, cuidando un puente para un gobierno que se olvidó de darle de comer.",
+                  "cierra": true
+                },
+                {
+                  "texto": "(Seguir de largo)",
+                  "quienResponde": "kolia",
+                  "respuesta": "«¡Al-alto! ¡Le digo alto!»\n\nNo dispara. No va a disparar. Pero yo tampoco voy a pasar por arriba de un chico con un fusil.",
+                  "cierra": true
+                }
+              ]
+            }
+          ],
+          "usos": [
+            {
+              "item": "pan_negro",
+              "exito": "Le doy el pan.\n\nLo mira. Me mira. Lo agarra con las dos manos y come de parado, rápido, como comen los que tienen miedo de que se lo saquen.\n\nSe le llenan los ojos y hace como que es el viento.\n\nAcordate de esta cara, Verushka. Acordate.",
+              "setFlag": "cadete_comio",
+              "consume": true,
+              "ejeConviccion": 1
+            }
+          ]
+        },
+        {
+          "id": "aurora",
+          "nombre": "Crucero Aurora",
+          "x": 22,
+          "y": 0,
+          "z": 10,
+          "forma": "caja",
+          "color": "#4a5a66",
+          "ancho": 9,
+          "alto": 4,
+          "prof": 3,
+          "mirar": "Amarrado en el Nevá, gris contra el agua negra. Seis mil toneladas y catorce cañones apuntando a una ciudad que mañana cambia de dueño.\n\nEl comité del barco no se mueve sin una orden firmada.",
+          "hablar": [
+            {
+              "quien": "marinero",
+              "requiereFlag": "aurora_conseguido",
+              "texto": "«A las nueve y cuarenta, compañera. Salva de fogueo. Que nadie se asuste: no vamos a tirarle al Hermitage.»"
+            },
+            {
+              "quien": "marinero",
+              "requiereFlag": "aurora_negado",
+              "texto": "«Sin firma no nos movemos. Ya nos engañaron en julio.»"
+            },
+            {
+              "quien": "marinero",
+              "texto": "«Traiga la orden, compañera.»\n\nLe doy el papel. Lo da vuelta. Lo mira contra el farol.\n\n«Acá no hay firma. Un papel sin firma no es nada. En julio nos movieron con un papel sin firma y nos cazaron a doscientos.»",
+              "requiereItem": "orden_aurora",
+              "opciones": [
+                {
+                  "texto": "(Marcarla con el lápiz rojo de Stalin, como las pruebas de Pravda)",
+                  "requiereItem": "lapiz_rojo",
+                  "quienResponde": "marinero",
+                  "respuesta": "Hago la marca. Dos trazos rojos en diagonal en el margen superior, igual que las pruebas de página del Smolny.\n\nEl marinero la mira. Reconoce la marca. Todo el mundo en Petrogrado conoce esa marca.\n\n«Ah, bueno. Eso ya es otra cosa.»\n\nNo firmé nada. Sólo dibujé dos rayas. Me lo repito varias veces camino al puente.",
+                  "setFlag": "aurora_conseguido",
+                  "consumeItem": "orden_aurora",
+                  "ejeMetodo": 2,
+                  "cierra": true
+                },
+                {
+                  "texto": "Tiene razón. Vuelvo cuando tenga una firma de verdad.",
+                  "quienResponde": "marinero",
+                  "respuesta": "«Así se habla, compañera.»\n\nNo vuelvo. No hay tiempo para volver y los dos lo sabemos. Mañana el Aurora no se mueve y el Palacio hay que tomarlo de otra manera.",
+                  "setFlag": "aurora_negado",
+                  "consumeItem": "orden_aurora",
+                  "ejeMetodo": -2,
+                  "ejeConviccion": -1,
+                  "cierra": true
+                }
+              ]
+            },
+            {
+              "quien": "marinero",
+              "texto": "«¿Trae orden del Comité? Porque sin orden, nada.»\n\nNo tengo la orden. Trotski dijo que la resolviera yo."
+            }
+          ]
+        },
+        {
+          "id": "mesa_orden",
+          "nombre": "Mesa del comité de fábrica",
+          "x": 17,
+          "y": 0,
+          "z": 4,
+          "forma": "caja",
+          "color": "#5f5347",
+          "ancho": 2,
+          "alto": 0.9,
+          "prof": 1.2,
+          "mirar": "Una mesa con papel membretado del Comité Militar Revolucionario, robado, y un tintero helado.\n\nPuedo redactar la orden. Redactarla no es el problema.",
+          "usarSolo": "Escribo la orden para el Aurora. Tres líneas, claras, sin adjetivos.\n\nAbajo queda el espacio de la firma, blanco, mirándome.",
+          "daItemAlUsar": "orden_aurora",
+          "setFlagAlUsar": "tengo_orden",
+          "ocultarSiFlag": "tengo_orden",
+          "mostrarSiFlag": "tranvia_conseguido"
+        },
+        {
+          "id": "imprenta",
+          "nombre": "Imprenta de Rech",
+          "x": 31,
+          "y": 0,
+          "z": 7,
+          "forma": "caja",
+          "color": "#6a5f52",
+          "ancho": 6,
+          "alto": 4,
+          "prof": 4,
+          "mostrarSiFlag": "tranvia_conseguido",
+          "mirar": "La rotativa de Rech, el diario de los kadetes. La edición de mañana dice que somos agentes alemanes pagados por el Estado Mayor.\n\nLa prensa está a tres metros de la puerta. Una barra de hierro y no sale ninguna edición nunca más.",
+          "hablar": [
+            {
+              "quien": "editor",
+              "requiereFlag": "imprenta_convencida",
+              "texto": "«Buenas noches, señorita. Y que Dios los agarre confesados.»"
+            },
+            {
+              "quien": "editor",
+              "requiereFlag": "imprenta_rota",
+              "texto": "No hay nadie. Hay una prensa rota y tinta en el piso."
+            },
+            {
+              "quien": "editor",
+              "requiereFlag": "imprenta_sale",
+              "texto": "La rotativa ya está andando. Se escucha desde la vereda."
+            },
+            {
+              "quien": "editor",
+              "texto": "El editor no se levanta de la silla. Tiene la prueba de página en la mano.\n\n«La edición sale en cuarenta minutos, señorita. ¿Viene a romperme la prensa o viene a discutir?»",
+              "opciones": [
+                {
+                  "texto": "Vengo a discutir.",
+                  "quienResponde": "editor",
+                  "respuesta": "Deja la prueba sobre el escritorio y se acomoda en la silla.\n\n«Excelente. Hace meses que nadie discute. Todos rompen.»",
+                  "abreDuelo": "duelo_editor"
+                },
+                {
+                  "texto": "(Agarrar la barra de hierro)",
+                  "quienResponde": "editor",
+                  "respuesta": "Tres golpes en el cilindro y la rotativa de Rech no imprime más.\n\nEl editor no se mueve de la silla. Me mira hacerlo, con las manos cruzadas sobre la prueba de página, y cuando termino dice, muy tranquilo:\n\n«Gracias. Ahora ya sé qué son ustedes, y no tuve que escribirlo.»\n\nTardó cuatro segundos. Fue rapidísimo. Fue lo más fácil de toda la noche.",
+                  "setFlag": "imprenta_rota",
+                  "ejeMetodo": 2,
+                  "cierra": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "salida_vyborg",
+          "nombre": "Camino al Palacio",
+          "x": 39,
+          "y": 0,
+          "z": 3,
+          "forma": "puerta",
+          "color": "#3f6f9f",
+          "ancho": 2,
+          "alto": 2.6,
+          "prof": 0.4,
+          "mirar": "Al sur, cruzando el río, la Plaza del Palacio. Ahí está el Gobierno Provisional esperando que alguien venga a buscarlo.",
+          "vaA": "palacio",
+          "requiereFlagParaIr": "cadete_comio",
+          "textoSiNoPuedeIr": "Todavía no cruzo. El puente está cortado y hay cosas acá sin resolver."
+        }
+      ]
+    },
+    {
+      "id": "palacio",
+      "nombre": "PALACIO DE INVIERNO",
+      "subtitulo": "Petrogrado · noche del 25 de octubre de 1917",
+      "acto": 3,
+      "ancho": 40,
+      "fondo": 18,
+      "alturaTecho": 8,
+      "paleta": "interior_palacio",
+      "notaHistorica": "1.500 habitaciones, 1.786 puertas. Kerenski huyó la mañana del 25. Los ministros esperaron el arresto en el Comedor Pequeño. Se entró sobre todo por accesos laterales sin custodia; el asalto se demoró cuando los atacantes encontraron la bodega imperial.",
+      "hotspots": [
+        {
+          "id": "cocinero",
+          "nombre": "Cocinero",
+          "x": -14,
+          "y": 0,
+          "z": 4,
+          "forma": "persona",
+          "color": "#a89078",
+          "ancho": 0.9,
+          "alto": 1.72,
+          "prof": 0.6,
+          "mirar": "Sentado en un cajón dado vuelta, fumando, con el delantal manchado. Treinta años dándole de comer a gente que se va.",
+          "hablar": [
+            {
+              "quien": "cocinero",
+              "requiereFlag": "se_la_entrada",
+              "texto": "«La del Hermitage. Ya le dije. Y si ve a mi sobrino adentro, mándemelo a casa.»"
+            },
+            {
+              "quien": "cocinero",
+              "texto": "«¿Usted también viene a tomar el Palacio? Van cuatro esta noche.»\n\nSe ríe sin ganas.\n\n«Les hice la cena a los ministros a las siete. No comieron. Están todos sentados esperando que los vengan a buscar y yo no me puedo ir porque nadie me dio permiso para irme.»",
+              "opciones": [
+                {
+                  "texto": "Váyase a su casa, compañero. Nadie va a preguntar.",
+                  "quienResponde": "cocinero",
+                  "respuesta": "Se queda pensando. Apaga el cigarrillo contra el cajón.\n\n«…¿Nadie?»\n\n«Nadie.»\n\nSe saca el delantal, lo dobla —lo dobla, después de todo— y antes de irse me dice por encima del hombro:\n\n«La puerta del lado del Hermitage no la cuida nadie. Nunca la cuidó nadie. Es por donde entramos nosotros hace treinta años.»",
+                  "setFlag": "se_la_entrada",
+                  "ejeConviccion": 1,
+                  "cierra": true
+                },
+                {
+                  "texto": "¿Por dónde se entra?",
+                  "quienResponde": "cocinero",
+                  "respuesta": "«¿Y a mí qué me va en eso?»\n\nSe da vuelta. Tiene razón: no le va nada.",
+                  "cierra": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "puerta_servicio",
+          "nombre": "Puerta del Hermitage",
+          "x": -6,
+          "y": 0,
+          "z": 9,
+          "forma": "puerta",
+          "color": "#6b5b4b",
+          "ancho": 1.4,
+          "alto": 2.8,
+          "prof": 0.4,
+          "mostrarSiFlag": "se_la_entrada",
+          "mirar": "Una puerta de servicio del lado del Hermitage. Sin guardia. Sin cerrojo. Entreabierta.\n\nTreinta mil personas afuera esperando que alguien dé la orden de asaltar el Palacio, y la puerta estaba abierta.",
+          "usarSolo": "Entro caminando.\n\nCaminando. Como quien entra a una casa. Van a escribir mil libros sobre el asalto al Palacio de Invierno y yo entré caminando por la puerta de servicio, sin sacarme el delantal.",
+          "setFlagAlUsar": "entre_al_palacio"
+        },
+        {
+          "id": "salones",
+          "nombre": "Enfilada de salones",
+          "x": 2,
+          "y": 0,
+          "z": 10,
+          "forma": "caja",
+          "color": "#7a6a5a",
+          "ancho": 10,
+          "alto": 5,
+          "prof": 4,
+          "mostrarSiFlag": "entre_al_palacio",
+          "mirar": "Mil quinientas habitaciones. Mil setecientas ochenta y seis puertas. Parqué encerado, arañas apagadas, cuadros de gente muerta mirando desde arriba.\n\nEstoy perdida hace veinte minutos.\n\nPero se escucha algo. Abajo, a la izquierda. Ruido de vidrio y hombres cantando mal.",
+          "usarSolo": "Sigo el ruido. Es el único mapa que tengo.",
+          "setFlagAlUsar": "encontre_bodega"
+        },
+        {
+          "id": "bodega",
+          "nombre": "Bodega imperial",
+          "x": 11,
+          "y": 0,
+          "z": 6,
+          "forma": "caja",
+          "color": "#4a3a2a",
+          "ancho": 5,
+          "alto": 3,
+          "prof": 4,
+          "mostrarSiFlag": "encontre_bodega",
+          "mirar": "La bodega del Zar. Château d'Yquem, Tokaji, borgoñas de antes de que existiera el ferrocarril.\n\nY adentro, veinte de los nuestros y ocho junkers que vinieron a defenderla, todos igual de borrachos, cantando juntos.\n\nEl asalto al Palacio de Invierno se está frenando acá abajo. Nadie va a escribir esto.",
+          "usarSolo": "Agarro una botella del estante. Château d'Yquem 1893, con el águila bicéfala en la etiqueta.\n\nNo sé todavía para qué la quiero. Algo me dice que sí.",
+          "daItemAlUsar": "vino",
+          "setFlagAlUsar": "tengo_vino",
+          "ocultarSiFlag": "tengo_vino"
+        },
+        {
+          "id": "defensores",
+          "nombre": "Últimos defensores",
+          "x": 17,
+          "y": 0,
+          "z": 9,
+          "forma": "persona",
+          "color": "#9a8a7a",
+          "ancho": 3,
+          "alto": 1.75,
+          "prof": 0.8,
+          "mostrarSiFlag": "tengo_vino",
+          "mirar": "Seis junkers y cuatro mujeres del Batallón de la Muerte en el último pasillo antes del Comedor Pequeño. Barricada de muebles. Tienen munición y tienen órdenes.\n\nSi esto se resuelve a los tiros, se resuelve a los tiros.",
+          "usos": [
+            {
+              "item": "vino",
+              "exito": "Dejo la botella en el medio del pasillo, de pie sobre el parqué, y me corro tres pasos.\n\nSilencio.\n\nLa mujer del Batallón de la Muerte la mira, mira a los junkers, mira la botella otra vez. Diecinueve horas de guardia. Nadie les mandó relevo y nadie les mandó comida.\n\n«Es del Zar», digo. «Ya no es de nadie.»\n\nEl primero que se levanta es un chico. Después los otros.\n\nEl Palacio de Invierno se tomó sin un tiro en este pasillo, con una botella de Sauternes de 1893, y nadie lo va a poner en ningún libro.",
+              "setFlag": "defensores_neutralizados",
+              "consume": true,
+              "ejeConviccion": 1
+            }
+          ],
+          "hablar": [
+            {
+              "quien": "kolia",
+              "requiereFlag": "defensores_neutralizados",
+              "texto": "Duermen. Los diez, contra la pared, como chicos en un viaje largo."
+            },
+            {
+              "quien": "kolia",
+              "texto": "«¡Alto ahí!»\n\nSon diez y están apuntando. No hay discurso que sirva acá.\n\nAlgo material haría falta. Algo que valga más que la orden que recibieron."
+            }
+          ]
+        },
+        {
+          "id": "kolia_final",
+          "nombre": "El cadete",
+          "x": 24,
+          "y": 0,
+          "z": 7,
+          "forma": "persona",
+          "color": "#c0b0a0",
+          "ancho": 0.7,
+          "alto": 1.68,
+          "prof": 0.6,
+          "mostrarSiFlag": "defensores_neutralizados",
+          "mirar": "La última puerta. Un solo cadete delante.\n\nCapote de la Escuela Vladímir dos talles más grande.\n\nEs él. Es Kolia. Nikolái Aleksándrovich Rybin, el único Rybin de Tsárskoye Seló.\n\nMe reconoce. Se le nota en la cara el segundo exacto en que me reconoce.",
+          "hablar": [
+            {
+              "quien": "kolia",
+              "requiereFlag": "kolia_resuelto",
+              "texto": "La puerta está abierta. Del cadete no queda nada, ni siquiera el fusil."
+            },
+            {
+              "quien": "kolia",
+              "texto": "«Usted…»\n\nEl fusil le tiembla igual que en el puente. Pero ahora está entre él y la última puerta del Gobierno Provisional de Rusia.\n\n«Me dieron una orden, señora. Yo tengo una orden.»",
+              "opciones": [
+                {
+                  "texto": "(Reducirlo) Dame el fusil, Kolia.",
+                  "quienResponde": "kolia",
+                  "respuesta": "Se lo saco de las manos. No forcejea; hace ese gesto de soltar de los que en el fondo estaban esperando que alguien decidiera por ellos.\n\nLo siento contra la pared. Le digo que no se mueva. Obedece.\n\nHice lo que había que hacer y lo hice bien, y llevo cuatro años sin poder explicar por qué me acuerdo tanto de eso.",
+                  "setFlag": "kolia_resuelto",
+                  "ejeMetodo": 1,
+                  "cierra": true
+                },
+                {
+                  "texto": "Los ministros ya se rindieron, Kolia. Estás cuidando una puerta vacía.",
+                  "quienResponde": "kolia",
+                  "respuesta": "«¿Cómo sabe mi nombre?»\n\n«Me lo dijiste vos. En el puente. Me pediste que le avisara a tu mamá.»\n\nBaja el fusil despacio, mirándose las botas.\n\n«Ah. Sí.»\n\nY se queda ahí parado, sin fusil y sin orden, que es la peor manera de quedarse parado.",
+                  "setFlag": "kolia_resuelto",
+                  "ejeConviccion": 1,
+                  "cierra": true
+                },
+                {
+                  "texto": "(Abrir la puerta y dejarlo correr) Andá a tu casa. Yo no te vi.",
+                  "quienResponde": "kolia",
+                  "respuesta": "Duda dos segundos. Después deja el fusil apoyado contra la pared, con cuidado, como si le fueran a cobrar el rayón, y sale corriendo por el pasillo de los espejos.\n\nCorre mal. Corre como corren los chicos con el capote grande.\n\nOjalá haya llegado a Tsárskoye Seló. Nunca lo supe.",
+                  "setFlag": "kolia_resuelto",
+                  "setFlagAlUsar": "kolia_libre",
+                  "ejeMetodo": -2,
+                  "ejeConviccion": 1,
+                  "cierra": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "gobierno",
+          "nombre": "Comedor Pequeño",
+          "x": 31,
+          "y": 0,
+          "z": 8,
+          "forma": "caja",
+          "color": "#5f5347",
+          "ancho": 6,
+          "alto": 3,
+          "prof": 4,
+          "mostrarSiFlag": "kolia_resuelto",
+          "mirar": "Trece ministros del Gobierno Provisional de Rusia sentados alrededor de una mesa, con los abrigos puestos, esperando.\n\nHay un reloj que anda. Son las dos y diez.\n\nPreparé un duelo dialéctico para este momento. Tengo ocho argumentos en la libreta, tres de ellos de Mártov.\n\nNo hay con quién discutir. Ya se rindieron. Se rindieron hace horas y se quedaron sentados porque no sabían qué otra cosa hacer.",
+          "hablar": [
+            {
+              "quien": "konovalov",
+              "texto": "Uno de los ministros levanta la vista.\n\n«¿Son ustedes? Muy bien. Hagan lo que tengan que hacer.»\n\nAntónov-Ovséyenko entra atrás mío, con el sombrero de ala ancha, y empieza a leer la fórmula del arresto. Alguien busca papel para el acta.\n\nEl papel me lo dan a mí. Porque soy la que sabe escribir.",
+              "daItem": "acta",
+              "setFlag": "tengo_acta",
+              "opciones": [
+                {
+                  "texto": "(Escribir) «Se tomó el Palacio por asalto tras dura resistencia.»",
+                  "quienResponde": "",
+                  "respuesta": "Lo escribo así. Queda bien. Es épico, es claro, y es lo que va a hacer falta contar mañana en las fábricas para que valga la pena.\n\nNo hubo dura resistencia. Hubo una botella de Sauternes y un chico de diecisiete años.\n\nPero esto lo van a leer durante cien años, y lo que se escribe es lo que pasó.",
+                  "setFlag": "acta_epica",
+                  "ejeMetodo": 2,
+                  "cierra": true
+                },
+                {
+                  "texto": "(Escribir) «Se entró por la puerta de servicio. Los ministros esperaban sentados.»",
+                  "quienResponde": "",
+                  "respuesta": "Lo escribo así. Tal cual.\n\nEl compañero que me mira por encima del hombro chasquea la lengua.\n\n«Eso no sirve, compañera.»\n\n«Eso pasó, compañero.»\n\nNo sé si esa hoja va a sobrevivir a la semana. Pero fue verdad durante el rato en que estuvo escrita.",
+                  "setFlag": "acta_veraz",
+                  "ejeMetodo": -2,
+                  "ejeConviccion": 1,
+                  "cierra": true
+                },
+                {
+                  "texto": "(Escribir los nombres de todos los que estuvimos, uno por uno)",
+                  "quienResponde": "",
+                  "respuesta": "Escribo los nombres. Todos. El marinero del Aurora, Liudmila la telefonista, Praskovia de la cola, el delegado del siete, el cocinero que se fue a su casa.\n\nY abajo de todo, con el lápiz rojo, Nikolái Aleksándrovich Rybin, de la Escuela Vladímir, que cuidaba la última puerta.\n\nNinguno de esos nombres va a aparecer en ningún libro. Por eso los escribo.",
+                  "setFlag": "acta_nombres",
+                  "ejeConviccion": 2,
+                  "ejeMetodo": -1,
+                  "cierra": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "fin",
+          "nombre": "El amanecer",
+          "x": 36,
+          "y": 0,
+          "z": 4,
+          "forma": "puerta",
+          "color": "#c8102e",
+          "ancho": 2,
+          "alto": 2.6,
+          "prof": 0.4,
+          "mostrarSiFlag": "tengo_acta",
+          "mirar": "Por la ventana del Comedor Pequeño ya se ve gris sobre el Nevá.\n\n26 de octubre de 1917. Cambió todo y todavía no lo sabe nadie.",
+          "vaA": "epilogo"
+        }
+      ]
+    }
+  ]
+}
