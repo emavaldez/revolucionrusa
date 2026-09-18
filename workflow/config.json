@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "baseBranch": "main",
+  "workerAgent": "hermes-headless",
+  "workerProfile": "revolucion-rusa",
+  "humanName": "Emmanuel",
+  "mergeStrategy": "squash",
+  "maxCorrectionCycles": 3,
+  "requireHumanDispatchApproval": true,
+  "requireHumanMergeApproval": true,
+  "worktreeDir": "../.worktrees",
+  "preset": "app-local"
+}
