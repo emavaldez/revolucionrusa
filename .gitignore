@@ -14,6 +14,10 @@
 
 sysinfo.txt
 
+# Artefactos de ejecución del circuito wf (se regeneran, no se versionan)
+workflow/runs/*/worker.log
+workflow/runs/*/verify.json
+
 *.apk
 *.aab
 *.unitypackage
