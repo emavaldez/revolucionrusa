@@ -8,13 +8,15 @@ using UnityEngine.SceneManagement;
 
 namespace RR.EditorTools {
 
-// Construye las tres escenas a partir de Contenido/contenido.json.
-// Geometría de bloqueo: sirve para jugar y para ubicarse, y se reemplaza
-// por arte sin tocar el contenido. Volver a correrlo regenera todo.
+// Construye las tres escenas a partir de Contenido/contenido.json, más una
+// pantalla de título. Geometría de bloqueo: sirve para jugar y para
+// ubicarse, y se reemplaza por arte sin tocar el contenido. Volver a
+// correrlo regenera todo.
 public static class ConstructorEscenas {
 
     const string RUTA_ESCENAS = "Assets/RR/Escenas";
     const string RUTA_MATS    = "Assets/RR/Materiales";
+    const string RUTA_ARTE    = "Assets/RR/Arte";
 
     [MenuItem("Revolución/Construir las tres escenas", priority = 0)]
     public static void ConstruirTodo() {
@@ -28,9 +30,9 @@ public static class ConstructorEscenas {
         var contenido = JsonUtility.FromJson<Contenido>(File.ReadAllText(json));
         Directory.CreateDirectory(RUTA_ESCENAS);
         Directory.CreateDirectory(RUTA_MATS);
-        Directory.CreateDirectory("Assets/RR/Arte");
+        Directory.CreateDirectory(RUTA_ARTE);
 
-        var rutas = new List<string>();
+        var rutas = new List<string> { ConstruirTitulo() };
         foreach (var esc in contenido.escenarios)
             rutas.Add(Construir(esc));
 
@@ -41,6 +43,33 @@ public static class ConstructorEscenas {
             .Select(r => new EditorBuildSettingsScene(r, true)).ToArray();
 
         Debug.Log($"[RR] {rutas.Count} escenas construidas:\n  " + string.Join("\n  ", rutas));
+    }
+
+    // ── pantalla de título ────────────────────────────────────────
+    // Mínima a propósito: logo (o el fondo que haya en Arte/titulo.png)
+    // y un botón. Sin esto el juego arrancaba directo en Smolny sin
+    // ninguna instrucción de cómo se juega.
+    static string ConstruirTitulo() {
+        var escena = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+        var raiz = new GameObject("— Título —");
+
+        var camGO = new GameObject("Camara");
+        camGO.tag = "MainCamera";
+        camGO.transform.SetParent(raiz.transform);
+        var cam = camGO.AddComponent<Camera>();
+        cam.clearFlags = CameraClearFlags.SolidColor;
+        cam.backgroundColor = Color.black;
+        camGO.AddComponent<AudioListener>();
+
+        var menuGO = new GameObject("Menu");
+        menuGO.transform.SetParent(raiz.transform);
+        var menu = menuGO.AddComponent<RR.MenuInicio>();
+        menu.fondo = AssetDatabase.LoadAssetAtPath<Texture2D>($"{RUTA_ARTE}/titulo.png");
+        menu.logo  = AssetDatabase.LoadAssetAtPath<Texture2D>($"{RUTA_ARTE}/logo_verushka.png");
+
+        var ruta = $"{RUTA_ESCENAS}/Titulo.unity";
+        EditorSceneManager.SaveScene(escena, ruta);
+        return ruta;
     }
 
     static string Construir(Escenario esc) {
@@ -62,7 +91,7 @@ public static class ConstructorEscenas {
         // Si existe Assets/RR/Arte/fondo_<id>.png, se usa como plano de
         // fondo y se saltea la pared de bloqueo. Reemplazar el arte es
         // reemplazar ese PNG: nada más se entera.
-        var rutaFondo = $"Assets/RR/Arte/fondo_{esc.id}.png";
+        var rutaFondo = $"{RUTA_ARTE}/fondo_{esc.id}.png";
         var tex = AssetDatabase.LoadAssetAtPath<Texture2D>(rutaFondo);
         bool hayFondo = tex != null;
 
@@ -77,8 +106,7 @@ public static class ConstructorEscenas {
             Object.DestroyImmediate(telon.GetComponent<Collider>());
 
             var shFondo = Shader.Find("Unlit/Texture") ?? Shader.Find("Standard");
-            var matFondo = new Material(shFondo) { mainTexture = tex };
-            AssetDatabase.CreateAsset(matFondo, $"{RUTA_MATS}/M_Fondo_{esc.id}.mat");
+            var matFondo = MaterialConTextura($"{RUTA_MATS}/M_Fondo_{esc.id}.mat", shFondo, tex);
             telon.GetComponent<Renderer>().sharedMaterial = matFondo;
         }
 
@@ -123,6 +151,13 @@ public static class ConstructorEscenas {
         luz.transform.rotation = Quaternion.Euler(42f, -28f, 0f);
 
         // ── cámara: plano lateral de aventura gráfica ──────────────
+        // Arranca centrada en el primer hotspot visible sin flags (así el
+        // jugador ve algo con qué interactuar apenas entra al escenario,
+        // en vez de un cuarto vacío que hay que descubrir moviendo el
+        // mouse a ciegas).
+        var primerVisible = esc.hotspots.FirstOrDefault(h => string.IsNullOrEmpty(h.mostrarSiFlag));
+        float xCamaraInicial = primerVisible != null ? primerVisible.x : esc.ancho * 0.5f - 12f;
+
         var camGO = new GameObject("Camara");
         camGO.tag = "MainCamera";
         camGO.transform.SetParent(raiz.transform);
@@ -132,7 +167,7 @@ public static class ConstructorEscenas {
             ? new Color(0.06f, 0.07f, 0.10f) : new Color(0.10f, 0.09f, 0.08f);
         cam.clearFlags = CameraClearFlags.SolidColor;
         camGO.AddComponent<AudioListener>();
-        camGO.transform.position = new Vector3(esc.ancho * 0.5f - 12f, 6.5f, -18f);
+        camGO.transform.position = new Vector3(xCamaraInicial, 6.5f, -18f);
         camGO.transform.rotation = Quaternion.Euler(12f, 0f, 0f);
         camGO.AddComponent<CamaraLateral>().ancho = esc.ancho;
 
@@ -158,6 +193,33 @@ public static class ConstructorEscenas {
 
             var col = go.GetComponent<Collider>();
             if (col != null) col.isTrigger = false;
+
+            // Arte de personaje: si hay Arte/personajes/<id>.png se usa como
+            // sprite billboard y se apaga el renderer de la cápsula de
+            // bloqueo (el collider se deja intacto: el click sigue
+            // resolviéndose contra ella, nada cambia en Juego.Update()).
+            if (h.forma == "persona") {
+                var rutaSprite = $"{RUTA_ARTE}/personajes/{h.id}.png";
+                var texPersona = AssetDatabase.LoadAssetAtPath<Texture2D>(rutaSprite);
+                if (texPersona != null) {
+                    var rend = go.GetComponent<Renderer>();
+                    if (rend != null) rend.enabled = false;
+
+                    var sprite = GameObject.CreatePrimitive(PrimitiveType.Quad);
+                    sprite.name = "Sprite";
+                    Object.DestroyImmediate(sprite.GetComponent<Collider>());
+                    sprite.transform.SetParent(padre.transform);
+                    // Mismo centro que la cápsula; el Quad de Unity ya mira
+                    // hacia -Z (lo mismo que usa el telón de fondo, sin
+                    // rotar), que es hacia donde está la cámara.
+                    sprite.transform.position = go.transform.position;
+                    sprite.transform.localScale = new Vector3(h.ancho, h.alto, 1f);
+
+                    var shSprite = Shader.Find("Unlit/Transparent") ?? Shader.Find("Unlit/Texture");
+                    var matSprite = MaterialConTextura($"{RUTA_MATS}/M_Personaje_{h.id}.mat", shSprite, texPersona);
+                    sprite.GetComponent<Renderer>().sharedMaterial = matSprite;
+                }
+            }
         }
 
         // ── controlador ────────────────────────────────────────────
@@ -172,6 +234,23 @@ public static class ConstructorEscenas {
 
     // ── materiales ─────────────────────────────────────────────────
     static readonly Dictionary<string, Material> cache = new Dictionary<string, Material>();
+
+    // Crea el material en la ruta dada la primera vez; en corridas
+    // posteriores reusa el asset existente y sólo actualiza su textura, en
+    // vez de llamar a AssetDatabase.CreateAsset sobre una ruta ocupada (eso
+    // generaba un "M_Fondo_smolny 1.mat" duplicado y huérfano cada vez que
+    // se reconstruían las escenas).
+    static Material MaterialConTextura(string ruta, Shader shader, Texture2D textura) {
+        var mat = AssetDatabase.LoadAssetAtPath<Material>(ruta);
+        if (mat == null) {
+            mat = new Material(shader);
+            AssetDatabase.CreateAsset(mat, ruta);
+        } else if (mat.shader != shader) {
+            mat.shader = shader;
+        }
+        mat.mainTexture = textura;
+        return mat;
+    }
 
     static void Pintar(GameObject go, string hex) {
         if (!cache.TryGetValue(hex, out var mat)) {

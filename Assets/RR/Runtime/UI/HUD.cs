@@ -109,6 +109,7 @@ public class HUD : MonoBehaviour {
         if (EnFinal) { DibujarFinal(W, H); return; }
 
         DibujarTitular(W, H);
+        DibujarAyuda(W, H);
 
         // ── barra inferior: verbos + inventario ────────────────────
         float altoBarra = 92f;
@@ -190,6 +191,16 @@ public class HUD : MonoBehaviour {
         GUI.Label(new Rect(0, H * 0.30f + 20, W, 60), tituloCard ?? "", sTitulo);
         GUI.Label(new Rect(0, H * 0.30f + 88, W, 30), subCard ?? "", sSub);
         GUI.color = prev;
+    }
+
+    // Recordatorio persistente y chico de cómo se juega: la cámara no se
+    // mueve con teclado ni con clic-y-arrastre, sólo acercando el mouse a
+    // los bordes de la pantalla. Sin este cartel, un cuarto sin nada en el
+    // centro de cámara parece un juego roto en vez de uno point & click.
+    public void DibujarAyuda(float W, float H) {
+        GUI.Label(new Rect(8, 6, Mathf.Min(520, W - 16), 20),
+                  "Acercá el mouse a los bordes para mirar a los costados  ·  elegí un verbo y hacé clic",
+                  sChico);
     }
 
     void DibujarFinal(float W, float H) {

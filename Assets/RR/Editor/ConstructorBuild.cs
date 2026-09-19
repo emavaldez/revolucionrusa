@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using RR.EditorTools;
@@ -15,15 +16,18 @@ namespace RR {
 //
 // El CLI no tiene build built-in para WebGL: sin --execute-method (o un build
 // profile de Unity 6) el comando muere en la validación previa. Esto hace lo
-// mínimo: resolver la salida, dejar las tres escenas listas y buildear, con
+// mínimo: resolver la salida, dejar las escenas listas y buildear, con
 // código de salida de verdad.
 public static class ConstructorBuild {
 
-    const string RUTA_ESCENAS = "Assets/RR/Escenas";
-    const string ARG_SALIDA   = "-buildOutput";
+    const string RUTA_ESCENAS  = "Assets/RR/Escenas";
+    const string ARG_SALIDA    = "-buildOutput";
+    const string ESCENA_TITULO = "Titulo";
 
     // Los tres actos, en orden. El nombre de archivo sale de Juego.NombreEscena,
-    // que es lo mismo que usa ConstructorEscenas para guardarlos.
+    // que es lo mismo que usa ConstructorEscenas para guardarlos. La pantalla
+    // de título va siempre primera (ver RutasEscenas): sin ella el build
+    // arranca directo en Smolny, sin instrucciones de cómo se juega.
     static readonly string[] IDS_ACTOS = { "smolny", "vyborg", "palacio" };
 
     public static void BuildWebGL() {
@@ -98,13 +102,16 @@ public static class ConstructorBuild {
 
     // ── escenas ────────────────────────────────────────────────────
 
-    // Deja las tres escenas en disco y registradas en Build Settings, en orden.
+    // Deja las escenas en disco y registradas en Build Settings, en orden.
     static bool PrepararEscenas() {
         var rutas = RutasEscenas();
 
-        // Sólo si faltan: ConstruirTodo() no es idempotente (usa
-        // AssetDatabase.CreateAsset sin chequeo previo para M_Fondo_<id>.mat),
-        // así que no regeneramos de gusto lo que ya está en disco.
+        // Sólo si falta alguna: ConstruirTodo() no es idempotente (usa
+        // AssetDatabase.CreateAsset sin chequeo previo para varios materiales),
+        // así que no regeneramos de gusto lo que ya está en disco. Cuando sí
+        // hace falta, ConstruirTodo() regenera TODAS las escenas (título +
+        // actos) de una: es lo que reaplica cambios de arte/cámara a las que
+        // ya existían.
         var faltan = rutas.Where(r => !File.Exists(r)).ToArray();
         if (faltan.Length > 0) {
             Debug.Log($"[RR] Faltan en disco: {string.Join(", ", faltan)}. " +
@@ -127,7 +134,7 @@ public static class ConstructorBuild {
         }
 
         if (CoincidenBuildSettings(rutas)) {
-            Debug.Log("[RR] Build Settings ya tiene las 3 escenas en orden: no lo toco.");
+            Debug.Log("[RR] Build Settings ya tiene las escenas en orden: no lo toco.");
             return true;
         }
 
@@ -138,8 +145,11 @@ public static class ConstructorBuild {
         return true;
     }
 
-    static string[] RutasEscenas() =>
-        IDS_ACTOS.Select(id => $"{RUTA_ESCENAS}/{Juego.NombreEscena(id)}.unity").ToArray();
+    static string[] RutasEscenas() {
+        var lista = new List<string> { $"{RUTA_ESCENAS}/{ESCENA_TITULO}.unity" };
+        lista.AddRange(IDS_ACTOS.Select(id => $"{RUTA_ESCENAS}/{Juego.NombreEscena(id)}.unity"));
+        return lista.ToArray();
+    }
 
     static bool CoincidenBuildSettings(string[] rutas) {
         var actuales = EditorBuildSettings.scenes;
