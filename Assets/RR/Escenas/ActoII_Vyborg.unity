@@ -1,0 +1,2279 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!29 &1
+OcclusionCullingSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_OcclusionBakeSettings:
+    smallestOccluder: 5
+    smallestHole: 0.25
+    backfaceThreshold: 100
+  m_SceneGUID: 00000000000000000000000000000000
+  m_OcclusionCullingData: {fileID: 0}
+--- !u!104 &2
+RenderSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 10
+  m_Fog: 0
+  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  m_FogMode: 3
+  m_FogDensity: 0.01
+  m_LinearFogStart: 0
+  m_LinearFogEnd: 300
+  m_AmbientSkyColor: {r: 0.16, g: 0.18, b: 0.24, a: 1}
+  m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
+  m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
+  m_AmbientIntensity: 1
+  m_AmbientMode: 0
+  m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
+  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_HaloStrength: 0.5
+  m_FlareStrength: 1
+  m_FlareFadeSpeed: 3
+  m_HaloTexture: {fileID: 0}
+  m_SpotCookie: {fileID: 10001, guid: 0000000000000000e000000000000000, type: 0}
+  m_DefaultReflectionMode: 0
+  m_DefaultReflectionResolution: 128
+  m_ReflectionBounces: 1
+  m_ReflectionIntensity: 1
+  m_CustomReflection: {fileID: 0}
+  m_Sun: {fileID: 0}
+  m_UseRadianceAmbientProbe: 0
+--- !u!157 &3
+LightmapSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 13
+  m_BakeOnSceneLoad: 0
+  m_GISettings:
+    serializedVersion: 2
+    m_BounceScale: 1
+    m_IndirectOutputScale: 1
+    m_AlbedoBoost: 1
+    m_EnvironmentLightingMode: 0
+    m_EnableBakedLightmaps: 1
+    m_EnableRealtimeLightmaps: 0
+  m_LightmapEditorSettings:
+    serializedVersion: 12
+    m_Resolution: 2
+    m_BakeResolution: 40
+    m_AtlasSize: 1024
+    m_AO: 0
+    m_AOMaxDistance: 1
+    m_CompAOExponent: 1
+    m_CompAOExponentDirect: 0
+    m_ExtractAmbientOcclusion: 0
+    m_Padding: 2
+    m_LightmapParameters: {fileID: 0}
+    m_LightmapsBakeMode: 1
+    m_TextureCompression: 1
+    m_ReflectionCompression: 2
+    m_MixedBakeMode: 2
+    m_BakeBackend: 2
+    m_PVRSampling: 1
+    m_PVRDirectSampleCount: 32
+    m_PVRSampleCount: 512
+    m_PVRBounces: 2
+    m_PVREnvironmentSampleCount: 256
+    m_PVREnvironmentReferencePointCount: 2048
+    m_PVRFilteringMode: 1
+    m_PVRDenoiserTypeDirect: 1
+    m_PVRDenoiserTypeIndirect: 1
+    m_PVRDenoiserTypeAO: 1
+    m_PVRFilterTypeDirect: 0
+    m_PVRFilterTypeIndirect: 0
+    m_PVRFilterTypeAO: 0
+    m_PVREnvironmentMIS: 1
+    m_PVRCulling: 1
+    m_PVRFilteringGaussRadiusDirect: 1
+    m_PVRFilteringGaussRadiusIndirect: 1
+    m_PVRFilteringGaussRadiusAO: 1
+    m_PVRFilteringAtrousPositionSigmaDirect: 0.5
+    m_PVRFilteringAtrousPositionSigmaIndirect: 2
+    m_PVRFilteringAtrousPositionSigmaAO: 1
+    m_ExportTrainingData: 0
+    m_TrainingDataDestination: TrainingData
+    m_LightProbeSampleCountMultiplier: 4
+  m_LightingDataAsset: {fileID: 20201, guid: 0000000000000000f000000000000000, type: 0}
+  m_LightingSettings: {fileID: 0}
+--- !u!196 &4
+NavMeshSettings:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_BuildSettings:
+    serializedVersion: 3
+    agentTypeID: 0
+    agentRadius: 0.5
+    agentHeight: 2
+    agentSlope: 45
+    agentClimb: 0.4
+    ledgeDropHeight: 0
+    maxJumpAcrossDistance: 0
+    minRegionArea: 2
+    manualCellSize: 0
+    cellSize: 0.16666667
+    manualTileSize: 0
+    tileSize: 256
+    buildHeightMesh: 0
+    maxJobWorkers: 0
+    preserveTilesOutsideBounds: 0
+    debug:
+      m_Flags: 0
+  m_NavMeshData: {fileID: 0}
+--- !u!1 &43227676
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 43227677}
+  - component: {fileID: 43227681}
+  - component: {fileID: 43227680}
+  - component: {fileID: 43227679}
+  - component: {fileID: 43227678}
+  m_Layer: 0
+  m_Name: aurora
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &43227677
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43227676}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 22, y: 2, z: 10}
+  m_LocalScale: {x: 9, y: 4, z: 3}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 998119124}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &43227678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43227676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc1571e17aedf407ab2f6c99b8394ce1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RR.HotspotBehaviour
+  datos:
+    id: aurora
+    nombre: Crucero Aurora
+    x: 22
+    y: 0
+    z: 10
+    ancho: 9
+    alto: 4
+    prof: 3
+    forma: caja
+    color: '#4a5a66'
+    mirar: "Amarrado en el Nev\xE1, gris contra el agua negra. Seis mil toneladas
+      y catorce ca\xF1ones apuntando a una ciudad que ma\xF1ana cambia de due\xF1o.\n\nEl
+      comit\xE9 del barco no se mueve sin una orden firmada."
+    setFlagAlMirar: 
+    usarSolo: 
+    setFlagAlUsar: 
+    hablar:
+    - quien: marinero
+      texto: "\xABA las nueve y cuarenta, compa\xF1era. Salva de fogueo. Que nadie
+        se asuste: no vamos a tirarle al Hermitage.\xBB"
+      requiereFlag: aurora_conseguido
+      requiereNoFlag: 
+      requiereItem: 
+      setFlag: 
+      daItem: 
+      consumeItem: 
+      abreDuelo: 
+      opciones: []
+    - quien: marinero
+      texto: "\xABSin firma no nos movemos. Ya nos enga\xF1aron en julio.\xBB"
+      requiereFlag: aurora_negado
+      requiereNoFlag: 
+      requiereItem: 
+      setFlag: 
+      daItem: 
+      consumeItem: 
+      abreDuelo: 
+      opciones: []
+    - quien: marinero
+      texto: "\xABTraiga la orden, compa\xF1era.\xBB\n\nLe doy el papel. Lo da vuelta.
+        Lo mira contra el farol.\n\n\xABAc\xE1 no hay firma. Un papel sin firma no
+        es nada. En julio nos movieron con un papel sin firma y nos cazaron a doscientos.\xBB"
+      requiereFlag: 
+      requiereNoFlag: 
+      requiereItem: orden_aurora
+      setFlag: 
+      daItem: 
+      consumeItem: 
+      abreDuelo: 
+      opciones:
+      - texto: "(Marcarla con el l\xE1piz rojo de Stalin, como las pruebas de Pravda)"
+        respuesta: "Hago la marca. Dos trazos rojos en diagonal en el margen superior,
+          igual que las pruebas de p\xE1gina del Smolny.\n\nEl marinero la mira.
+          Reconoce la marca. Todo el mundo en Petrogrado conoce esa marca.\n\n\xABAh,
+          bueno. Eso ya es otra cosa.\xBB\n\nNo firm\xE9 nada. S\xF3lo dibuj\xE9
+          dos rayas. Me lo repito varias veces camino al puente."
+        quienResponde: marinero
+        requiereFlag: 
+        requiereNoFlag: 
+        requiereItem: lapiz_rojo
+        setFlag: aurora_conseguido
+        daItem: 
+        consumeItem: orden_aurora
+        abreDuelo: 
+        ejeConviccion: 0
+        ejeMetodo: 2
+        cierra: 1
+      - texto: "Tiene raz\xF3n. Vuelvo cuando tenga una firma de verdad."
+        respuesta: "\xABAs\xED se habla, compa\xF1era.\xBB\n\nNo vuelvo. No hay tiempo
+          para volver y los dos lo sabemos. Ma\xF1ana el Aurora no se mueve y el
+          Palacio hay que tomarlo de otra manera."
+        quienResponde: marinero
+        requiereFlag: 
+        requiereNoFlag: 
+        requiereItem: 
+        setFlag: aurora_negado
+        daItem: 
+        consumeItem: orden_aurora
+        abreDuelo: 
+        ejeConviccion: -1
+        ejeMetodo: -2
+        cierra: 1
+    - quien: marinero
+      texto: "\xAB\xBFTrae orden del Comit\xE9? Porque sin orden, nada.\xBB\n\nNo
+        tengo la orden. Trotski dijo que la resolviera yo."
+      requiereFlag: 
+      requiereNoFlag: 
+      requiereItem: 
+      setFlag: 
+      daItem: 
+      consumeItem: 
+      abreDuelo: 
+      opciones: []
+    usos: []
+    daItemAlUsar: 
+    ocultarSiFlag: 
+    mostrarSiFlag: 
+    vaA: 
+    requiereFlagParaIr: 
+    textoSiNoPuedeIr: 
+  bloqueadoParaReimportar: 0
+--- !u!23 &43227679
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43227676}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: d951ab4ea4f484880b6727d3607e6d98, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &43227680
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43227676}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!33 &43227681
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43227676}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &143073880
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 143073881}
+  - component: {fileID: 143073882}
+  m_Layer: 0
+  m_Name: Luz
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &143073881
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143073880}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.3477229, y: -0.22585355, z: 0.08669706, w: 0.9058491}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 664179962}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!108 &143073882
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143073880}
+  m_Enabled: 1
+  serializedVersion: 12
+  m_Type: 1
+  m_Color: {r: 0.62, g: 0.7, b: 0.88, a: 1}
+  m_Intensity: 0.55
+  m_Range: 10
+  m_SpotAngle: 30
+  m_InnerSpotAngle: 21.80208
+  m_CookieSize2D: {x: 0.5, y: 0.5}
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
+  m_ForceVisible: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+  m_LightUnit: 1
+  m_LuxAtDistance: 1
+  m_EnableSpotReflector: 1
+--- !u!1 &580029797
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 580029798}
+  - component: {fileID: 580029799}
+  m_Layer: 0
+  m_Name: Juego
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &580029798
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 580029797}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 664179962}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &580029799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 580029797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cd0e4bef2bfc4ab88aa46a0c58189e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RR.Juego
+  idEscenario: vyborg
+  verbo: 0
+  itemEnMano: 
+--- !u!1 &633135698
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 633135699}
+  - component: {fileID: 633135703}
+  - component: {fileID: 633135702}
+  - component: {fileID: 633135701}
+  - component: {fileID: 633135700}
+  m_Layer: 0
+  m_Name: tranvia
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &633135699
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 633135698}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -6, y: 1.4, z: 7}
+  m_LocalScale: {x: 6, y: 2.8, z: 2.2}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 998119124}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &633135700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 633135698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc1571e17aedf407ab2f6c99b8394ce1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RR.HotspotBehaviour
+  datos:
+    id: tranvia
+    nombre: "Tranv\xEDa parado"
+    x: -6
+    y: 0
+    z: 7
+    ancho: 6
+    alto: 2.8
+    prof: 2.2
+    forma: caja
+    color: '#7a4a3a'
+    mirar: "El siete, parado en medio de la calle con las luces apagadas. Catorce
+      m\xE1s atr\xE1s. Huelga por el aumento desde el lunes.\n\nEs la \xFAnica manera
+      de cruzar la ciudad antes de que amanezca."
+    setFlagAlMirar: 
+    usarSolo: 
+    setFlagAlUsar: 
+    hablar:
+    - quien: delegado
+      texto: "\xABSub\xED, compa\xF1era. Y agarrate, que voy r\xE1pido.\xBB"
+      requiereFlag: tranvia_conseguido
+      requiereNoFlag: 
+      requiereItem: 
+      setFlag: 
+      daItem: 
+      consumeItem: 
+      abreDuelo: 
+      opciones: []
+    - quien: delegado
+      texto: "\xABYa te dije que no. And\xE1 a pie.\xBB"
+      requiereFlag: tranvia_negado
+      requiereNoFlag: 
+      requiereItem: 
+      setFlag: 
+      daItem: 
+      consumeItem: 
+      abreDuelo: 
+      opciones: []
+    - quien: delegado
+      texto: "El delegado del sindicato se para delante del estribo.\n\n\xABEst\xE1
+        parado. Y va a seguir parado.\xBB"
+      requiereFlag: 
+      requiereNoFlag: 
+      requiereItem: 
+      setFlag: 
+      daItem: 
+      consumeItem: 
+      abreDuelo: 
+      opciones:
+      - texto: "Necesito cruzar la ciudad esta noche. Es para ma\xF1ana."
+        respuesta: "Se cruza de brazos. Detr\xE1s suyo, ochenta tipos mirando c\xF3mo
+          termina esto."
+        quienResponde: delegado
+        requiereFlag: 
+        requiereNoFlag: 
+        requiereItem: 
+        setFlag: 
+        daItem: 
+        consumeItem: 
+        abreDuelo: duelo_tranvia
+        ejeConviccion: 0
+        ejeMetodo: 0
+        cierra: 0
+      - texto: (Subirme igual y arrancarlo yo)
+        respuesta: "Levanto el pie al estribo y me quedo as\xED.\n\nSoy obrera textil.
+          Hace seis a\xF1os que paro el telar cuando el sindicato dice parar.\n\nBajo
+          el pie. Hay cosas que no se hacen ni por la revoluci\xF3n, y romper una
+          huelga ajena es la primera."
+        quienResponde: delegado
+        requiereFlag: 
+        requiereNoFlag: 
+        requiereItem: 
+        setFlag: 
+        daItem: 
+        consumeItem: 
+        abreDuelo: 
+        ejeConviccion: 0
+        ejeMetodo: -1
+        cierra: 1
+    usos: []
+    daItemAlUsar: 
+    ocultarSiFlag: 
+    mostrarSiFlag: 
+    vaA: 
+    requiereFlagParaIr: 
+    textoSiNoPuedeIr: 
+  bloqueadoParaReimportar: 0
+--- !u!23 &633135701
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 633135698}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: b8e4aaa034914488aa9e8b62c504c0b9, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &633135702
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 633135698}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!33 &633135703
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 633135698}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &634694013
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 634694014}
+  - component: {fileID: 634694018}
+  - component: {fileID: 634694017}
+  - component: {fileID: 634694016}
+  - component: {fileID: 634694015}
+  m_Layer: 0
+  m_Name: puente
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &634694014
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 634694013}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 12, y: 0.84, z: 5}
+  m_LocalScale: {x: 0.7, y: 0.84, z: 0.6}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 998119124}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &634694015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 634694013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc1571e17aedf407ab2f6c99b8394ce1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RR.HotspotBehaviour
+  datos:
+    id: puente
+    nombre: "Puente Lit\xE9ini"
+    x: 12
+    y: 0
+    z: 5
+    ancho: 0.7
+    alto: 1.68
+    prof: 0.6
+    forma: persona
+    color: '#c0b0a0'
+    mirar: "Un solo cadete cuidando el puente. Diecisiete a\xF1os, capote de la Escuela
+      Vlad\xEDmir dos talles m\xE1s grande, fusil que no sabe si quiere.\n\nTiembla.
+      Puede ser el fr\xEDo."
+    setFlagAlMirar: 
+    usarSolo: 
+    setFlagAlUsar: 
+    hablar:
+    - quien: kolia
+      texto: "\xABMe llamo Nikol\xE1i. Kolia.\xBB\n\nY despu\xE9s de un rato:\n\n\xABMi
+        madre est\xE1 en Ts\xE1rskoye Sel\xF3. Si pasa algo, \xBFle puede avisar?
+        Nikol\xE1i Aleks\xE1ndrovich Rybin. Es el \xFAnico Rybin de ah\xED.\xBB"
+      requiereFlag: cadete_comio
+      requiereNoFlag: 
+      requiereItem: 
+      setFlag: 
+      daItem: 
+      consumeItem: 
+      abreDuelo: 
+      opciones: []
+    - quien: kolia
+      texto: "Me apunta con el fusil. Le tiembla tanto que el ca\xF1\xF3n hace c\xEDrculos.\n\n\xABAl-alto.
+        Puente cerrado por orden del Gobierno Provisional.\xBB"
+      requiereFlag: 
+      requiereNoFlag: 
+      requiereItem: 
+      setFlag: 
+      daItem: 
+      consumeItem: 
+      abreDuelo: 
+      opciones:
+      - texto: "\xBFCu\xE1ndo comiste por \xFAltima vez?"
+        respuesta: "El fusil baja diez cent\xEDmetros.\n\n\xAB\u2026ayer al mediod\xEDa.
+          Nos mandaron sin rancho.\xBB\n\nY se queda ah\xED, apunt\xE1ndome mal,
+          con hambre, cuidando un puente para un gobierno que se olvid\xF3 de darle
+          de comer."
+        quienResponde: kolia
+        requiereFlag: 
+        requiereNoFlag: 
+        requiereItem: 
+        setFlag: 
+        daItem: 
+        consumeItem: 
+        abreDuelo: 
+        ejeConviccion: 0
+        ejeMetodo: 0
+        cierra: 1
+      - texto: (Seguir de largo)
+        respuesta: "\xAB\xA1Al-alto! \xA1Le digo alto!\xBB\n\nNo dispara. No va a
+          disparar. Pero yo tampoco voy a pasar por arriba de un chico con un fusil."
+        quienResponde: kolia
+        requiereFlag: 
+        requiereNoFlag: 
+        requiereItem: 
+        setFlag: 
+        daItem: 
+        consumeItem: 
+        abreDuelo: 
+        ejeConviccion: 0
+        ejeMetodo: 0
+        cierra: 1
+    usos:
+    - item: pan_negro
+      requiereFlag: 
+      exito: "Le doy el pan.\n\nLo mira. Me mira. Lo agarra con las dos manos y come
+        de parado, r\xE1pido, como comen los que tienen miedo de que se lo saquen.\n\nSe
+        le llenan los ojos y hace como que es el viento.\n\nAcordate de esta cara,
+        Verushka. Acordate."
+      fallo: 
+      setFlag: cadete_comio
+      daItem: 
+      consume: 1
+      ejeConviccion: 1
+      ejeMetodo: 0
+    daItemAlUsar: 
+    ocultarSiFlag: 
+    mostrarSiFlag: 
+    vaA: 
+    requiereFlagParaIr: 
+    textoSiNoPuedeIr: 
+  bloqueadoParaReimportar: 0
+--- !u!23 &634694016
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 634694013}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 4009c8bb98f164111bbda4c8756135a2, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!136 &634694017
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 634694013}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!33 &634694018
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 634694013}
+  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &662612253
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 662612254}
+  - component: {fileID: 662612258}
+  - component: {fileID: 662612257}
+  - component: {fileID: 662612256}
+  - component: {fileID: 662612255}
+  m_Layer: 0
+  m_Name: imprenta
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &662612254
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 662612253}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 31, y: 2, z: 7}
+  m_LocalScale: {x: 6, y: 4, z: 4}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 998119124}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &662612255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 662612253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc1571e17aedf407ab2f6c99b8394ce1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RR.HotspotBehaviour
+  datos:
+    id: imprenta
+    nombre: Imprenta de Rech
+    x: 31
+    y: 0
+    z: 7
+    ancho: 6
+    alto: 4
+    prof: 4
+    forma: caja
+    color: '#6a5f52'
+    mirar: "La rotativa de Rech, el diario de los kadetes. La edici\xF3n de ma\xF1ana
+      dice que somos agentes alemanes pagados por el Estado Mayor.\n\nLa prensa est\xE1
+      a tres metros de la puerta. Una barra de hierro y no sale ninguna edici\xF3n
+      nunca m\xE1s."
+    setFlagAlMirar: 
+    usarSolo: 
+    setFlagAlUsar: 
+    hablar:
+    - quien: editor
+      texto: "\xABBuenas noches, se\xF1orita. Y que Dios los agarre confesados.\xBB"
+      requiereFlag: imprenta_convencida
+      requiereNoFlag: 
+      requiereItem: 
+      setFlag: 
+      daItem: 
+      consumeItem: 
+      abreDuelo: 
+      opciones: []
+    - quien: editor
+      texto: No hay nadie. Hay una prensa rota y tinta en el piso.
+      requiereFlag: imprenta_rota
+      requiereNoFlag: 
+      requiereItem: 
+      setFlag: 
+      daItem: 
+      consumeItem: 
+      abreDuelo: 
+      opciones: []
+    - quien: editor
+      texto: "La rotativa ya est\xE1 andando. Se escucha desde la vereda."
+      requiereFlag: imprenta_sale
+      requiereNoFlag: 
+      requiereItem: 
+      setFlag: 
+      daItem: 
+      consumeItem: 
+      abreDuelo: 
+      opciones: []
+    - quien: editor
+      texto: "El editor no se levanta de la silla. Tiene la prueba de p\xE1gina en
+        la mano.\n\n\xABLa edici\xF3n sale en cuarenta minutos, se\xF1orita. \xBFViene
+        a romperme la prensa o viene a discutir?\xBB"
+      requiereFlag: 
+      requiereNoFlag: 
+      requiereItem: 
+      setFlag: 
+      daItem: 
+      consumeItem: 
+      abreDuelo: 
+      opciones:
+      - texto: Vengo a discutir.
+        respuesta: "Deja la prueba sobre el escritorio y se acomoda en la silla.\n\n\xABExcelente.
+          Hace meses que nadie discute. Todos rompen.\xBB"
+        quienResponde: editor
+        requiereFlag: 
+        requiereNoFlag: 
+        requiereItem: 
+        setFlag: 
+        daItem: 
+        consumeItem: 
+        abreDuelo: duelo_editor
+        ejeConviccion: 0
+        ejeMetodo: 0
+        cierra: 0
+      - texto: (Agarrar la barra de hierro)
+        respuesta: "Tres golpes en el cilindro y la rotativa de Rech no imprime m\xE1s.\n\nEl
+          editor no se mueve de la silla. Me mira hacerlo, con las manos cruzadas
+          sobre la prueba de p\xE1gina, y cuando termino dice, muy tranquilo:\n\n\xABGracias.
+          Ahora ya s\xE9 qu\xE9 son ustedes, y no tuve que escribirlo.\xBB\n\nTard\xF3
+          cuatro segundos. Fue rapid\xEDsimo. Fue lo m\xE1s f\xE1cil de toda la noche."
+        quienResponde: editor
+        requiereFlag: 
+        requiereNoFlag: 
+        requiereItem: 
+        setFlag: imprenta_rota
+        daItem: 
+        consumeItem: 
+        abreDuelo: 
+        ejeConviccion: 0
+        ejeMetodo: 2
+        cierra: 1
+    usos: []
+    daItemAlUsar: 
+    ocultarSiFlag: 
+    mostrarSiFlag: tranvia_conseguido
+    vaA: 
+    requiereFlagParaIr: 
+    textoSiNoPuedeIr: 
+  bloqueadoParaReimportar: 0
+--- !u!23 &662612256
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 662612253}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: f6fe6c6fa34c54fa6bcc96d39a6bbad2, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &662612257
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 662612253}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!33 &662612258
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 662612253}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &664179961
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 664179962}
+  m_Layer: 0
+  m_Name: "\u2014 BARRIO DE V\xDDBORG \u2014"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &664179962
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 664179961}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1990994149}
+  - {fileID: 1034905869}
+  - {fileID: 143073881}
+  - {fileID: 1256978214}
+  - {fileID: 998119124}
+  - {fileID: 580029798}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &878493783
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 878493784}
+  - component: {fileID: 878493788}
+  - component: {fileID: 878493787}
+  - component: {fileID: 878493786}
+  - component: {fileID: 878493785}
+  m_Layer: 0
+  m_Name: mesa_orden
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &878493784
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 878493783}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 17, y: 0.45, z: 4}
+  m_LocalScale: {x: 2, y: 0.9, z: 1.2}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 998119124}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &878493785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 878493783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc1571e17aedf407ab2f6c99b8394ce1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RR.HotspotBehaviour
+  datos:
+    id: mesa_orden
+    nombre: "Mesa del comit\xE9 de f\xE1brica"
+    x: 17
+    y: 0
+    z: 4
+    ancho: 2
+    alto: 0.9
+    prof: 1.2
+    forma: caja
+    color: '#5f5347'
+    mirar: "Una mesa con papel membretado del Comit\xE9 Militar Revolucionario, robado,
+      y un tintero helado.\n\nPuedo redactar la orden. Redactarla no es el problema."
+    setFlagAlMirar: 
+    usarSolo: "Escribo la orden para el Aurora. Tres l\xEDneas, claras, sin adjetivos.\n\nAbajo
+      queda el espacio de la firma, blanco, mir\xE1ndome."
+    setFlagAlUsar: tengo_orden
+    hablar: []
+    usos: []
+    daItemAlUsar: orden_aurora
+    ocultarSiFlag: tengo_orden
+    mostrarSiFlag: tranvia_conseguido
+    vaA: 
+    requiereFlagParaIr: 
+    textoSiNoPuedeIr: 
+  bloqueadoParaReimportar: 0
+--- !u!23 &878493786
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 878493783}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 309f335f8c23345f8834c6f5bb3d873d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &878493787
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 878493783}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!33 &878493788
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 878493783}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &996269955
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 996269956}
+  - component: {fileID: 996269960}
+  - component: {fileID: 996269959}
+  - component: {fileID: 996269958}
+  - component: {fileID: 996269957}
+  m_Layer: 0
+  m_Name: cola_pan
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &996269956
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996269955}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -16, y: 0.875, z: 6}
+  m_LocalScale: {x: 4, y: 0.875, z: 0.8}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 998119124}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &996269957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996269955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc1571e17aedf407ab2f6c99b8394ce1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RR.HotspotBehaviour
+  datos:
+    id: cola_pan
+    nombre: Cola del pan
+    x: -16
+    y: 0
+    z: 6
+    ancho: 4
+    alto: 1.75
+    prof: 0.8
+    forma: persona
+    color: '#b9a98c'
+    mirar: "Cuarenta mujeres desde las cuatro de la ma\xF1ana. Cinco grados bajo
+      cero. La panader\xEDa abre a las nueve y el pan alcanza hasta la n\xFAmero
+      veintid\xF3s, m\xE1s o menos, seg\xFAn el d\xEDa.\n\nAc\xE1 se sabe todo lo
+      que pasa en Petrogrado antes que en el Smolny."
+    setFlagAlMirar: 
+    usarSolo: 
+    setFlagAlUsar: 
+    hablar:
+    - quien: praskovia
+      texto: "\xABEl puente lo cuida un chico de la Escuela Vlad\xEDmir. Uno solo.
+        Tiene m\xE1s miedo que vos.\xBB\n\nY despu\xE9s, m\xE1s bajo:\n\n\xABGracias
+        por lo del n\xFAmero, m'hija. Mi hermana pudo ir a las dos colas.\xBB"
+      requiereFlag: cola_resuelta
+      requiereNoFlag: 
+      requiereItem: 
+      setFlag: 
+      daItem: 
+      consumeItem: 
+      abreDuelo: 
+      opciones: []
+    - quien: praskovia
+      texto: "\xAB\xBFQu\xE9 quer\xE9s saber, m'hija?\xBB\n\n\xABNada es gratis.
+        Ac\xE1 se guarda el lugar o no se habla. Y vos no pod\xE9s estar en dos colas
+        a la vez, as\xED que no ten\xE9s nada para ofrecer.\xBB"
+      requiereFlag: 
+      requiereNoFlag: 
+      requiereItem: fajo_pravda
+      setFlag: 
+      daItem: 
+      consumeItem: 
+      abreDuelo: 
+      opciones:
+      - texto: "(Repartir los Pravda con un n\xFAmero escrito en el margen)"
+        respuesta: "Escribo un n\xFAmero en el margen de cada diario y los reparto.
+          El que tiene el papel tiene el lugar. El que tiene el lugar se puede ir
+          a otra cola.\n\nA las mujeres les lleva cuatro minutos entender el sistema
+          y diez segundos empezar a mejorarlo.\n\nAcabo de inventar el n\xFAmero
+          de turno. Seis horas antes de que exista el Estado que lo va a usar para
+          todo."
+        quienResponde: praskovia
+        requiereFlag: 
+        requiereNoFlag: 
+        requiereItem: 
+        setFlag: cola_resuelta
+        daItem: pan_negro
+        consumeItem: fajo_pravda
+        abreDuelo: 
+        ejeConviccion: 0
+        ejeMetodo: 0
+        cierra: 1
+      - texto: "Se viene algo grande. Ma\xF1ana esto cambia."
+        respuesta: "Praskovia se sopla las manos.\n\n\xABEn febrero tambi\xE9n se
+          ven\xEDa algo grande. Mir\xE1 d\xF3nde estoy parada.\xBB"
+        quienResponde: praskovia
+        requiereFlag: 
+        requiereNoFlag: 
+        requiereItem: 
+        setFlag: 
+        daItem: 
+        consumeItem: 
+        abreDuelo: 
+        ejeConviccion: 0
+        ejeMetodo: 0
+        cierra: 1
+    - quien: praskovia
+      texto: "\xABAnd\xE1 al final, m'hija, como todas.\xBB"
+      requiereFlag: 
+      requiereNoFlag: 
+      requiereItem: 
+      setFlag: 
+      daItem: 
+      consumeItem: 
+      abreDuelo: 
+      opciones: []
+    usos: []
+    daItemAlUsar: 
+    ocultarSiFlag: 
+    mostrarSiFlag: 
+    vaA: 
+    requiereFlagParaIr: 
+    textoSiNoPuedeIr: 
+  bloqueadoParaReimportar: 0
+--- !u!23 &996269958
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996269955}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 03c9763e2f0e34541b035d0ae24bafb2, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!136 &996269959
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996269955}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!33 &996269960
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996269955}
+  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &998119123
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 998119124}
+  m_Layer: 0
+  m_Name: Hotspots
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &998119124
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 998119123}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 996269956}
+  - {fileID: 633135699}
+  - {fileID: 1999690396}
+  - {fileID: 634694014}
+  - {fileID: 43227677}
+  - {fileID: 878493784}
+  - {fileID: 662612254}
+  - {fileID: 2113622881}
+  m_Father: {fileID: 664179962}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1034905868
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1034905869}
+  - component: {fileID: 1034905871}
+  - component: {fileID: 1034905870}
+  m_Layer: 0
+  m_Name: Telon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1034905869
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1034905868}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 10, y: 9.8, z: 21}
+  m_LocalScale: {x: 70, y: 23.333334, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 664179962}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &1034905870
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1034905868}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 721139d4877ce4e7da37ca26b6f78317, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1034905871
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1034905868}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1256978213
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1256978214}
+  - component: {fileID: 1256978217}
+  - component: {fileID: 1256978216}
+  - component: {fileID: 1256978215}
+  m_Layer: 0
+  m_Name: Camara
+  m_TagString: MainCamera
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1256978214
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1256978213}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.104528464, y: -0, z: -0, w: 0.9945219}
+  m_LocalPosition: {x: 10, y: 6.5, z: -18}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 664179962}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1256978215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1256978213}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60d30c9c8787f47fd98aa2cb4abc4e07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RR.CamaraLateral
+  ancho: 44
+  suavidad: 3.5
+  margen: 0.18
+--- !u!81 &1256978216
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1256978213}
+  m_Enabled: 1
+--- !u!20 &1256978217
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1256978213}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.06, g: 0.07, b: 0.1, a: 1}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_Iso: 200
+  m_ShutterSpeed: 0.005
+  m_Aperture: 16
+  m_FocusDistance: 10
+  m_FocalLength: 50
+  m_BladeCount: 5
+  m_Curvature: {x: 2, y: 11}
+  m_BarrelClipping: 0.25
+  m_Anamorphism: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 34
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!1 &1990994148
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1990994149}
+  - component: {fileID: 1990994152}
+  - component: {fileID: 1990994151}
+  - component: {fileID: 1990994150}
+  m_Layer: 0
+  m_Name: Piso
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1990994149
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1990994148}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 10, y: -0.25, z: 8}
+  m_LocalScale: {x: 52, y: 0.5, z: 22}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 664179962}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &1990994150
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1990994148}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 089b14820721249e69362108c7487448, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &1990994151
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1990994148}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!33 &1990994152
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1990994148}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1999690395
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1999690396}
+  - component: {fileID: 1999690400}
+  - component: {fileID: 1999690399}
+  - component: {fileID: 1999690398}
+  - component: {fileID: 1999690397}
+  m_Layer: 0
+  m_Name: central
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1999690396
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1999690395}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 4, y: 2, z: 9}
+  m_LocalScale: {x: 5, y: 4, z: 3}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 998119124}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1999690397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1999690395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc1571e17aedf407ab2f6c99b8394ce1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RR.HotspotBehaviour
+  datos:
+    id: central
+    nombre: "Central telef\xF3nica"
+    x: 4
+    y: 0
+    z: 9
+    ancho: 5
+    alto: 4
+    prof: 3
+    forma: caja
+    color: '#6b6258'
+    mirar: "Bolshaya Morskaya 22. Adentro, treinta telefonistas j\xF3venes conectando
+      clavijas. Por esos cables el Palacio de Invierno habla con los cuarteles, con
+      Mosc\xFA, con el frente.\n\nEl CMR quiere tomarla con veinte marinos. Ser\xEDa
+      un desastre."
+    setFlagAlMirar: 
+    usarSolo: 
+    setFlagAlUsar: 
+    hablar:
+    - quien: liudmila
+      texto: "\xABLa l\xEDnea del Palacio la tenemos ac\xE1. Si hace falta que se
+        caiga, se cae. Pero avisanos antes, \xBFs\xED? Nos gusta saber.\xBB"
+      requiereFlag: central_ganada
+      requiereNoFlag: 
+      requiereItem: 
+      setFlag: 
+      daItem: 
+      consumeItem: 
+      abreDuelo: 
+      opciones: []
+    - quien: liudmila
+      texto: "Liudmila, diecinueve a\xF1os, catorce meses en el tablero.\n\n\xABSi
+        vienen a tomar la central, avisen. Nos van a echar igual, pero por lo menos
+        me llevo el abrigo.\xBB"
+      requiereFlag: tranvia_conseguido
+      requiereNoFlag: 
+      requiereItem: 
+      setFlag: 
+      daItem: 
+      consumeItem: 
+      abreDuelo: 
+      opciones:
+      - texto: "No vengo a tomar nada. \xBFCu\xE1nto les pagan?"
+        respuesta: "Se queda con la clavija en la mano.\n\n\xAB\u2026cuarenta y dos
+          rublos. Los mismos que en el 15. El pan sal\xEDa dieciocho k\xF3peks y
+          ahora sale uno con veinte.\xBB\n\nY entonces empieza a hablar y no para
+          durante veinte minutos, porque hace catorce meses que nadie le pregunta
+          nada.\n\nAl final me dice: \xABEl Palacio llama cada media hora al cuartel
+          de P\xE1vlovsk. \xBFQuer\xE9s escuchar?\xBB"
+        quienResponde: liudmila
+        requiereFlag: 
+        requiereNoFlag: 
+        requiereItem: 
+        setFlag: central_ganada
+        daItem: 
+        consumeItem: 
+        abreDuelo: 
+        ejeConviccion: 1
+        ejeMetodo: 0
+        cierra: 1
+      - texto: "Vengo de parte del Comit\xE9 Militar Revolucionario."
+        respuesta: "La cara se le apaga. Vuelve al tablero.\n\n\xABEntonces hable
+          con el supervisor, se\xF1orita.\xBB\n\nOtro comit\xE9 m\xE1s. Ya tuvieron
+          cuatro este a\xF1o."
+        quienResponde: liudmila
+        requiereFlag: 
+        requiereNoFlag: 
+        requiereItem: 
+        setFlag: 
+        daItem: 
+        consumeItem: 
+        abreDuelo: 
+        ejeConviccion: 0
+        ejeMetodo: 0
+        cierra: 1
+    - quien: liudmila
+      texto: "El port\xF3n est\xE1 cerrado y son las dos de la ma\xF1ana. Sin cruzar
+        la ciudad no llego."
+      requiereFlag: 
+      requiereNoFlag: 
+      requiereItem: 
+      setFlag: 
+      daItem: 
+      consumeItem: 
+      abreDuelo: 
+      opciones: []
+    usos: []
+    daItemAlUsar: 
+    ocultarSiFlag: 
+    mostrarSiFlag: 
+    vaA: 
+    requiereFlagParaIr: 
+    textoSiNoPuedeIr: 
+  bloqueadoParaReimportar: 0
+--- !u!23 &1999690398
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1999690395}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 5a0ddcf7a18e044c1b293a8b5ed07bcd, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &1999690399
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1999690395}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!33 &1999690400
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1999690395}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &2113622880
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2113622881}
+  - component: {fileID: 2113622885}
+  - component: {fileID: 2113622884}
+  - component: {fileID: 2113622883}
+  - component: {fileID: 2113622882}
+  m_Layer: 0
+  m_Name: salida_vyborg
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2113622881
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2113622880}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 39, y: 1.3, z: 3}
+  m_LocalScale: {x: 2, y: 2.6, z: 0.4}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 998119124}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2113622882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2113622880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc1571e17aedf407ab2f6c99b8394ce1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RR.HotspotBehaviour
+  datos:
+    id: salida_vyborg
+    nombre: Camino al Palacio
+    x: 39
+    y: 0
+    z: 3
+    ancho: 2
+    alto: 2.6
+    prof: 0.4
+    forma: puerta
+    color: '#3f6f9f'
+    mirar: "Al sur, cruzando el r\xEDo, la Plaza del Palacio. Ah\xED est\xE1 el Gobierno
+      Provisional esperando que alguien venga a buscarlo."
+    setFlagAlMirar: 
+    usarSolo: 
+    setFlagAlUsar: 
+    hablar: []
+    usos: []
+    daItemAlUsar: 
+    ocultarSiFlag: 
+    mostrarSiFlag: 
+    vaA: palacio
+    requiereFlagParaIr: cadete_comio
+    textoSiNoPuedeIr: "Todav\xEDa no cruzo. El puente est\xE1 cortado y hay cosas
+      ac\xE1 sin resolver."
+  bloqueadoParaReimportar: 0
+--- !u!23 &2113622883
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2113622880}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 1781e7a586ea3493796a9f82389d3979, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &2113622884
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2113622880}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!33 &2113622885
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2113622880}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1660057539 &9223372036854775807
+SceneRoots:
+  m_ObjectHideFlags: 0
+  m_Roots:
+  - {fileID: 664179962}

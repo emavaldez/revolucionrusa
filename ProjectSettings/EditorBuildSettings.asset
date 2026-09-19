@@ -4,7 +4,16 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/RR/Escenas/ActoI_Smolny.unity
+    guid: beae735d57da64293aff3ff8ddbdd2ae
+  - enabled: 1
+    path: Assets/RR/Escenas/ActoII_Vyborg.unity
+    guid: cde997e5dec2e4002859c5fd81d15b76
+  - enabled: 1
+    path: Assets/RR/Escenas/ActoIII_Palacio.unity
+    guid: f0faa47cda3dd407e969c22d3a8fb6ac
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 289c1b55c9541489481df5cc06664110, type: 3}
   m_UseUCBPForAssetBundles: 0
