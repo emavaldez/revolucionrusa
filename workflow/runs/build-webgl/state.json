@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "build-webgl",
+  "title": "ConstructorBuild: build WebGL headless invocable con --execute-method",
+  "status": "ready",
+  "branch": "task/build-webgl",
+  "worktree": null,
+  "scope": {
+    "allow": [
+      "Assets/RR/Editor/ConstructorBuild.cs"
+    ]
+  },
+  "correctionCycle": 0,
+  "dispatch": {
+    "approved": true,
+    "approvedBy": "Emmanuel (OK por chat, via supervisor, 19/9)",
+    "approvedAt": "2026-09-19T13:35:00.679126+00:00"
+  },
+  "implementation": {
+    "completed": false,
+    "commit": null
+  },
+  "audit": {
+    "decision": "pending",
+    "auditedBy": null,
+    "auditedAt": null
+  },
+  "merge": {
+    "approved": false,
+    "approvedBy": null,
+    "approvedAt": null,
+    "commit": null
+  },
+  "timestamps": {
+    "createdAt": "2026-09-19T13:31:09.528000+00:00",
+    "updatedAt": "2026-09-19T13:35:00.679240+00:00"
+  }
+}
