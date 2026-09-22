@@ -208,12 +208,19 @@ public static class ConstructorEscenas {
                     var sprite = GameObject.CreatePrimitive(PrimitiveType.Quad);
                     sprite.name = "Sprite";
                     Object.DestroyImmediate(sprite.GetComponent<Collider>());
-                    sprite.transform.SetParent(padre.transform);
-                    // Mismo centro que la cápsula; el Quad de Unity ya mira
-                    // hacia -Z (lo mismo que usa el telón de fondo, sin
-                    // rotar), que es hacia donde está la cámara.
-                    sprite.transform.position = go.transform.position;
-                    sprite.transform.localScale = new Vector3(h.ancho, h.alto, 1f);
+                    // Cuelga del hotspot, no del contenedor: Juego aplica la
+                    // visibilidad por flag con SetActive sobre el hotspot, y
+                    // como hermano el sprite quedaba visible con el hotspot
+                    // apagado (personajes a la vista antes de cumplir la flag,
+                    // y sin collider porque el collider vive en la cápsula).
+                    sprite.transform.SetParent(go.transform, false);
+                    sprite.transform.localPosition = Vector3.zero;
+                    // Compensa la escala del padre (la cápsula usa alto*0.5)
+                    // para que el quad mida ancho x alto en el mundo. El Quad
+                    // ya mira hacia -Z, igual que el telón de fondo (sin rotar).
+                    var escalaPadre = go.transform.localScale;
+                    sprite.transform.localScale = new Vector3(
+                        h.ancho / escalaPadre.x, h.alto / escalaPadre.y, 1f / escalaPadre.z);
 
                     var shSprite = Shader.Find("Unlit/Transparent") ?? Shader.Find("Unlit/Texture");
                     var matSprite = MaterialConTextura($"{RUTA_MATS}/M_Personaje_{h.id}.mat", shSprite, texPersona);
