@@ -29,5 +29,10 @@
   "timestamps": {
     "createdAt": "2026-09-23T19:16:54.597338+00:00",
     "updatedAt": "2026-09-28T19:24:13.267863+00:00"
+  },
+  "scope": {
+    "allow": [
+      "Assets/RR/Runtime/UI/*"
+    ]
   }
 }

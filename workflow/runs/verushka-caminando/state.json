@@ -29,5 +29,14 @@
   "timestamps": {
     "createdAt": "2026-09-23T19:16:54.633521+00:00",
     "updatedAt": "2026-09-28T19:24:16.691912+00:00"
+  },
+  "scope": {
+    "allow": [
+      "Assets/RR/Editor/ConstructorEscenas.cs",
+      "Assets/RR/Runtime/Core/Juego.cs",
+      "Assets/RR/Runtime/Core/*.cs",
+      "Assets/RR/Runtime/Personaje/*",
+      "Packages/manifest.json"
+    ]
   }
 }
