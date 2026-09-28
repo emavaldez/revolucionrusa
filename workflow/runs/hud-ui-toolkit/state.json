@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "hud-ui-toolkit",
+  "title": "Migrar el HUD de IMGUI a UI Toolkit",
+  "status": "ready",
+  "branch": "task/hud-ui-toolkit",
+  "worktree": null,
+  "correctionCycle": 0,
+  "dispatch": {
+    "approved": true,
+    "approvedBy": "Emmanuel (via Claude)",
+    "approvedAt": "2026-09-28T19:24:13.267844+00:00"
+  },
+  "implementation": {
+    "completed": false,
+    "commit": null
+  },
+  "audit": {
+    "decision": "pending",
+    "auditedBy": null,
+    "auditedAt": null
+  },
+  "merge": {
+    "approved": false,
+    "approvedBy": null,
+    "approvedAt": null,
+    "commit": null
+  },
+  "timestamps": {
+    "createdAt": "2026-09-23T19:16:54.597338+00:00",
+    "updatedAt": "2026-09-28T19:24:13.267863+00:00"
+  }
+}
