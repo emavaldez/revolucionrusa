@@ -23,6 +23,7 @@ public class Juego : MonoBehaviour {
 
     HUD hud;
     Camera cam;
+    ControladorVerushka verushka;
     readonly List<HotspotBehaviour> hotspots = new List<HotspotBehaviour>();
 
     // diálogo en curso
@@ -41,6 +42,11 @@ public class Juego : MonoBehaviour {
         estado.escenarioActual = idEscenario;
         hotspots.Clear();
         hotspots.AddRange(FindObjectsByType<HotspotBehaviour>(FindObjectsSortMode.None));
+        // El constructor de escenas deja a Verushka como hermano del Juego
+        // (ambos bajo la raíz), así que se busca por tipo, no por jerarquía.
+        // Si la escena es vieja y no tiene ControladorVerushka, verushka queda
+        // null y la interacción vuelve a dispararse en el sitio (sin romper).
+        verushka = FindFirstObjectByType<ControladorVerushka>();
         hud = gameObject.AddComponent<HUD>();
     }
 
@@ -89,7 +95,32 @@ public class Juego : MonoBehaviour {
         if (!Physics.Raycast(ray, out var hit, 200f)) return;
         var hb = hit.collider.GetComponentInParent<HotspotBehaviour>();
         if (hb == null) return;
-        Interactuar(hb.datos);
+
+        // Caminar-primero (story 004): en vez de interactuar en el mismo
+        // frame, Verushka camina hasta el hotspot y recién al llegar se
+        // dispara la misma Interactuar de siempre. Si ya está ahí (distancia
+        // ~0) dispara al toque. Sin ControladorVerushka (escena vieja) o sin
+        // NavMesh, CaminarHacia degrada a la conducta inmediata.
+        // Un clic sobre otro hotspot mientras camina re-dirige; la UI sigue
+        // gobernada por hud.SobreUI(), intacta.
+        if (verushka != null)
+            verushka.CaminarHacia(PuntoInteraccion(hb), () => Interactuar(hb.datos));
+        else
+            Interactuar(hb.datos);
+    }
+
+    // Punto al que camina Verushka para interactuar con un hotspot: sobre el
+    // piso, en la x del hotspot y en la z adelantada hacia la cámara (los
+    // hotspots no están rotados y la cámara mira desde -Z, así el frente de
+    // interacción es z menor). Se usa el borde frontal del collider (prof/2)
+    // más un margen, para que no quede enterrada en la geometría de bloqueo
+    // (riesgo declarado en la asignación: se prioriza que se vea razonable).
+    const float MARGEN_INTERACCION = 0.6f;
+
+    Vector3 PuntoInteraccion(HotspotBehaviour hb) {
+        var d = hb.datos;
+        var p = hb.transform.position;
+        return new Vector3(p.x, 0.02f, p.z - (d.prof * 0.5f + MARGEN_INTERACCION));
     }
 
     void RefrescarVisibilidad() {

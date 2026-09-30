@@ -2,8 +2,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEditor;
+using UnityEditor.Animations;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 
 namespace RR.EditorTools {
@@ -17,6 +19,7 @@ public static class ConstructorEscenas {
     const string RUTA_ESCENAS = "Assets/RR/Escenas";
     const string RUTA_MATS    = "Assets/RR/Materiales";
     const string RUTA_ARTE    = "Assets/RR/Arte";
+    const string RUTA_PERSONAJE = "Assets/RR/Runtime/Personaje";
 
     [MenuItem("Revolución/Construir las tres escenas", priority = 0)]
     public static void ConstruirTodo() {
@@ -31,10 +34,13 @@ public static class ConstructorEscenas {
         Directory.CreateDirectory(RUTA_ESCENAS);
         Directory.CreateDirectory(RUTA_MATS);
         Directory.CreateDirectory(RUTA_ARTE);
+        AsegurarCarpeta(RUTA_PERSONAJE);
+
+        var controladorVerushka = CrearControladorVerushka();
 
         var rutas = new List<string> { ConstruirTitulo() };
         foreach (var esc in contenido.escenarios)
-            rutas.Add(Construir(esc));
+            rutas.Add(Construir(esc, controladorVerushka));
 
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
@@ -72,7 +78,7 @@ public static class ConstructorEscenas {
         return ruta;
     }
 
-    static string Construir(Escenario esc) {
+    static string Construir(Escenario esc, AnimatorController controladorPersonaje) {
         var escena = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
         bool interior = esc.alturaTecho > 0.1f;
 
@@ -86,6 +92,14 @@ public static class ConstructorEscenas {
         piso.transform.position = new Vector3(esc.ancho * 0.5f - 12f, -0.25f, esc.fondo * 0.5f);
         piso.transform.localScale = new Vector3(esc.ancho + 8f, 0.5f, esc.fondo + 6f);
         Pintar(piso, interior ? "#4a4038" : "#2a2c30");
+        // Caminable para el bake de NavMesh: el flag deja el Piso como
+        // "Walkable" en la ventana Navigation del Editor (lo pide la
+        // asignación); el runtime no depende de él porque
+        // ControladorVerushka pasa el Piso directo a CollectSources.
+#pragma warning disable CS0618 // NavigationStatic deprecado en favor de
+        // NavMeshBuildMarkup: es justo el equivalente legacy que la story pide.
+        GameObjectUtility.SetStaticEditorFlags(piso, StaticEditorFlags.NavigationStatic);
+#pragma warning restore CS0618
 
         // ── telón de fondo pintado ─────────────────────────────────
         // Si existe Assets/RR/Arte/fondo_<id>.png, se usa como plano de
@@ -229,6 +243,9 @@ public static class ConstructorEscenas {
             }
         }
 
+        // ── Verushka (story 004: personaje jugable) ──────────────────
+        ConstruirVerushka(esc, raiz, piso, controladorPersonaje);
+
         // ── controlador ────────────────────────────────────────────
         var juegoGO = new GameObject("Juego");
         juegoGO.transform.SetParent(raiz.transform);
@@ -239,7 +256,189 @@ public static class ConstructorEscenas {
         return ruta;
     }
 
-    // ── materiales ─────────────────────────────────────────────────
+    // ── Verushka: personaje jugable (story 004) ───────────────────
+    // Cápsula de bloqueo con el rojo constructivista del HUD (M_c8102e),
+    // como placeholder adentro de la estética, igual que los hotspots son
+    // cubos/cápsulas. El bake de NavMesh NO se hace acá: lo hace
+    // ControladorVerushka en Awake sobre el Piso (justificación completa en
+    // implementation.md); la verificación headless sin abrir el Editor a
+    // mano es Revolución → Verificar NavMesh horneable.
+    static void ConstruirVerushka(Escenario esc, GameObject raiz, GameObject piso,
+                                  AnimatorController controlador) {
+        // Aparece en la banda frontal del escenario (la que ve la cámara),
+        // dentro de los límites de scroll de CamaraLateral (x de -10 a
+        // ancho-14), en el tercio izquierdo: clickear un hotspot de la
+        // derecha se ve caminar, y el spawn queda sobre el NavMesh del Piso.
+        float x = Mathf.Clamp(-10f + esc.ancho * 0.25f, -9f, esc.ancho - 15f);
+        float z = Mathf.Min(esc.fondo * 0.25f, 4.5f);
+
+        var go = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+        go.name = "Verushka";
+        go.transform.SetParent(raiz.transform);
+        go.transform.localScale = new Vector3(0.5f, 0.9f, 0.5f);   // cápsula base de 2m -> 1.8m de alto
+        go.transform.position = new Vector3(x, 0.9f, z);
+        Pintar(go, "#c8102e");
+        // Sin collider propio: el Physics.Raycast de Juego golpearía la
+        // cápsula de Verushka antes que al hotspot que está detrás (capa
+        // default, sin filtrar). El NavMeshAgent no necesita collider.
+        Object.DestroyImmediate(go.GetComponent<Collider>());
+
+        var agente = go.AddComponent<NavMeshAgent>();
+        // Escala de las escenas (ancho 34-44 m, banda jugable z<=10): con
+        // speed 2.6 un cruce completo tarda ~13 s y el paseo típico hotspot a
+        // hotspot 1-3 s (el default 3.5 no deja VER caminar; riesgo de la
+        // asignación: no hay valor documentado, va anotado en
+        // implementation.md). baseOffset = mitad de la altura del primitivo:
+        // el pivote de la cápsula es su centro, si fuera 0 el agente clavara
+        // el centro en el piso y Verushka caminara enterrada hasta la cintura.
+        agente.speed = 2.6f;
+        agente.angularSpeed = 360f;
+        agente.acceleration = 8f;
+        agente.radius = 0.25f;
+        agente.height = 1.8f;
+        agente.baseOffset = 0.9f;
+        agente.stoppingDistance = 0.35f;
+        agente.autoBraking = true;
+        agente.enabled = false;     // ControladorVerushka lo activa tras hornear el NavMesh
+
+        var anim = go.AddComponent<Animator>();
+        anim.runtimeAnimatorController = controlador;
+
+        var ctrl = go.AddComponent<RR.ControladorVerushka>();
+        ctrl.piso = piso;
+        ctrl.puntoAparicion = go.transform;
+    }
+
+    // ── animación placeholder: Idle / Caminar ─────────────────────
+    // Dos estados cableados con el bool "caminando" (transiciones sin exit
+    // time, para que el cambio se vea inmediato). No hay clips de arte: el
+    // paso rebota el alto de la cápsula entre 0.87 y 0.93 (ciclo 0.5 s) y el
+    // idle respira entre 0.89 y 0.91 (ciclo 1 s).
+    // Ojo: las curvas son ABSOLUTAS y sólo tocan m_LocalScale.y — a
+    // propósito. El NavMeshAgent escribe posición y rotación del transform en
+    // cada update; un clip que animara euler o posición pelearía con el
+    // agente (Verushka no giraría al caminar). Con sólo el alto animado el
+    // paso/idle se ven sin pisar el movimiento, y la asignación lo permite
+    // explícitamente ("escala entre estados... alcanza").
+    static AnimatorController CrearControladorVerushka() {
+        const string rutaCtrl = RUTA_PERSONAJE + "/AC_Verushka.controller";
+        const string rutaIdle = RUTA_PERSONAJE + "/Clip_IdleVerushka.anim";
+        const string rutaPaso = RUTA_PERSONAJE + "/Clip_PasoVerushka.anim";
+
+        var controlador = AssetDatabase.LoadAssetAtPath<AnimatorController>(rutaCtrl);
+        var idle = AssetDatabase.LoadAssetAtPath<AnimationClip>(rutaIdle);
+        var paso = AssetDatabase.LoadAssetAtPath<AnimationClip>(rutaPaso);
+
+        if (controlador == null || idle == null || paso == null) {
+            if (controlador == null) {
+                controlador = AnimatorController.CreateAnimatorControllerAtPath(rutaCtrl);
+                controlador.AddParameter("caminando", AnimatorControllerParameterType.Bool);
+
+                var maquina = controlador.layers[0].stateMachine;
+                idle = new AnimationClip { name = "Idle" };
+                AssetDatabase.CreateAsset(idle, rutaIdle);
+                paso = new AnimationClip { name = "Caminar" };
+                AssetDatabase.CreateAsset(paso, rutaPaso);
+
+                var eIdle = maquina.AddState("Idle", new Vector2(300f, 0f));
+                var ePaso = maquina.AddState("Caminar", new Vector2(300f, 150f));
+                eIdle.motion = idle;
+                ePaso.motion = paso;
+                maquina.defaultState = eIdle;
+
+                var ida = eIdle.AddTransition(ePaso);
+                ida.hasExitTime = false;
+                ida.duration = 0.1f;
+                ida.AddCondition(AnimatorConditionMode.If, 0f, "caminando");
+
+                var vuelta = ePaso.AddTransition(eIdle);
+                vuelta.hasExitTime = false;
+                vuelta.duration = 0.1f;
+                vuelta.AddCondition(AnimatorConditionMode.IfNot, 0f, "caminando");
+
+                EditorUtility.SetDirty(controlador);
+            } else {
+                Debug.LogWarning("[RR] AC_Verushka.controller existe pero faltan los clips: "
+                    + "borrá la carpeta Assets/RR/Runtime/Personaje y reconstruí las escenas.");
+                return controlador;
+            }
+        }
+
+        RellenarClips(idle, paso);
+        return controlador;
+    }
+
+    static void RellenarClips(AnimationClip idle, AnimationClip paso) {
+        // Idle: respiración ±0.01 en el alto de la cápsula (loop 1 s).
+        idle.SetCurve("", typeof(Transform), "m_LocalScale.y",
+                      CurvaLoop(new Keyframe(0f, 0.89f), new Keyframe(0.5f, 0.91f),
+                                new Keyframe(1f, 0.89f)));
+        idle.frameRate = 30f;
+        // (length se deriva de las curvas: llegan hasta 1 s)
+        Loop(idle);
+
+        // Caminar: rebote de paso, ciclo 0.5 s, alto entre 0.87 y 0.93.
+        paso.SetCurve("", typeof(Transform), "m_LocalScale.y",
+                      CurvaLoop(new Keyframe(0f, 0.87f), new Keyframe(0.125f, 0.93f),
+                                new Keyframe(0.25f, 0.87f), new Keyframe(0.375f, 0.93f),
+                                new Keyframe(0.5f, 0.87f)));
+        paso.frameRate = 30f;
+        // (length se deriva de las curvas: llegan hasta 0.5 s)
+        Loop(paso);
+    }
+
+    // Crea la carpeta de assets si falta (AssetDatabase, no Directory, para
+    // que Unity le genere el .meta y no quede huérfana en la próxima refresh).
+    static void AsegurarCarpeta(string ruta) {
+        if (!AssetDatabase.IsValidFolder(ruta)) {
+            var padre = ruta.Substring(0, ruta.LastIndexOf('/'));
+            var nombre = ruta.Substring(ruta.LastIndexOf('/') + 1);
+            AssetDatabase.CreateFolder(padre, nombre);
+        }
+    }
+
+    static AnimationCurve CurvaLoop(params Keyframe[] keys) {
+        var c = new AnimationCurve(keys);
+        c.preWrapMode = WrapMode.Loop;
+        c.postWrapMode = WrapMode.Loop;
+        return c;
+    }
+
+    static void Loop(AnimationClip clip) {
+        var ajustes = AnimationUtility.GetAnimationClipSettings(clip);
+        ajustes.loopTime = true;
+        AnimationUtility.SetAnimationClipSettings(clip, ajustes);
+        EditorUtility.SetDirty(clip);
+    }
+
+    // Verificación headless del bake (CA1/CA6): el horneado vive en
+    // ControladorVerushka.Awake, que en edit mode NO corre; por eso esta
+    // entrada abre cada escena, le pide al propio componente que hornee
+    // (HorrearModoEdicion) y le pregunta si el NavMesh quedó listo, sin
+    // dejar capas ni datos colgados en el mundo del Editor. Se puede correr
+    // sin interfaz:
+    //   Unity -batchmode -nographics -quit -projectPath . -executeMethod \
+    //     RR.EditorTools.ConstructorEscenas.VerificarNavMeshHorneable
+    // (o a través del CLI: unity build --execute-method …; el CLI reenvía
+    //  --execute-method al editor como -executeMethod).
+    [MenuItem("Revolución/Verificar NavMesh horneable", priority = 10)]
+    public static void VerificarNavMeshHorneable() {
+        int ok = 0;
+        foreach (var ruta in new[] {
+            $"{RUTA_ESCENAS}/ActoI_Smolny.unity",
+            $"{RUTA_ESCENAS}/ActoII_Vyborg.unity",
+            $"{RUTA_ESCENAS}/ActoIII_Palacio.unity" }) {
+
+            var escena = EditorSceneManager.OpenScene(ruta, OpenSceneMode.Single);
+            var verushka = UnityEngine.Object.FindFirstObjectByType<RR.ControladorVerushka>();
+            bool hornedo = verushka != null && verushka.VerificarHorneadoEnEditor();
+            if (hornedo) ok++;
+            Debug.Log($"[RR] NavMesh {ruta}: {(hornedo ? "OK" : "FALLA")}");
+            EditorSceneManager.CloseScene(escena, true);
+        }
+        Debug.Log($"[RR] Verificación NavMesh: {ok}/3 escenas hornearon.");
+    }
+
     static readonly Dictionary<string, Material> cache = new Dictionary<string, Material>();
 
     // Crea el material en la ruta dada la primera vez; en corridas
