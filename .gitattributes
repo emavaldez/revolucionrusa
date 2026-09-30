@@ -1,0 +1,13 @@
+# Los YAML de Unity terminan habitualmente valores vacíos en "clave: " (con
+# un espacio final) — es el serializador del motor, no un error de tipeo.
+# git diff --check marca eso como "trailing whitespace" en cualquier línea
+# agregada, y una escena regenerada reordena casi todo el archivo, así que
+# terminan "agregadas" miles de líneas normales. Desactivamos el chequeo de
+# espacios sólo para los formatos YAML de Unity; el resto del repo lo
+# conserva.
+*.unity -whitespace
+*.asset -whitespace
+*.anim -whitespace
+*.controller -whitespace
+*.prefab -whitespace
+*.mat -whitespace
