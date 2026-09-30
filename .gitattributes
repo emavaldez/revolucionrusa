@@ -11,3 +11,5 @@
 *.controller -whitespace
 *.prefab -whitespace
 *.mat -whitespace
+*.meta -whitespace
+*.patch -whitespace -diff
